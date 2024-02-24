@@ -58,6 +58,7 @@ import UserInfoTech from './Pages/TechnicalDashboard.jsx/UserInfoTech';
 import ComplainResolveTech from './Pages/TechnicalDashboard.jsx/ComplainResolveTech';
 import UpdateRenewal from './Pages/SuperVisorDashboard/UpdateRenewal';
 import AllDataLogs from './Pages/AllDataLogs';
+import TechInventery from './Pages/TechnicalDashboard.jsx/TechInventery';
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
       {/* Technical Routes  */}
       <Route path='/tech' element={<TechHome/>}/>
       <Route path='/tech/allUser' element={<AllUserTech/>}/>
+      <Route path='/tech/addInventory' element={<TechInventery/>}/>
       <Route path='/tech/userInfo/:reg_no' element={<UserInfoTech/>}/>
       <Route path='/tech/Datalog' element={<DataLogTech/>}/>
       <Route path='/tech/addUser/:reg_no' element={<AddUserTech/>}/>

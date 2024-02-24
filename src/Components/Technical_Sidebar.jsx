@@ -115,14 +115,14 @@ export default function Technical_Sidebar() {
                 <FontAwesomeIcon icon={faFolderClosed} /> All Users
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link
-                to="/tech/addUser"
+                to="/tech/addInventory"
                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500  hover:text-white"
               >
-                Add User
+               Inventeries
               </Link>
-            </li> */}
+            </li>
             <li>
               <Link
                 to="/tech/complains"

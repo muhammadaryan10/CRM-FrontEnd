@@ -1,15 +1,15 @@
-import axios from 'axios'
+import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
 
-export default function DeviceInventoryTech() {
+export default function AtachSimNumber() {
     const [empName, setEmpName] = useState("")
     const [newDevice, setNewDevice] = useState({
         device_serialno: "",
         imei_no: "",
         vendor: "",
+        devciesim_no: "",
         representative: "",
     })
     const cookies = new Cookies();
@@ -24,8 +24,8 @@ export default function DeviceInventoryTech() {
     };
 
     const addDevice = async (e) => {
-        const { device_serialno, imei_no, vendor } = newDevice
-        if (device_serialno && imei_no && vendor  ) {
+        const { device_serialno, imei_no, vendor, devciesim_no } = newDevice
+        if (device_serialno && imei_no && vendor && devciesim_no) {
             try {
                 const response = await axios.post(
                     "http://127.0.0.1:8000/api/storeinventory",
@@ -42,21 +42,20 @@ export default function DeviceInventoryTech() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    toast.success('Device Added Successfully')
-                }else {
-                    toast.error("Please Try Again Later.");
+                    window.alert('Device Added Successfully')
+                } else {
+                    window.alert("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
-                    toast.error("This device already exists");
+                    window.alert("This device already exists");
                 }
                 else if (error.response.status === 402) {
-                    toast.error("Please Fill All the Feilds")
-                    console.log(error)
-                }  else {
+                    window.alert("Please Fill All the Feilds")
+                } else {
                     console.log("Internal Server Error", error);
-                    toast.error("Internal Server Error")
+                    window.alert("Internal Server Error")
                 }
             }
         } else {
@@ -65,7 +64,7 @@ export default function DeviceInventoryTech() {
     }
 
     useEffect(() => {
-        
+
         setEmpName(cookies.get('name'));
         console.log(empName)
         setNewDevice({
@@ -77,17 +76,27 @@ export default function DeviceInventoryTech() {
 
     return (
         <div>
-            <ToastContainer/>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1 my-4'>
                 <div className=' flex flex-col justify-between'>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Device Serial No :</p><input name='device_serialno' onChange={getUserData} className=' ml-3 custum_input  p-1 ' style={{ width: "55%" }} /> </div>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input name='imei_no' onChange={getUserData} className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Select Device Num </p><select className='input-field  ml-4 p-1  border bg-white' name='nature_of_complain' style={{ width: "55%" }} aria-label=".form-select-lg example">
+                        <option value="">Select Device Num  </option>
+                        <option value="availble">Available</option>
+                        <option value="in stock">IN Stock </option>
+                        <option value="blanked">Blanked</option>
+                    </select>
+                    </div>
                 </div>
                 <div className=' flex flex-col justify-between'>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Vendor :</p><input name='vendor' onChange={getUserData} className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Select Sim Num </p><select className='input-field  ml-4 p-1  border bg-white' name='nature_of_complain' style={{ width: "55%" }} aria-label=".form-select-lg example">
+                        <option value="">Select Sim Num  </option>
+                        <option value="availble">Available</option>
+                        <option value="in stock">IN Stock </option>
+                        <option value="blanked">Blanked</option>
+                    </select>
+                    </div>
                 </div>
             </div >
-            <button className='theme_btn_md float-end my-4 rounded-0' onClick={addDevice}>Submit</button>
+            <button className='theme_btn_md float-end my-4 rounded-0' onClick={addDevice}>Attach    </button>
         </div>
     )
 }

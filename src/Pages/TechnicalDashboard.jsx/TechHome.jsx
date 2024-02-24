@@ -75,7 +75,7 @@ export default function TechHome() {
   };
 
   useEffect(() => {
-    Authentication()
+    // Authentication()
     const updateDate = () => {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit' };
@@ -94,20 +94,20 @@ export default function TechHome() {
 
   }, []);
 
-  const Authentication =async()=>{
-    const check = cookies.get('role');
-    if (check === "Technical") { 
+  // const Authentication =async()=>{
+  //   const check = cookies.get('role');
+  //   if (check === "Technical") { 
 
-    }
-    else if (!check) { 
-      // alert("Please Login First")
-      navigate("/")
-    }
-    else{
-      // alert("You Are Not Autherize")
-      navigate("/")
-    }
-  }
+  //   }
+  //   else if (!check) { 
+  //     // alert("Please Login First")
+  //     navigate("/")
+  //   }
+  //   else{
+  //     // alert("You Are Not Autherize")
+  //     navigate("/")
+  //   }
+  // }
 
   return (
     <div className='flex h-[100vh] bg-black'>
