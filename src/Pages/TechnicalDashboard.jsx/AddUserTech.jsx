@@ -9,6 +9,7 @@ export default function AddUserTech() {
     const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const { reg_no } = useParams();
     const [selectedDeviceId, setSelectedDeviceId] = useState("");
+    const [isListOpen, setIsListOpen] = useState(false);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -50,13 +51,26 @@ export default function AddUserTech() {
         console.log(customer);
     };
 
-    const getDeviceData = async (e, deviceId) => {
+    const getDeviceData = async (e) => {
+        setIsListOpen(true)
         const { name, value } = e.target;
-        // setCustomer({ ...customer, [name]: value });
-        const res = await fetch("http://127.0.0.1:8000/api/get_device_no")
-        const response =await res.json()
-        setApiResult(response.data)
-        console.log(apiResult);
+        setCustomer({ ...customer, [name]: value });
+        try {
+            const response = await axios.post("http://127.0.0.1:8000/api/getdevices",
+                { search_term: value },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                }
+            );
+            setApiResult(response.data.data)
+            console.log(apiResult);
+        }
+        catch (error) {
+            console.log(error)
+        }
     };
 
     const handleDeviceIdSelect = (deviceId) => {
@@ -65,6 +79,7 @@ export default function AddUserTech() {
             ...prevState,
             device_id: deviceId
         }));
+        setIsListOpen(false)
     };
 
     const getUserInfo = async () => {
@@ -191,16 +206,20 @@ export default function AddUserTech() {
                         <div className=' flex flex-col justify-center'>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Customer Id :</p><input onChange={getUserData} className=' ml-3 custum_input p-1 ' value={customer.client_code} style={{ width: "55%" }} readOnly /> </div>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Vender:</p><input onChange={getUserData} name='vendor_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input  onChange={getDeviceData} name='device_id' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                            <div>
-                                {apiResult.map(item => (
-                                    <div key={item.id} onClick={() => handleDeviceIdSelect(item.id)}>
-                                        {item.name} {/* Assuming the API returns an object with an 'id' and 'name' */}
+                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input value={customer.device_id} onChange={getDeviceData} name='device_id' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                            {isListOpen && (
+                                <div className='flex justify-end my-2'>
+                                    <div className='flex flex-col justify-center items-center shadow px-5 space-y-2 my-2'>
+                                        {apiResult.map(item => (
+                                            <div key={item.id} className='p-1' onClick={() => handleDeviceIdSelect(item.device_serialno)}>
+                                                {item.device_serialno}
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input onChange={getUserData} name='IMEI_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> GSM Number :</p><input onChange={getUserData} name='Gsm_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                                </div>
+                            )}
+                            {/* <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input onChange={getUserData} name='IMEI_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div> */}
+                            {/* <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%"    }}> GSM Number :</p><input onChange={getUserData} name='Gsm_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div> */}
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Designated Technician:</p><input onChange={getUserData} name='technician_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                         </div >
                         <div className='space-y-3'>
