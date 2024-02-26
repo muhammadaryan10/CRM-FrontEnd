@@ -8,11 +8,12 @@ export default function AddUserTech() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const { reg_no } = useParams();
-    console.log(reg_no)
+    const [selectedDeviceId, setSelectedDeviceId] = useState("");
+
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
-
+    const [apiResult, setApiResult] = useState([]);
     const [customer, setCustomer] = useState({
         client_code: "",
         vendor_name: "",
@@ -33,11 +34,13 @@ export default function AddUserTech() {
         customer_name: "",
         engine_no: "",
         reg_no: "",
-        representative:""
+        representative: ""
 
     })
+
+
     const [empName, setEmpName] = useState("")
-    const [ vas ,setVas ]=useState();
+    const [vas, setVas] = useState();
     const cookies = new Cookies();
 
     let name, value
@@ -45,6 +48,23 @@ export default function AddUserTech() {
         const { name, value } = e.target;
         setCustomer({ ...customer, [name]: value });
         console.log(customer);
+    };
+
+    const getDeviceData = async (e, deviceId) => {
+        const { name, value } = e.target;
+        // setCustomer({ ...customer, [name]: value });
+        const res = await fetch("http://127.0.0.1:8000/api/get_device_no")
+        const response =await res.json()
+        setApiResult(response.data)
+        console.log(apiResult);
+    };
+
+    const handleDeviceIdSelect = (deviceId) => {
+        setSelectedDeviceId(deviceId);
+        setCustomer(prevState => ({
+            ...prevState,
+            device_id: deviceId
+        }));
     };
 
     const getUserInfo = async () => {
@@ -123,19 +143,19 @@ export default function AddUserTech() {
                 if (response.status === 200) {
                     console.log("Request successful");
                     window.alert('user Register Succfully')
-                } 
+                }
             } catch (error) {
                 if (error.response.status === 420) {
                     console.log("Device is already installed", error);
                     window.alert("Device is already installed");
-                } 
-               else if (error.response.status === 400) {
+                }
+                else if (error.response.status === 400) {
                     console.log("Device not found", error);
                     window.alert("Device not found");
-                } 
+                }
                 else if (error.response.status === 402) {
                     window.alert("validations Fail")
-                }  else {
+                } else {
                     console.log("Internal Server Error", error);
                     window.alert("Internal Server Error")
                 }
@@ -151,7 +171,7 @@ export default function AddUserTech() {
 
     useEffect(() => {
         setEmpName(cookies.get('name'));
-        console.log(empName)    
+        console.log(empName)
         setCustomer({
             ...customer,
             representative: empName,
@@ -169,12 +189,18 @@ export default function AddUserTech() {
                     <h1 className='text-xl font-semibold bg-gray-400 p-2 m-2'>Technical Details</h1>
                     <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>
                         <div className=' flex flex-col justify-center'>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Customer Id :</p><input onChange={getUserData} className=' ml-3 custum_input p-1 ' value={customer.client_code} style={{ width: "55%" }} readOnly/> </div>
+                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Customer Id :</p><input onChange={getUserData} className=' ml-3 custum_input p-1 ' value={customer.client_code} style={{ width: "55%" }} readOnly /> </div>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Vender:</p><input onChange={getUserData} name='vendor_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input onChange={getUserData} name='device_id' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input  onChange={getDeviceData} name='device_id' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                            <div>
+                                {apiResult.map(item => (
+                                    <div key={item.id} onClick={() => handleDeviceIdSelect(item.id)}>
+                                        {item.name} {/* Assuming the API returns an object with an 'id' and 'name' */}
+                                    </div>
+                                ))}
+                            </div>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input onChange={getUserData} name='IMEI_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> GSM Number :</p><input onChange={getUserData} name='Gsm_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> TAVL mang. ID :</p><input onChange={getUserData} name='Tavl_mang_id' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Designated Technician:</p><input onChange={getUserData} name='technician_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                         </div >
                         <div className='space-y-3'>
@@ -263,7 +289,7 @@ export default function AddUserTech() {
                         </div>
                         <div className=' flex flex-col mt-3 p-2'>
                             <h1 className='text-xl font-semibold bg-gray-400 p-2 m-2'>VAS</h1>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Location On Call :</p><input onChange={getUserData} name='' readOnly  value={vas && vas.includes('Location on Call') ? 'Yes' : 'No'} className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Location On Call :</p><input onChange={getUserData} name='' readOnly value={vas && vas.includes('Location on Call') ? 'Yes' : 'No'} className=' ml-3 custum_input p-1 ' /> </div>
                             <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Igination On :</p><input onChange={getUserData} name='' readOnly value={vas && vas.includes('Ignition On') ? 'Yes' : 'No'} className=' ml-3 custum_input p-1 ' /> </div>
                             <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Igination Off :</p><input onChange={getUserData} name='' readOnly value={vas && vas.includes('Ignition Off') ? 'Yes' : 'No'} className=' ml-3 custum_input p-1 ' /> </div>
                             <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Geo Fencing  :</p><input onChange={getUserData} name='' readOnly value={vas && vas.includes('Geofence Alerts') ? 'Yes' : 'No'} className=' ml-3 custum_input p-1 ' /> </div>

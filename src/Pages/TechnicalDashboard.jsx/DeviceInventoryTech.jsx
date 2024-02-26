@@ -49,6 +49,7 @@ export default function DeviceInventoryTech() {
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
+                    console.log(error)
                     toast.error("This device already exists");
                 }
                 else if (error.response.status === 402) {

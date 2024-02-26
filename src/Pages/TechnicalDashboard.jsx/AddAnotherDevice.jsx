@@ -2,37 +2,20 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Cookies from 'universal-cookie';
 
-export default function UpdateICC() {
-    const [empName, setEmpName] = useState("");
+export default function AddAnotherDevice() {
     const [search_term, setSearch_term] = useState("");
+    const [data ,setData ]=useState([])
     const [newDevice, setNewDevice] = useState({
-        device_serialno: "",
-        imei_no: "",
-        sim_no: "",
-        icc_id: "",
-        sim_id: "",
+        client_id: "",
+        device_id_1: "",
     })
-    const cookies = new Cookies();
-
-
-    let name, value
-    const getUserData = (e) => {
-        name = e.target.name;
-        value = e.target.value;
-        setNewDevice({
-            ...newDevice,
-            representative: empName,
-            [name]: value
-        });
-        console.log(newDevice);
-    };
 
     const addDevice = async (e) => {
-        const { device_serialno, imei_no, sim_no, icc_id, sim_id } = newDevice
-        if (device_serialno && imei_no && sim_no && icc_id, sim_id) {
+        const {  client_id , device_id_1 } = newDevice
+        if (client_id && device_id_1 ) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/update_merge_inventory",
+                    "http://127.0.0.1:8000/api/create_another_device",
                     newDevice,
                     {
                         headers: {
@@ -52,11 +35,15 @@ export default function UpdateICC() {
                 }
             } catch (error) {
                 if (error.response.status === 400) {
-                    console.log(error);
-                    window.alert("This device already exists");
+                    console.log( error);
+                    window.alert("Already have 2 devices");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Sim OR ICC Id is not found in the Inventory")
+                    window.alert("Please Fill All the Feilds")
+                }
+                else if (error.response.status === 401) {
+                    console.log(error)
+                    window.alert("Device Is Already Installed")
                 } else {
                     console.log("Internal Server Error", error);
                     window.alert("Internal Server Error")
@@ -71,8 +58,8 @@ export default function UpdateICC() {
         if (search_term.trim() !== "") {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/search_merge_inventory",
-                    { search_term },
+                    "http://127.0.0.1:8000/api/seach_secondary_device",
+                    {search_term},
                     {
                         headers: {
                             "Content-Type": "application/json",
@@ -85,21 +72,18 @@ export default function UpdateICC() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    window.alert('Device Added Successfully')
+                    window.alert('Data Founded Successfully')
+                    setData(response.data)
                     setNewDevice({
                         ...newDevice,
-                        device_serialno: response.data.device_details.device_serialno,
-                        imei_no: response.data.device_details.imei_no,
-                        sim_no: response.data.sim_details.sim_no,
-                        icc_id: response.data.sim_details.icc_id,
-                        sim_id: response.data.device_details.sim_id,
+                        client_id:response.data.user.id,
+
                     })
                 } else {
                     window.alert("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
-                    // console.log("Error:", "User Already Registered With This Credentails", error);
                     window.alert("Device is installed please unisntall first");
                 }
                 else if (error.response.status === 402) {
@@ -114,24 +98,21 @@ export default function UpdateICC() {
         }
     }
 
-    useEffect(() => {
-        setEmpName(cookies.get('name'));
-    }, [empName]);
-
     return (
         <div>
             <div className='flex justify-content-center my-3 mb-5'>
-                <input onChange={(e) => setSearch_term(e.target.value)} name="search_term" className='w-96 mx-4  p-2 custum_input' placeholder='Enter Device Num' />
+                <input onChange={(e) => setSearch_term(e.target.value)} name="search_term" className='w-96 mx-4  p-2 custum_input' placeholder='Enter Registration Num' />
                 <button className='theme_btn_md rounded-0 ' onClick={SearchDevice}>Search</button>
             </div>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1 my-4'>
                 <div className=' flex flex-col justify-between'>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Device Num :</p><input name='device_serialno' onChange={getUserData} readOnly value={newDevice.device_serialno} className=' ml-3 custum_input  p-1 ' style={{ width: "55%" }} /> </div>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>IMEI Num :</p><input name='imei_no' onChange={getUserData} readOnly value={newDevice.imei_no} className=' ml-3 custum_input  p-1 ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Custumer Name :</p><input name='device_serialno'  value={data.user && data.user.customer_name} className=' ml-3 custum_input  p-1  cursor-not-allowed' style={{ width: "55%" }}  readOnly/> </div>
+                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Engine Num :</p><input  value={data.user && data.user.engine_no} className=' ml-3 custum_input  p-1 cursor-not-allowed ' style={{ width: "55%" }} readOnly /> </div>
+                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input name='sim_no'  value={data.technical && data.technical.device_id} className=' ml-3 custum_input p-1 cursor-not-allowed ' style={{ width: "55%" }} readOnly /> </div>
+                    
                 </div>
                 <div className=' flex flex-col justify-between'>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Sim Num :</p><input name='sim_no' onChange={getUserData} value={newDevice.sim_no} className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> ICC ID :</p><input name='icc_id' onChange={getUserData} value={newDevice.icc_id} className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Secendory Device :</p><input  className=' ml-3 custum_input p-1 ' name='device_id_1' onChange={(e)=> setNewDevice({...newDevice,device_id_1:e.target.value})} style={{ width: "55%" }} placeholder='Enter Secendory Device ID ' /> </div>
                 </div>
             </div >
             <button className='theme_btn_md float-end my-4 rounded-0' onClick={addDevice}>Submit</button>

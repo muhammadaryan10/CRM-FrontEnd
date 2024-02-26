@@ -4,6 +4,7 @@ import RedoFormTech from './RedoFormTech';
 import RemowalFromTech from './RemowalFromTech';
 import Technical_Sidebar from '../../Components/Technical_Sidebar';
 import RemowalTransfer from './RemovalTransfer';
+import AddAnotherDevice from './AddAnotherDevice';
 
 export default function FormTech() {
     const [selectedLog, setSelectedLog] = useState('Redo');
@@ -36,11 +37,13 @@ export default function FormTech() {
                             onClick={() => handleLogButtonClick('Renewal')}>Removal</button>
                         <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'Transfer' ? 'bg-gray-400' : 'bg-white'}`}
                             onClick={() => handleLogButtonClick('Transfer')}>Removal Transfer</button>
+                             <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'add' ? 'bg-gray-400' : 'bg-white'}`}
+                            onClick={() => handleLogButtonClick('add')}>Add Another Device  </button>
                     </div>
                     {selectedLog === 'Transfer' && <RemowalTransfer />}
-                    {/* {selectedLog === 'device' && <DeviceInventoryTech />} */}
                     {selectedLog === 'Redo' && <RedoFormTech />}
                     {selectedLog === 'Renewal' && <RemowalFromTech />}
+                    {selectedLog === 'add' && <AddAnotherDevice />}
                 </div>
             </div>
         </div>

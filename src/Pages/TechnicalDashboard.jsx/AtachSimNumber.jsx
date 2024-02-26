@@ -5,31 +5,22 @@ import Cookies from 'universal-cookie';
 
 export default function AtachSimNumber() {
     const [empName, setEmpName] = useState("")
-    const [newDevice, setNewDevice] = useState({
-        device_serialno: "",
-        imei_no: "",
-        vendor: "",
-        devciesim_no: "",
-        representative: "",
+    const [Device, setDevice] = useState([])
+    const [Sim, setSim] = useState("")
+    const [deviceTerm, setDeviceTerm] = useState('')
+    const [simTerm, setSimTerm] = useState("")
+    const [Attach,setAttach]=useState({
+        device_serialno:"",
+        sim_no:"",
+        representative:""
     })
-    const cookies = new Cookies();
 
-
-    let name, value
-    const getUserData = (e) => {
-        name = e.target.name;
-        value = e.target.value;
-        setNewDevice({ ...newDevice, [name]: value });
-        console.log(newDevice);
-    };
-
-    const addDevice = async (e) => {
-        const { device_serialno, imei_no, vendor, devciesim_no } = newDevice
-        if (device_serialno && imei_no && vendor && devciesim_no) {
+    const searchDevice = async () => {
+        if (deviceTerm.trim() !== "") {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/storeinventory",
-                    newDevice,
+                    "http://127.0.0.1:8000/api/get_device_no",
+                    { search_term: deviceTerm },
                     {
                         headers: {
                             "Content-Type": "application/json",
@@ -41,15 +32,115 @@ export default function AtachSimNumber() {
                 console.log(response); // use response.data to get the server response
 
                 if (response.status === 200) {
+                    setDevice(response.data.data)
+                    setAttach({
+                        ...Attach,
+                        device_serialno:response.data.data.device_serialno,
+                        representative:empName
+                    })
                     console.log("Request successful");
                     window.alert('Device Added Successfully')
+                    console.log(Device)
                 } else {
                     window.alert("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
-                    // console.log("Error:", "User Already Registered With This Credentails", error);
-                    window.alert("This device already exists");
+                    setDevice()
+                    window.alert("This device Already Installed");
+                }
+                else if (error.response.status === 402) {
+                    setDevice()
+                    window.alert("Device Not Found")
+                } else {
+                    setDevice()
+                    console.log("Internal Server Error", error);
+                    window.alert("Internal Server Error")
+                }
+            }
+        } else {
+            window.alert("Please Enter The Device Num")
+        }
+    }
+
+    const searchSim = async () => {
+        if (simTerm.trim() !== "") {
+            try {
+                const response = await axios.post(
+                    "http://127.0.0.1:8000/api/get_sim_no",
+                    { search_term: simTerm },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        credentials: "include",
+                    }
+                );
+
+                console.log(setSim);
+
+                if (response.status === 200) {
+                    setSim(response.data.data)
+                    setAttach({
+                        ...Attach,
+                        sim_no:response.data.data.sim_no,
+                        representative:empName
+                    })
+                    console.log("Request successful");
+                    window.alert('Sinm Founded Successfully')
+                    console.log(Attach)
+                    return
+                } else {
+                    window.alert("Please Try Again Later.");
+                }
+            } catch (error) {
+                if (error.response.status === 400) {
+                    setSim()
+                    window.alert("This Sim Already Installed");
+                }
+                else if (error.response.status === 402) {
+                    setSim()
+                    window.alert("Sim Not Found")
+                } else {
+                    setSim()
+                    console.log("Internal Server Error", error);
+                    window.alert("Internal Server Error")
+                }
+            }
+        } else {
+            window.alert("Please Enter The Sim Num")
+        }
+    }
+
+    const cookies = new Cookies();
+
+    const attachDevice = async (e) => {
+        const { device_serialno, sim_no, representative } = Attach
+        if (device_serialno && sim_no && representative ) {
+            try {
+                const response = await axios.post(
+                    "http://127.0.0.1:8000/api/create_merge_inventory",
+                    Attach,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        credentials: "include",
+                    }
+                );
+
+                console.log(response); 
+                if (response.status === 200) {
+                    setDevice()
+                    setAttach()
+                    console.log("Request successful");
+                    window.alert('Device Attached  Successfully')
+                } else {
+                    window.alert("Please Try Again Later.");
+                }
+            } catch (error) {
+                if (error.response.status === 400) {
+                    window.alert("Error In Submision ");
                 }
                 else if (error.response.status === 402) {
                     window.alert("Please Fill All the Feilds")
@@ -64,39 +155,42 @@ export default function AtachSimNumber() {
     }
 
     useEffect(() => {
-
         setEmpName(cookies.get('name'));
         console.log(empName)
-        setNewDevice({
-            ...newDevice,
+        setDevice({
+            ...Device,
             representative: empName,
         });
     }, [empName]);
-
 
     return (
         <div>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1 my-4'>
                 <div className=' flex flex-col justify-between'>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Select Device Num </p><select className='input-field  ml-4 p-1  border bg-white' name='nature_of_complain' style={{ width: "55%" }} aria-label=".form-select-lg example">
-                        <option value="">Select Device Num  </option>
-                        <option value="availble">Available</option>
-                        <option value="in stock">IN Stock </option>
-                        <option value="blanked">Blanked</option>
-                    </select>
+                    <div className='flex justify-content-center my-3 mb-5'>
+                        <input onChange={(e) => setDeviceTerm(e.target.value)} className='w-96 mx-4  p-2 custum_input' placeholder='Enter Device Num' />
+                        <button className='theme_btn_md rounded-0 ' onClick={searchDevice}>Search</button>
+                    </div>
+                    <div className=' flex flex-col justify-between'>
+                        <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Device Serial No :</p><input readOnly value={Device && Device.device_serialno} className=' ml-3 custum_input cursor-not-allowed  p-1 ' style={{ width: "55%" }} /> </div>
+                        <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input readOnly value={Device && Device.imei_no} className=' ml-3 custum_input cursor-not-allowed p-1 ' style={{ width: "55%" }} /> </div>
+                        <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Vender:</p><input readOnly value={Device && Device.vendor} className=' ml-3 custum_input cursor-not-allowed p-1 ' style={{ width: "55%" }} /> </div>
                     </div>
                 </div>
                 <div className=' flex flex-col justify-between'>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Select Sim Num </p><select className='input-field  ml-4 p-1  border bg-white' name='nature_of_complain' style={{ width: "55%" }} aria-label=".form-select-lg example">
-                        <option value="">Select Sim Num  </option>
-                        <option value="availble">Available</option>
-                        <option value="in stock">IN Stock </option>
-                        <option value="blanked">Blanked</option>
-                    </select>
+                    <div className='flex justify-content-center my-3 mb-5'>
+                        <input onChange={(e) => setSimTerm(e.target.value)} className='w-96 mx-4  p-2 custum_input' placeholder='Enter Device Num' />
+                        <button className='theme_btn_md rounded-0 ' onClick={searchSim}>Search</button>
+                    </div>
+                    <div className=' flex flex-col justify-between'>
+                        <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Sim Num :</p><input readOnly value={Sim && Sim.sim_no} className=' ml-3 custum_input cursor-not-allowed  p-1 ' style={{ width: "55%" }} /> </div>
+                        <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> ICC ID  :</p><input readOnly value={Sim && Sim.icc_id} className=' ml-3 custum_input cursor-not-allowed p-1 ' style={{ width: "55%" }} /> </div>
+                        <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Provider :</p><input readOnly value={Sim && Sim.provider} className=' ml-3 custum_input cursor-not-allowed p-1 ' style={{ width: "55%" }} /> </div>
+
                     </div>
                 </div>
             </div >
-            <button className='theme_btn_md float-end my-4 rounded-0' onClick={addDevice}>Attach    </button>
+            <button className='theme_btn_md float-end my-4 rounded-0' onClick={attachDevice}>Attach    </button>
         </div>
     )
 }

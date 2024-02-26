@@ -25,10 +25,10 @@ export default function SimInventory() {
 
     const addDevice = async (e) => {
         const { sim_no, icc_id, provider, status } = newSim
-        if (sim_no && icc_id && provider && status) {
+        if (  icc_id && provider && status) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/storeinventory",
+                    "http://127.0.0.1:8000/api/create_sim_inventtory",
                     newSim,
                     {
                         headers: {
@@ -49,10 +49,11 @@ export default function SimInventory() {
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
-                    window.alert("This device already exists");
+                    window.alert("This Sim already exists");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Please Fill All the Feilds")
+                    console.log(error);
+                    window.alert("This SimmNo Or ICC ID has Been Already Registered")
                 } else {
                     console.log("Internal Server Error", error);
                     window.alert("Internal Server Error")
@@ -84,7 +85,7 @@ export default function SimInventory() {
                 <div className=' flex flex-col justify-between'>
                     <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Nature of Complain</p><select className='input-field  ml-4 p-1  border bg-white' onChange={getUserData} name='status' style={{ width: "55%" }} aria-label=".form-select-lg example">
                         <option value="">Select Nature Of Sim </option>
-                        <option value="availble">Available</option>
+                        <option value="availiable">Available</option>
                         <option value="in stock">IN Stock </option>
                         <option value="blanked">Blanked</option>
                     </select>
