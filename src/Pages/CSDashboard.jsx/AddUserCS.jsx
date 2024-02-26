@@ -186,7 +186,7 @@ const AddUserCS = () => {
     };
 
 
-    if (customer_name && father_name && address && telephone_residence && mobileno_1 && ntn && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && date && remarks && campaign_point && dealership && dealer_name && sales_person && conatct_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && primaryuser_name && primaryuser_con1 && primaryuser_cnic && engine_type && transmission && vas) {
+    if (customer_name && father_name && address && mobileno_1  && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc  && remarks && campaign_point && dealership && dealer_name && sales_person  && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && primaryuser_name && primaryuser_con1 && primaryuser_cnic && engine_type && transmission && vas) {
       try {
         const response = await axios.post(
           "http://127.0.0.1:8000/api/storedata",
@@ -277,14 +277,16 @@ const AddUserCS = () => {
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Customer Name :</p><input onChange={getUserData} name="customer_name" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Father Name:</p><input onChange={getUserData} name="father_name" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> address :</p><input onChange={getUserData} name="address" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Telephone Residence :</p><input onChange={getUserData} name="telephone_residence" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Mobile Number :</p><input onChange={getUserData} name="mobileno_1" type='number' className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> 2 Mobile Number :</p><input onChange={getUserData} name="mobileno_2" type='number' className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> 3 Mobile Number :</p><input onChange={getUserData} name="mobileno_3" type='number' className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               {/* <div className="flex items-center space-x-2">
+                            <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Telephone Residence :</p><input onChange={getUserData} name="telephone_residence" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+
                 {serviceList.map((singleService, index) => (
                   <div key={index} className="services">
                     <div className="first-division">
+                    
                       <input
                         name="service"
                         type="text"
@@ -317,8 +319,7 @@ const AddUserCS = () => {
                   </div>
                 ))}
               </div> */}
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> NTN :</p><input onChange={getUserData} name="ntn" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> CNIC :</p><input onChange={getUserData} name="cnic" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
+              {/* <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> CNIC :</p><input onChange={getUserData} name="cnic" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div> */}
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Primary  User :</p><input onChange={getUserData} name="primaryuser_name" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User CNIC :</p><input onChange={getUserData} name="primaryuser_cnic" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User Contact:</p><input onChange={getUserData} name="primaryuser_con1" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
@@ -339,7 +340,7 @@ const AddUserCS = () => {
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Color  :</p><input onChange={getUserData} name="color" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Type  :</p><input onChange={getUserData} name="engine_type" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Transmission :</p><input onChange={getUserData} name="transmission" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Date :</p><input onChange={getUserData} name="date" type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Date :</p><input onChange={getUserData} name="date" type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div> */}
               </div>
             </div>
             {/* Product Details  */}
@@ -375,7 +376,7 @@ const AddUserCS = () => {
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Dealer Name :</p><input onChange={getUserData} name="dealer_name" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Sales Person :</p><input onChange={getUserData} name="sales_person" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Installation Location :</p><input onChange={getUserData} name="installation_loc" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Contact Person :</p><input onChange={getUserData} name="conatct_person" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+              {/* <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Contact Person :</p><input onChange={getUserData} name="conatct_person" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div> */}
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Remarks :</p><input onChange={getUserData} name="remarks" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
             </div >
             {/* Payment Details  */}
