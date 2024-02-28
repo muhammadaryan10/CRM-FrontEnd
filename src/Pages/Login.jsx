@@ -37,7 +37,7 @@ export default function Login() {
     if (login_Id && password) {
       try {
         const response = await axios.post(
-          `${BaseUrl}empLogin`,
+          `${BaseUrl}/empLogin`,
           { em_loginid: login_Id, password },
           { withCredentials: true } // Include credentials (cookies)
         );
