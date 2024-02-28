@@ -15,7 +15,7 @@ export default function AddAnotherDevice() {
         if (client_id && device_id_1 ) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/create_another_device",
+                    `${process.env.REACT_APP_BACKEND_URL}/create_another_device`,
                     newDevice,
                     {
                         headers: {
@@ -58,7 +58,7 @@ export default function AddAnotherDevice() {
         if (search_term.trim() !== "") {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/seach_secondary_device",
+                    `${process.env.REACT_APP_BACKEND_URL}/seach_secondary_device`,
                     {search_term},
                     {
                         headers: {

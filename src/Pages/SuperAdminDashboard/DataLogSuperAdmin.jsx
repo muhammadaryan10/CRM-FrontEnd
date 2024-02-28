@@ -47,7 +47,7 @@ export default function DataLogSuperAdmin({ data }) {
     if (nature, customer_name, reg_no, remarks, representative, contact_no, contact_person, em_loginid) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/create_datalogs",
+          `${process.env.REACT_APP_BACKEND_URL}/create_datalogs`,
           createLog,
           {
             headers: {

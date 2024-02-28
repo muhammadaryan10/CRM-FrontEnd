@@ -30,7 +30,7 @@ export default function HomeSuperAdmin() {
 
   const getNewInstallation = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/alert_technical");
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/alert_technical`);
       if (!res.ok) {
         throw new Error(`Failed to fetch data. Status: ${res}`);
       }
@@ -62,6 +62,7 @@ export default function HomeSuperAdmin() {
     const intervalId = setInterval(updateDate, 1000); // Update every second
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, []);
+  
   return (
     <div className='flex h-[100vh] bg-black'>
       {isSidebarOpen && (

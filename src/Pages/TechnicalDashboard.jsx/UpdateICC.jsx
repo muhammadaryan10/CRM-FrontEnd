@@ -32,7 +32,7 @@ export default function UpdateICC() {
         if (device_serialno && imei_no && sim_no && icc_id, sim_id) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/update_merge_inventory",
+                    `${process.env.REACT_APP_BACKEND_URL}/update_merge_inventory`,
                     newDevice,
                     {
                         headers: {
@@ -71,7 +71,7 @@ export default function UpdateICC() {
         if (search_term.trim() !== "") {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/search_merge_inventory",
+                    `${process.env.REACT_APP_BACKEND_URL}/search_merge_inventory`,
                     { search_term },
                     {
                         headers: {

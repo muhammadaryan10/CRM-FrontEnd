@@ -36,7 +36,7 @@ export default function AddUserSuperVisor() {
     const getUserInfo = async () => {
         try {
             console.log(reg_no)
-            const res = await fetch(`http://127.0.0.1:8000/api/tech_reg/${reg_no}`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/tech_reg/${reg_no}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -55,7 +55,7 @@ export default function AddUserSuperVisor() {
         if (client_code, customer_email, emergency_pass, emergency_person, security_ques, security_ans, emergency_person_contact, representative,password) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/security_create",
+                    `${process.env.REACT_APP_BACKEND_URL}/security_create`,
                     customer,
                     {
                         headers: {

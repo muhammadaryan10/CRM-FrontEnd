@@ -19,15 +19,10 @@ export default function RemovalCS() {
     customer_name: "",
     father_name: "",
     address: "",
-    telephone: "",
     mobileno_1: "",
     mobileno_2: "",
     mobileno_3: "",
-    ntn: "",
     cnic: "",
-    primary_user: "",
-    primary_user_cnic: "",
-    primary_user_con: "",
     secondary_user: "",
     relationship: "",
     secondary_user_con: "",
@@ -48,7 +43,7 @@ export default function RemovalCS() {
     int_comission: "",
     ext_comission: "",
     discount: "",
-    representative:""
+    representative: ""
   })
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
   const getSearchItem = (e) => {
@@ -63,73 +58,73 @@ export default function RemovalCS() {
 
   const getRemoavalData = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/seach_ownership",
-        { search_term: searchTerm }
-      );
-      if (response.status == 200) {
-        console.log("data", response.status)
-        // console.log(response)
-        setData(response.data.data)
-        setnewCustomer({
-          ...newCustomer,
-          id: response.data.data.user.id,
-          customer_name: response.data.data.user.customer_name,
-          father_name: response.data.data.user.father_name,
-          address: response.data.data.user.address,
-          telephone: response.data.data.user.telephone_residence,
-          mobileno_1: response.data.data.user.mobileno_1,
-          mobileno_2: response.data.data.user.mobileno_2,
-          mobileno_3: response.data.data.user.mobileno_3,
-          ntn: response.data.data.user.ntn,
-          cnic: response.data.data.user.cnic,
-          primary_user: response.data.data.user.primaryuser_name,
-          primary_user_cnic: response.data.data.user.primaryuser_cnic,
-          primary_user_con: response.data.data.user.primaryuser_con1,
-          secondary_user: response.data.data.user.seconadryuser_name,
-          relationship: response.data.data.user.relationship,
-          secondary_user_con: response.data.data.user.seconadryuser_name,
-          insurance_partner: response.data.data.user.insurance_partner,
-          vas: response.data.data.user.vas,
-          vas_options: response.data.data.user.vas_options,
-          customer_email: response.data.data.security.customer_email,
-          emergency_pass: response.data.data.security.emergency_pass,
-          emergency_per: response.data.data.security.emergency_person,
-          emergency_per_con: response.data.data.security.emergency_person_contact,
-          security_ques: response.data.data.security.security_ques,
-          security_ans: response.data.data.security.security_ans,
-          password: response.data.data.security.password,
-          compaign_point_alo: response.data.data.user.campaign_point,
-          renewal_charges: response.data.data.renewal_charges.renewal_charges,
-          segment: response.data.data.user.segment,
-          Demo_duration: response.data.data.user.demo_duration,
-          int_comission: response.data.data.user.int_comission,
-          ext_comission: response.data.data.user.ext_comission,
-          discount: response.data.data.user.discount,
-          representative:empName
-        })
-        setMsg("")
-        console.log("data >>",data)
-        console.log("Customer >>",newCustomer)
-        return
+    if (searchTerm.trim() !== "") {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/seach_ownership",
+          { search_term: searchTerm }
+        );
+        if (response.status == 200) {
+          console.log("data", response.status)
+          // console.log(response)
+          setData(response.data.data)
+          setnewCustomer({
+            ...newCustomer,
+            id: response.data.data.user.id,
+            customer_name: response.data.data.user.customer_name,
+            father_name: response.data.data.user.father_name,
+            address: response.data.data.user.address,
+            mobileno_1: response.data.data.user.mobileno_1,
+            mobileno_2: response.data.data.user.mobileno_2,
+            mobileno_3: response.data.data.user.mobileno_3,
+            cnic: response.data.data.user.cnic,
+            secondary_user: response.data.data.user.seconadryuser_name,
+            relationship: response.data.data.user.relationship,
+            secondary_user_con: response.data.data.user.seconadryuser_name,
+            insurance_partner: response.data.data.user.insurance_partner,
+            vas: response.data.data.user.vas,
+            vas_options: response.data.data.user.vas_options,
+            customer_email: response.data.data.security.customer_email,
+            emergency_pass: response.data.data.security.emergency_pass,
+            emergency_per: response.data.data.security.emergency_person,
+            emergency_per_con: response.data.data.security.emergency_person_contact,
+            security_ques: response.data.data.security.security_ques,
+            security_ans: response.data.data.security.security_ans,
+            password: response.data.data.security.password,
+            compaign_point_alo: response.data.data.user.campaign_point,
+            renewal_charges: response.data.data.renewal_charges.renewal_charges,
+            segment: response.data.data.user.segment,
+            Demo_duration: response.data.data.user.demo_duration,
+            int_comission: response.data.data.user.int_comission,
+            ext_comission: response.data.data.user.ext_comission,
+            discount: response.data.data.user.discount,
+            representative: empName
+          })
+          setMsg("")
+          console.log("data >>", data)
+          console.log("Customer >>", newCustomer)
+          return
+        }
       }
-    }
-    catch (error) {
-      console.log(error)
-      if (error.response.status === 402) {
-        setMsg("Plase Enter A Registration Number ")
-        console.log("Validation Error")
+      catch (error) {
+        console.log(error)
+        if (error.response.status === 402) {
+          setMsg("Plase Enter A Registration Number ")
+          console.log("Validation Error")
+        }
+        else if (error.response.status === 400) {
+          setnewCustomer(null)
+          console.log(error.response.data.message)
+          setMsg(error.response.data.messsage)
+          setErrorAlert(true)
+        }
+        else {
+          console.log("Internal Server Error")
+        }
       }
-      else if (error.response.status === 400) {
-        setnewCustomer(null)
-        console.log(error.response.data.message)
-        setMsg(error.response.data.messsage)
-        setErrorAlert(true)
-      }
-      else {
-      console.log("Internal Server Error")
-      }
+    } else {
+      setMsg("Please Enter A Valid Registration")
+      setErrorAlert(true)
     }
   };
 
@@ -138,7 +133,7 @@ export default function RemovalCS() {
 
     console.log(value); // Debugging: Check if value is correct
 
-    let updatedOptions = [...newCustomer.vas_options ]; // Copy the existing array
+    let updatedOptions = [...newCustomer.vas_options]; // Copy the existing array
 
     if (checked) {
       updatedOptions.push(value); // Add to array if checked
@@ -191,20 +186,20 @@ export default function RemovalCS() {
 
   const sendData = async (e) => {
     e.preventDefault();
-    const { id, customer_name, father_name, address, telephone, mobileno_1, mobileno_2, mobileno_3, ntn, cnic, primary_user,representative, primary_user_cnic, primary_user_con, secondary_user, relationship, secondary_user_con, insurance_partner, vas, vas_options, customer_email, emergency_pass, emergency_per, emergency_per_con, security_ques, security_ans, password, compaign_point_alo, renewal_charges, segment, Demo_duration, int_comission, ext_comission, discount } = newCustomer;
+    const { id, customer_name, father_name, address, telephone, mobileno_1, mobileno_2, mobileno_3, ntn, cnic, primary_user, representative, primary_user_cnic, primary_user_con, secondary_user, relationship, secondary_user_con, insurance_partner, vas, vas_options, customer_email, emergency_pass, emergency_per, emergency_per_con, security_ques, security_ans, password, compaign_point_alo, renewal_charges, segment, Demo_duration, int_comission, ext_comission, discount } = newCustomer;
     const vasOptionsString = JSON.stringify(newCustomer.vas_options).replace(/[\[\]"]+/g, '');
 
     // Include the converted string in the data you send to the backend
     const dataToSend = {
-    vas_options: vasOptionsString,
-    id, customer_name, father_name,representative, address, telephone, mobileno_1, mobileno_2, mobileno_3, ntn, cnic, primary_user, primary_user_cnic, primary_user_con, secondary_user, relationship, secondary_user_con, insurance_partner, vas, vas_options, customer_email, emergency_pass, emergency_per, emergency_per_con, security_ques, security_ans, password, compaign_point_alo, renewal_charges, segment, Demo_duration, int_comission, ext_comission, discount
+      vas_options: vasOptionsString,
+      id, customer_name, father_name, representative, address, mobileno_1, mobileno_2, mobileno_3, cnic,  secondary_user, relationship, secondary_user_con, insurance_partner, vas, vas_options, customer_email, emergency_pass, emergency_per, emergency_per_con, security_ques, security_ans, password, compaign_point_alo, renewal_charges, segment, Demo_duration, int_comission, ext_comission, discount
     };
 
 
-    if (id && customer_name && father_name && address && telephone && mobileno_1 && representative && mobileno_2 && mobileno_3 && ntn && cnic && primary_user && primary_user_cnic && primary_user_con && secondary_user && relationship && secondary_user_con && insurance_partner && vas && vas_options && customer_email && emergency_pass && emergency_per && emergency_per_con && security_ques && security_ans && password && compaign_point_alo && renewal_charges && segment  &&  int_comission && ext_comission && discount) {
+    if (id && customer_name && father_name && address  && mobileno_1 && representative  && cnic  && secondary_user && relationship && secondary_user_con && insurance_partner && vas && vas_options && customer_email && emergency_pass && emergency_per && emergency_per_con && security_ques && security_ans && password && compaign_point_alo && renewal_charges && segment && int_comission && ext_comission && discount) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/createrownership",
+          `${process.env.REACT_APP_BACKEND_URL}/createrownership`,
           dataToSend,
           {
             headers: {
@@ -220,7 +215,7 @@ export default function RemovalCS() {
           console.log("Request successful");
           setMsg('User Register Succfully')
           setSuccessAlert(true)
-        }  else {
+        } else {
           console.log("Please Try Again Later.");
         }
       } catch (error) {
@@ -228,7 +223,7 @@ export default function RemovalCS() {
           console.log("Error:", "User Already Registered With This Credentails", error);
           setErrorAlert(true)
           setMsg("User Already Registered With This Credentails");
-        } 
+        }
         else if (error.response.status === 402) {
           setErrorAlert(true)
           console.log(error)
@@ -249,7 +244,7 @@ export default function RemovalCS() {
   useEffect(() => {
     const emp_name = cookies.get('name');
     setEmpName(emp_name)
-}, [])
+  }, [])
   return (
     <>
       <div className='p-3'>
@@ -258,31 +253,31 @@ export default function RemovalCS() {
           <button className='theme_btn_md mx-4 rounded' onClick={getRemoavalData}>Search</button>
         </div>
         {successAlert && (
-        <div className="overlay">
-          <div className="popup">
-            <div className="alert alert-success" role="alert">
-              <div className="flex justify-end">
-                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+          <div className="overlay">
+            <div className="popup">
+              <div className="alert alert-success" role="alert">
+                <div className="flex justify-end">
+                  <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+                </div>
+                <h1 className="font-bold fs-4 my-2">Succes</h1>
+                {msg}
               </div>
-              <h1 className="font-bold fs-4 my-2">Succes</h1>
-              {msg}
             </div>
           </div>
-        </div>
-      )}
-      {errorAlert && (
-        <div className="overlay">
-          <div className="popup">
-            <div className="alert alert-danger" role="alert">
-              <div className="flex justify-end">
-                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+        )}
+        {errorAlert && (
+          <div className="overlay">
+            <div className="popup">
+              <div className="alert alert-danger" role="alert">
+                <div className="flex justify-end">
+                  <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+                </div>
+                <h1 className="font-bold fs-4 my-2">An Errro Occured</h1>
+                {msg}
               </div>
-              <h1 className="font-bold fs-4 my-2">An Errro Occured</h1>
-              {msg}
             </div>
           </div>
-        </div>
-      )}
+        )}
         <h1 className='text-lg font-bold bg-black text-white p-2 my-2'>User Details</h1>
         <div className='flex grid lg:grid-cols-2 gap-x-2 space-y-3 md:grid-co ls-1'>
           <div className=' flex flex-col justify-center space-y-3'>
@@ -292,20 +287,17 @@ export default function RemovalCS() {
             </div>
             <div className='flex justify-center'>
               <p className='text-start text-sm' style={{ width: "40%" }}> Customer Name :</p>
-              <input onChange={getUserData} className='ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.customer_name || ""}  name='customer_name'/>
+              <input onChange={getUserData} className='ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.customer_name || ""} name='customer_name' />
             </div>
             <div className='flex justify-center'>
               <p className='text-start text-sm' style={{ width: "40%" }}> Father Name: :</p>
-              <input onChange={getUserData} className='ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.father_name || ""} name='father_name'/>
+              <input onChange={getUserData} className='ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.father_name || ""} name='father_name' />
             </div>
             <div className='flex justify-center'>
-              <p className='text-start text-sm' style={{ width: "40%" }}> address :</p>
+              <p className='text-start text-sm' style={{ width: "40%" }}> Address :</p>
               <input onChange={getUserData} className='ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.address || ""} name="address" />
             </div>
-            <div className='flex justify-center'>
-              <p className='text-start text-sm' style={{ width: "40%" }}> Telephone Residence :</p>
-              <input onChange={getUserData} className='ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.telephone || ""} name="telephone" />
-            </div>
+
             <div className='flex justify-center'>
               <p className='text-start text-sm' style={{ width: "40%" }}> Mobile Number :</p>
               <input onChange={getUserData} className='ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.mobileno_1 || ""} name="mobileno_1" />
@@ -321,11 +313,10 @@ export default function RemovalCS() {
           </div >
           <div className='space-y-3'>
             <div className=' flex flex-col justify-center space-y-3'>
-              <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> NTN :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.ntn || ""} name="ntn" /> </div>
               <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> CNIC  :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.cnic || ""} name="cnic" /> </div>
-              <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User  :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.primary_user || ""} name="primary_user" /> </div>
+              {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User  :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.primary_user || ""} name="primary_user" /> </div>
               <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User CNIC :</p><input onChange={getUserData} type="number" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.primary_user_cnic || ""} name="primary_user_cnic" /> </div>
-              <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User Contact :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.primary_user_con || ""} name="primary_user_con" /> </div>
+              <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User Contact :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.primary_user_con || ""} name="primary_user_con" /> </div> */}
               <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Secondary User  :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.secondary_user || ""} name="secondary_user" /> </div>
               <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Relationship with Primary User :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.relationship || ""} name="relationship" /> </div>
               <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Secondary User Contact :</p><input onChange={getUserData} className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} value={newCustomer && newCustomer.secondary_user_con || ""} name="secondary_user_con" /> </div>
@@ -346,22 +337,22 @@ export default function RemovalCS() {
                   </div>
                 </div>
                 {showAdditionalFields && (
-                <div className='space-y-2'>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Location on Call :</p><input onChange={handleCheckboxChange} value="Location on Call" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Ignition On :</p><input onChange={handleCheckboxChange} value="Ignition On " type='checkbox' className=' ml-3 p-1 custum_input' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Ignition Off :</p><input onChange={handleCheckboxChange} value="Ignition Off" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Webtrack :</p><input onChange={handleCheckboxChange} value="Webtrack" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Geofence Alerts :</p><input onChange={handleCheckboxChange} value="Geofence Alerts" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Mobile App :</p><input onChange={handleCheckboxChange} value="Mobile App" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center mb-3'><p className='text-start text-sm' style={{ width: "40%" }}> Over Speed :</p><input onChange={handleCheckboxChange} value="Over Speed" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                </div>
+                  <div className='space-y-2'>
+                    <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Location on Call :</p><input onChange={handleCheckboxChange} value="Location on Call" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Ignition On :</p><input onChange={handleCheckboxChange} value="Ignition On " type='checkbox' className=' ml-3 p-1 custum_input' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Ignition Off :</p><input onChange={handleCheckboxChange} value="Ignition Off" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Webtrack :</p><input onChange={handleCheckboxChange} value="Webtrack" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Geofence Alerts :</p><input onChange={handleCheckboxChange} value="Geofence Alerts" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Mobile App :</p><input onChange={handleCheckboxChange} value="Mobile App" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                    <div className='flex justify-center mb-3'><p className='text-start text-sm' style={{ width: "40%" }}> Over Speed :</p><input onChange={handleCheckboxChange} value="Over Speed" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                  </div>
                 )}
               </div >
               {/* Payment Details  */}
               <div className=' flex flex-col justify-center space-y-3'>
                 <h1 className='text-lg font-bold bg-black text-white p-2'>Payment Details</h1>
                 <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Campaign Point Allocation :</p><input onChange={getUserData} name="compaign_point_alo" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.compaign_point_alo || ""} /> </div>
-                <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Renewal Charges :</p><input onChange={getUserData} name="renewal_charges" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }}  value={newCustomer && newCustomer.renewal_charges || ""}/> </div>
+                <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Renewal Charges :</p><input onChange={getUserData} name="renewal_charges" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} value={newCustomer && newCustomer.renewal_charges || ""} /> </div>
                 <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Segment :</p>
                   <div className=' ml-3 p-1 text-sm flex justify-start grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 space-x-1' style={{ width: "55%" }} >
                     <div className='flex'><input onChange={handleSegmentChange} type="radio" className='mr-2' name="segment" value="cash" />Cash </div>

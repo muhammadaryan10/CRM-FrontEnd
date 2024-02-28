@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import SuperAdminSidebar from '../../Components/SuperAdminSidebar';
 import { useEffect } from 'react';
 import axios from 'axios';
-  import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
 
 export default function AddEmployessSuperAdmin() {
@@ -12,7 +12,7 @@ export default function AddEmployessSuperAdmin() {
   const [id, setId] = useState();
   const [errorAlert, setErrorAlert] = useState(false);
   const [msg, setMsg] = useState("");
-  const [successAlert,setsuccessAlert]=useState(false)
+  const [successAlert, setsuccessAlert] = useState(false)
 
   const hideAlerts = () => {
     setsuccessAlert(false)
@@ -46,7 +46,7 @@ export default function AddEmployessSuperAdmin() {
   };
 
   const getRoles = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/roles");
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/roles`);
     const response = await res.json();
     console.log(response.data)
     setRoles(response.data)
@@ -59,7 +59,7 @@ export default function AddEmployessSuperAdmin() {
 
 
   const GetNewId = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/add_employees");
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/add_employ`);
     const response = await res.json();
     setId(response.Emp_id)
     console.log(id)
@@ -79,7 +79,7 @@ export default function AddEmployessSuperAdmin() {
     formDataToSend.append('image', image);
     formDataToSend.append('password', password);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/create_emp', formDataToSend);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/create_emp`, formDataToSend);
       if (response) {
         // Handle success
         setsuccessAlert(true)

@@ -12,7 +12,7 @@ export default function SuperAdminEditProfile() {
   
     const getData = async (e,empId) => {
       try {
-        const res = await axios.post("http://127.0.0.1:8000/api/viewprofile",
+        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/viewprofile`,
           { emp_id: empid },
           {
             headers: {

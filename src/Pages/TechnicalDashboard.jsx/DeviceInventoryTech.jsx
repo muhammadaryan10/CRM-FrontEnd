@@ -28,7 +28,7 @@ export default function DeviceInventoryTech() {
         if (device_serialno && imei_no && vendor  ) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/storeinventory",
+                    `${process.env.REACT_APP_BACKEND_URL}/storeinventory`,
                     newDevice,
                     {
                         headers: {

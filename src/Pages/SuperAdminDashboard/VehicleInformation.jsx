@@ -17,7 +17,7 @@ export default function VehicleInformation() {
         try {
             console.log('agaya hn ')
             console.log(reg_no)
-            const res = await fetch(`http://127.0.0.1:8000/api/edit/${reg_no}`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/edit/${reg_no}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -335,15 +335,15 @@ export default function VehicleInformation() {
                             <div className='p-2'>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Customer Briefing :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.form_status || "NOt Available"}</p>
+                                    <p className='text-sm  w-60'>{data && data.user.form_status || "Pending"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Technical Briefing :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.technical_status || "NOt Available"}</p>
+                                    <p className='text-sm  w-60'>{data && data.technical.technical_status || "Pending"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Security Briefing :</p>
-                                    <p className='text-sm  w-60'>{data && data.security.security_status || "NOt Available"}</p>
+                                    <p className='text-sm  w-60'>{data && data.security.security_status || "Pending"}</p>
                                 </div>
                             </div>
                         </div>

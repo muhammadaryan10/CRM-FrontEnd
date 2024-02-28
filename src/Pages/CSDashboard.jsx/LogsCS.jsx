@@ -24,7 +24,7 @@ export default function LogsCS() {
     const fetchData = async () => {
         try {
             console.log('agaya hn ')
-            const res = await axios.post('http://127.0.0.1:8000/api/search_for_all',
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/search_for_all`,
                 { search_term: searchTerm, }
             );
             // setErrorAlert(true)

@@ -20,13 +20,13 @@ export default function ComplainLogSuperAdmin({ data }) {
         Date: "",
         Time: "",
         remarks: "",
-        representative :"",
+        representative: "",
         last_location: "",
         em_loginid: "",
     });
     const [errorAlert, setErrorAlert] = useState(false);
     const [msg, setMsg] = useState("");
-    const [successAlert,setSuccessAlert]=useState(false)
+    const [successAlert, setSuccessAlert] = useState(false)
     const hideAlerts = () => {
         setSuccessAlert(false)
         setErrorAlert(false);
@@ -49,7 +49,7 @@ export default function ComplainLogSuperAdmin({ data }) {
         if (nature_of_complain, client_id, customer_name, reg_no, remarks) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/createcomplain",
+                    `${process.env.REACT_APP_BACKEND_URL}/createcomplain`,
                     complain,
                     {
                         headers: {
@@ -63,8 +63,8 @@ export default function ComplainLogSuperAdmin({ data }) {
 
                 if (response.status === 200) {
                     // console.log("Request successful");
-                   setMsg(response.data.messsage)
-                   setSuccessAlert(true)
+                    setMsg(response.data.messsage)
+                    setSuccessAlert(true)
                 } else {
                     setErrorAlert(true)
                     setMsg("Please Try Again Later.");
@@ -73,46 +73,46 @@ export default function ComplainLogSuperAdmin({ data }) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
                     setErrorAlert(true)
-                   setMsg("Data Not Found");
-                } 
+                    setMsg("Data Not Found");
+                }
                 else if (error.response.status === 402) {
                     setErrorAlert(true)
                     setMsg("Plesae Fill All the feilds")
-                 }else {
-                    // console.log("Internal Server Error", error);
+                } else {
+                    console.log("Internal Server Error", error);
                     setErrorAlert(true)
-                   setMsg("Internal Server Error")
+                    setMsg("Internal Server Error")
                 }
             }
         } else {
             setErrorAlert(true)
-           setMsg("Plesae Fill All the feilds")
+            setMsg("Plesae Fill All the feilds")
         }
     }
 
     const getResolvedBy = (complain) => {
         if (complain.actions && complain.actions.length > 0) {
-          return complain.actions[0].resolved_by;
+            return complain.actions[0].resolved_by;
         } else {
-          return 'Not Resolved'; 
+            return 'Not Resolved';
         }
-      };
-      
-      const getResolvedByDate = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-          return complain.actions[0].date;
-        } else {
-          return 'Not Resolved'; 
-        }
-      };
+    };
 
-      const getResolvedByTime = (complain) => {
+    const getResolvedByDate = (complain) => {
         if (complain.actions && complain.actions.length > 0) {
-          return complain.actions[0].time;
+            return complain.actions[0].date;
         } else {
-          return 'Not Resolved'; 
+            return 'Not Resolved';
         }
-      };
+    };
+
+    const getResolvedByTime = (complain) => {
+        if (complain.actions && complain.actions.length > 0) {
+            return complain.actions[0].time;
+        } else {
+            return 'Not Resolved';
+        }
+    };
 
     const columns = useMemo(
         () => [
@@ -160,33 +160,33 @@ export default function ComplainLogSuperAdmin({ data }) {
                 accessorKey: 'resolved_by',
                 header: 'Resolved By',
                 size: 100,
-                Cell: ({  row }) => (
+                Cell: ({ row }) => (
                     <p className='' >
-                    {getResolvedBy(row.original)}
-                  </p>
-                  
+                        {getResolvedBy(row.original)}
+                    </p>
+
                 ),
             },
             {
                 accessorKey: 'Date',
                 header: 'Resolved Date',
                 size: 100,
-                Cell: ({  row }) => (
+                Cell: ({ row }) => (
                     <p className='' >
-                    {getResolvedByDate(row.original)}
-                  </p>
-                  
+                        {getResolvedByDate(row.original)}
+                    </p>
+
                 ),
             },
             {
                 accessorKey: 'Time',
                 header: 'Resolved Time',
                 size: 100,
-                Cell: ({  row }) => (
+                Cell: ({ row }) => (
                     <p className='' >
-                    {getResolvedByTime(row.original)}
-                  </p>
-                  
+                        {getResolvedByTime(row.original)}
+                    </p>
+
                 ),
             },
             {
@@ -201,9 +201,10 @@ export default function ComplainLogSuperAdmin({ data }) {
     const OptionSelect = async (e) => {
         name = e.target.name
         value = e.target.value
-        setComplain({...complain,
-        nature_of_complain:value
-    })
+        setComplain({
+            ...complain,
+            nature_of_complain: value
+        })
         if (value === "N/R(no report)") {
             setAdditionalFields(true)
         } else {
@@ -242,7 +243,7 @@ export default function ComplainLogSuperAdmin({ data }) {
     useEffect(() => {
         if (data && data.complain.complains) {
             // console.log("New data received:", data.complain.complain);
-             setTableData(data.complain.complains);
+            setTableData(data.complain.complains);
         }
     }, [data]);
     useEffect(() => {
@@ -256,38 +257,38 @@ export default function ComplainLogSuperAdmin({ data }) {
             customer_name: data && data.data.user.customer_name,
             reg_no: data && data.data.user.registeration_no,
             em_loginid: loginID,
-            representative :empName
+            representative: empName
         });
     }, [complain])
 
     return (
         <div>
-            {successAlert && (  
-                    <div className="overlay">
-                        <div className="popup">
-                            <div className="alert alert-success" role="alert">
-                                <div className="flex justify-end">
-                                    <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
-                                </div>
-                                <h1 className="font-bold fs-4 my-2">Succes</h1>
-                                {msg}
+            {successAlert && (
+                <div className="overlay">
+                    <div className="popup">
+                        <div className="alert alert-success" role="alert">
+                            <div className="flex justify-end">
+                                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
                             </div>
+                            <h1 className="font-bold fs-4 my-2">Succes</h1>
+                            {msg}
                         </div>
                     </div>
-                )}
+                </div>
+            )}
             {errorAlert && (
-                    <div className="overlay">
-                        <div className="popup">
-                            <div className="alert alert-danger" role="alert">
-                                <div className="flex justify-end">
-                                    <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
-                                </div>
-                                <h1 className="font-bold fs-4 my-2">An Errro Occured</h1>
-                                {msg}
+                <div className="overlay">
+                    <div className="popup">
+                        <div className="alert alert-danger" role="alert">
+                            <div className="flex justify-end">
+                                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
                             </div>
+                            <h1 className="font-bold fs-4 my-2">An Errro Occured</h1>
+                            {msg}
                         </div>
                     </div>
-                )}
+                </div>
+            )}
             <div className='flex h-100 pt-0 mt-0'>
                 <div className='bg-gray-200 rounded-xl m-2 mt-0 pt-0 p-2 w-100'>
                     <div className='m-2 mt-0 p-2 bg-white'>

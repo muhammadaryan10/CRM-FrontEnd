@@ -12,9 +12,9 @@ const AddUserCS = () => {
     customer_name: "",
     father_name: "",
     address: "",
-    telephone_residence: "",
     mobileno_1: "",
-    ntn: "",
+    mobileno_2:"",
+    mobileno_3:"",
     cnic: "",
     seconadryuser_name: "",
     relationship: "",
@@ -28,12 +28,10 @@ const AddUserCS = () => {
     year: "",
     color: "",
     installation_loc: "",
-    date: "",
     campaign_point: "",
     dealership: "",
     dealer_name: "",
     sales_person: "",
-    conatct_person: "",
     insurance_partner: "",
     tracker_charges: "",
     date_of_installation: "",
@@ -42,9 +40,6 @@ const AddUserCS = () => {
     discount: "",
     remarks: "",
     renewal_charges: "",
-    primaryuser_name: "",
-    primaryuser_con1: "",
-    primaryuser_cnic: "",
     engine_type: "",
     transmission: "",
     vas: "",
@@ -71,6 +66,21 @@ const AddUserCS = () => {
   const getUserData = (e) => {
     name = e.target.name;
     value = e.target.value;
+
+    if (name === "registeration_no") {
+      // Convert the value to uppercase
+      const uppercaseValue = value.toUpperCase();
+  
+      // Update the state with the uppercase value
+      setnewCustomer({
+        ...newCustomer,
+        representative: userName,
+        [name]: uppercaseValue
+      });
+      return
+    }
+
+
     setnewCustomer({
       ...newCustomer,
       representative: userName,
@@ -139,7 +149,7 @@ const AddUserCS = () => {
   };
 
   const GetNewId = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/user");
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user`);
     const response = await res.json();
     console.log(response)
     setnewCustomer((prevCustomer) => ({
@@ -173,7 +183,7 @@ const AddUserCS = () => {
 
   const sendData = async (e) => {
     e.preventDefault();
-    const { id, customer_name, father_name, address, telephone_residence, mobileno_1, remarks, ntn, cnic, seconadryuser_name, relationship, secondaryuser_con1, registeration_no, engine_no, chasis_no, CC, make, model, year, color, installation_loc, date, campaign_point, dealership, dealer_name, sales_person, conatct_person, insurance_partner, tracker_charges, date_of_installation, int_comission, ext_comission, discount, renewal_charges, primaryuser_name, primaryuser_con1, primaryuser_cnic, engine_type, transmission, vas, vas_options, segment, demo_duration, representative } = newCustomer;
+    const { id, customer_name,mobileno_2,mobileno_3, father_name, address, mobileno_1, remarks, cnic, seconadryuser_name, relationship, secondaryuser_con1, registeration_no, engine_no, chasis_no, CC, make, model, year, color, installation_loc, date, campaign_point, dealership, dealer_name, sales_person, conatct_person, insurance_partner, tracker_charges, date_of_installation, int_comission, ext_comission, discount, renewal_charges,  engine_type, transmission, vas, vas_options, segment, demo_duration, representative } = newCustomer;
     const vasOptionsString = JSON.stringify(newCustomer.vas_options).replace(/[\[\]"]+/g, '');
 
     // Include the converted string in the data you send to the backend
@@ -182,14 +192,14 @@ const AddUserCS = () => {
       vas_options: vasOptionsString,
       customer_name,
       representative,
-      father_name, address, telephone_residence, mobileno_1, remarks, ntn, cnic, seconadryuser_name, relationship, secondaryuser_con1, registeration_no, engine_no, chasis_no, CC, make, model, year, color, installation_loc, date, campaign_point, dealership, dealer_name, sales_person, conatct_person, insurance_partner, tracker_charges, date_of_installation, int_comission, ext_comission, discount, renewal_charges, primaryuser_name, primaryuser_con1, primaryuser_cnic, engine_type, transmission, vas, segment, demo_duration
+      father_name, address,  mobileno_1,mobileno_2,mobileno_3, remarks, cnic, seconadryuser_name, relationship, secondaryuser_con1, registeration_no, engine_no, chasis_no, CC, make, model, year, color, installation_loc, date, campaign_point, dealership, dealer_name, sales_person, conatct_person, insurance_partner, tracker_charges, date_of_installation, int_comission, ext_comission, discount, renewal_charges,  engine_type, transmission, vas, segment, demo_duration
     };
 
 
-    if (customer_name && father_name && address && mobileno_1  && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc  && remarks && campaign_point && dealership && dealer_name && sales_person  && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
+    if (customer_name && father_name && address && mobileno_1 && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && remarks && campaign_point && dealership && dealer_name && sales_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/storedata",
+          `${process.env.REACT_APP_BACKEND_URL}/storedata`,
           dataToSend,
           {
             headers: {
@@ -209,17 +219,27 @@ const AddUserCS = () => {
           setErrorAlert(true)
           setMsg("validations Fail")
         } else {
+
           console.log("Please Try Again Later.");
         }
       } catch (error) {
-        if (error.response.status === 422) {
-          console.log("Error:", "User Already Registered With This Credentails", error);
-          setErrorAlert(true)
-          setMsg("User Already Registered With This Credentails");
-        } else if (error.response.status === 500) {
+        if (error.response.status === 400) {
+          console.log("Error:", "User Already Registered With This Credentials", error);
+          setErrorAlert(true);
+          let errorMessage = "";
+          for (const key in error.response.data.message) {
+            errorMessage += ` ${error.response.data.message[key].join(", ")}\n`;
+          }
+          setMsg(errorMessage);
+        }
+             
+         else if (error.response.status === 500) {
           console.log("Internal Server Error", error);
           setErrorAlert(true)
           setMsg("Internal Server Error")
+        }
+        else {
+          console.log(error)
         }
       }
     } else {
@@ -277,9 +297,9 @@ const AddUserCS = () => {
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Customer Name :</p><input onChange={getUserData} name="customer_name" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Father Name:</p><input onChange={getUserData} name="father_name" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Address :</p><input onChange={getUserData} name="address" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Mobile Number :</p><input onChange={getUserData} name="mobileno_1" type='number' className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> 2 Mobile Number :</p><input onChange={getUserData} name="mobileno_2" type='number' className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> 3 Mobile Number :</p><input onChange={getUserData} name="mobileno_3" type='number' className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Mobile Number :</p><input onChange={getUserData} name="mobileno_1" type='number' className=' ml-3 p-1 custum_input no-spinners ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> 2 Mobile Number :</p><input onChange={getUserData} name="mobileno_2" type='number' className=' ml-3 p-1 custum_input no-spinners ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> 3 Mobile Number :</p><input onChange={getUserData} name="mobileno_3" type='number' className=' ml-3 p-1 custum_input  no-spinners' style={{ width: "55%" }} /> </div>
               {/* <div className="flex items-center space-x-2">
                             <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Telephone Residence :</p><input onChange={getUserData} name="telephone_residence" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
 
@@ -319,34 +339,47 @@ const AddUserCS = () => {
                   </div>
                 ))}
               </div> */}
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> CNIC :</p><input onChange={getUserData} name="cnic" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> CNIC :</p><input onChange={getUserData} name="cnic" className=' ml-3 p-1 custum_input no-spinners ' style={{ width: "55%" }} /> </div>
               {/* <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Primary  User :</p><input onChange={getUserData} name="primaryuser_name" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div> */}
               {/* <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User CNIC :</p><input onChange={getUserData} name="primaryuser_cnic" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div> */}
               {/* <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Primary User Contact:</p><input onChange={getUserData} name="primaryuser_con1" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div> */}
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Secondary User :</p><input onChange={getUserData} name="seconadryuser_name" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Relationship with Primary  User :</p><input onChange={getUserData} name="relationship" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Secondary User Contact:</p><input onChange={getUserData} name="secondaryuser_con1" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Secondary User Contact:</p><input onChange={getUserData} name="secondaryuser_con1" type='number' className=' ml-3 p-1 custum_input no-spinners' style={{ width: "55%" }} /> </div>
             </div >
             <div className='space-y-3'>
               <div className=' flex flex-col justify-center space-y-3'>
                 <h1 className='text-lg font-bold bg-black text-white p-2'>Vehicle Details</h1>
-                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Registration Number :</p><input onChange={getUserData} name="registeration_no" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Number :</p><input onChange={getUserData} name="engine_no" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Chassis Number :</p><input onChange={getUserData} name="chasis_no" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Registration Number :</p><input onChange={getUserData} name="registeration_no" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Number :</p><input onChange={getUserData} name="engine_no" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Chassis Number :</p><input onChange={getUserData} name="chasis_no" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> CC :</p><input onChange={getUserData} name="CC" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Make :</p><input onChange={getUserData} name="make" type="text" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Model :</p><input onChange={getUserData} name="model" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Year :</p><input onChange={getUserData} name="year" type='number' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Year :</p><input onChange={getUserData} name="year" type='number' className=' ml-3 p-1 custum_input no-spinners' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Color  :</p><input onChange={getUserData} name="color" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Type  :</p><input onChange={getUserData} name="engine_type" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Type  :</p>
+                  {/* <input onChange={getUserData} name="engine_type" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} />  */}
+                  <select className='input-field  ml-4 p-1  border bg-white' name='engine_type' onChange={getUserData} style={{ width: "55%" }} aria-label=".form-select-lg example">
+                    <option value="">Select Engine Type </option>
+                    <option value="Petrol">Petrol </option>
+                    <option value="Diesel">Diesel </option>
+                    <option value="Hybrid">Hybrid</option>
+                  </select>
+                </div>
                 <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Transmission :</p>
-                <input onChange={getUserData} name="transmission" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} />
-                 </div>
+                  {/* <input onChange={getUserData} name="transmission" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> */}
+                  <select className='input-field  ml-4 p-1  border bg-white' name='transmission' onChange={getUserData} style={{ width: "55%" }} aria-label=".form-select-lg example">
+                    <option value="">Select Transmission </option>
+                    <option value="Auto">Auto </option>
+                    <option value="Manual">Manual </option>
+                  </select>
+                </div>
                 {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Date :</p><input onChange={getUserData} name="date" type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div> */}
               </div>
             </div>
             {/* Product Details  */}
-            <div className=' flex flex-col justify-center space-y-3'>
+            <div className=' flex flex-col justify-center space-y-3 mt-4'>
               <h1 className='text-lg font-bold bg-black text-white p-2'>Product Details</h1>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Insurance Partner :</p><input onChange={getUserData} name="insurance_partner" className=' ml-3 p-1 custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>VAS :</p>
@@ -361,7 +394,6 @@ const AddUserCS = () => {
               </div>
               {showAdditionalFields && (
                 <div className='space-y-2'>
-                  <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Location on Call :</p><input onChange={handleCheckboxChange} value="Location on Call" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                   <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Ignition On :</p><input onChange={handleCheckboxChange} value="Ignition On " type='checkbox' className=' ml-3 p-1 custum_input' style={{ width: "55%" }} /> </div>
                   <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Ignition Off :</p><input onChange={handleCheckboxChange} value="Ignition Off" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>
                   <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}> Webtrack :</p><input onChange={handleCheckboxChange} value="Webtrack" type='checkbox' className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> </div>

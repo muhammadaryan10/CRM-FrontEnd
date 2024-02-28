@@ -26,7 +26,7 @@ export default function ComplainResolveTech() {
         try {
 
             console.log(complain_id)
-            const res = await fetch(`http://127.0.0.1:8000/api/complain_resolve/${complain_id}`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/complain_resolve/${complain_id}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -59,7 +59,7 @@ export default function ComplainResolveTech() {
             try {
                 console.log(userName)
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/create_resolve_complain",
+                    `${process.env.REACT_APP_BACKEND_URL}/create_resolve_complain`,
                     resolvedComplains,
                     {
                         headers: {

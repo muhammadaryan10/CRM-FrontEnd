@@ -51,7 +51,7 @@ export default function RedoFormTech() {
       //   return alert("Errro")
       // }
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/redo_search",
+        `${process.env.REACT_APP_BACKEND_URL}/redo_search`,
         { search_term }
       );
       if (response.status === 200) {
@@ -121,7 +121,7 @@ export default function RedoFormTech() {
       const emp_name = cookies.get('name');
       setEmpName(emp_name)
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/create_redo",
+        `${process.env.REACT_APP_BACKEND_URL}/create_redo`,
         createRedo 
       );
       if (response.status === 200) {
@@ -215,8 +215,8 @@ export default function RedoFormTech() {
           <div className=' flex flex-col justify-center space-y-3'>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Number :</p><input onChange={getUserdata} name="eng_no" className=' ml-3 custum_input p-1 ' style={{ width: "55%" }}  value={createRedo && createRedo.eng_no} readOnly/> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Chassis Number :</p><input onChange={getUserdata} name="chasis_no" className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} value={createRedo && createRedo.chasis_no} readOnly /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Install Location :</p><input onChange={getUserdata} name="install_loc" className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Install Date :</p><input type="date" name='install_date' className=' ml-3 p-1 ' style={{ width: "55%" }} value={createRedo && createRedo.install_date} readOnly /> </div>
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Redo Location :</p><input onChange={getUserdata} name="install_loc" className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Redo  Date :</p><input type="date" name='install_date' className=' ml-3 p-1 ' style={{ width: "55%" }} value={createRedo && createRedo.install_date} onChange={getUserdata} /> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Remarks :</p><input onChange={getUserdata} name="remarks" className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
           </div>
         </div>

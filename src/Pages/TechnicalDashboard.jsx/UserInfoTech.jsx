@@ -49,7 +49,7 @@ export default function UserInfoCS() {
                         <h1 className='text-xl font-semibold bg-black text-white p-2'>Cleint Information</h1>
                         <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-2'>
                             <div>
-                                <h1 className='bg-gray-200 p-2 text-md font-bold my-2 mr-4 underline'> Primary User Information</h1>
+                                <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Primary User Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Customer Name:</p>
                                     <p className='text-sm  w-60 '>{data && data.user.customer_name || "NOT Available"}</p>
@@ -64,7 +64,7 @@ export default function UserInfoCS() {
                                 </div>
                             </div>
                             <div>
-                                <h1 className='bg-gray-200 p-2 text-md font-bold my-2 mr-4 underline'> Contact Information</h1>
+                                <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Contact Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Contact 1</p>
                                     <p className='text-sm  w-60'>{data && data.user.mobileno_1 || "NOt Available"}</p>
@@ -83,7 +83,7 @@ export default function UserInfoCS() {
                                 </div>
                             </div>
                             <div>
-                                <h1 className='bg-gray-200 text-md font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
+                                <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Customer Email:</p>
                                     <p className='text-sm  w-60'>{data && data.technical.security || "NOt Available"}</p>
@@ -155,7 +155,7 @@ export default function UserInfoCS() {
                             </div>
                         </div>
                         {/* Organiztion Detail */}
-                        <div className='bg-white mt-3 border border-gray-600'>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Oragnization Detail</h1>
                             <div className='p-2'>
                                 <div className='flex'>
@@ -179,7 +179,7 @@ export default function UserInfoCS() {
                                     <p className='text-sm  w-60'>{data && data.technical.hh || "NOt Available"}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Technical Information  */}
                         <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Technical Information</h1>

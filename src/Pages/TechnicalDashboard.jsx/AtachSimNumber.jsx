@@ -19,7 +19,7 @@ export default function AtachSimNumber() {
         if (deviceTerm.trim() !== "") {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/get_device_no",
+                    `${process.env.REACT_APP_BACKEND_URL}/get_device_no`,
                     { search_term: deviceTerm },
                     {
                         headers: {
@@ -67,7 +67,7 @@ export default function AtachSimNumber() {
         if (simTerm.trim() !== "") {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/get_sim_no",
+                    `${process.env.REACT_APP_BACKEND_URL}/get_sim_no`,
                     { search_term: simTerm },
                     {
                         headers: {
@@ -119,7 +119,7 @@ export default function AtachSimNumber() {
         if (device_serialno && sim_no && representative ) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/create_merge_inventory",
+                    `${process.env.REACT_APP_BACKEND_URL}/create_merge_inventory`,
                     Attach,
                     {
                         headers: {

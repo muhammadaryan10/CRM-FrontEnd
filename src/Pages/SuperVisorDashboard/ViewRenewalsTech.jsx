@@ -25,7 +25,7 @@ export default function ViewRenewalsTech() {
     const getUserInfo = async () => {
         try {
             console.log(reg_no)
-            const res = await fetch(`http://127.0.0.1:8000/api/renewals_info/${reg_no}`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/renewals_info/${reg_no}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -41,7 +41,7 @@ export default function ViewRenewalsTech() {
         try {
             if (data && data.renewal_id) {
                 const id = data.renewal_id;
-                const res = await fetch(`http://127.0.0.1:8000/api/get_renewal_remarks/${id}`);
+                const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/get_renewal_remarks/${id}`);
                 if (!res.ok) {
                     throw new Error(`Failed to fetch data. Status: ${res}`);
                 }

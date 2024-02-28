@@ -29,7 +29,7 @@ export default function UpdateProfile({ data }) {
         console.log(updateEmp)
         if (updateEmp.new_password === ConfrimPassword) {
             try {
-                const res = await axios.post("http://127.0.0.1:8000/api/edit_emp",
+                const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/edit_emp`,
                     updateEmp,
                     {
                         headers: {

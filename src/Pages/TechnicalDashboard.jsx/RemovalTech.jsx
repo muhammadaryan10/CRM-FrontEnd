@@ -15,7 +15,7 @@ const RemovalTech = () => {
 
   const fetchData = async () => {
     try {
-        const res = await fetch("http://127.0.0.1:8000/api/all_removal_info");
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/all_removal_info`);
         if (!res.ok) {
             throw new Error(`Failed to fetch data. Status: ${res}`);
         }

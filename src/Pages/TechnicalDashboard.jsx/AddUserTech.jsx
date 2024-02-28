@@ -8,6 +8,7 @@ export default function AddUserTech() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const { reg_no } = useParams();
+    const [ secondDevice,setSecondDevice]=useState(false)
     const [selectedDeviceId, setSelectedDeviceId] = useState("");
     const [isListOpen, setIsListOpen] = useState(false);
 
@@ -39,7 +40,6 @@ export default function AddUserTech() {
 
     })
 
-
     const [empName, setEmpName] = useState("")
     const [vas, setVas] = useState();
     const cookies = new Cookies();
@@ -56,7 +56,7 @@ export default function AddUserTech() {
         const { name, value } = e.target;
         setCustomer({ ...customer, [name]: value });
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/getdevices",
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/getdevices`,
                 { search_term: value },
                 {
                     headers: {
@@ -85,7 +85,7 @@ export default function AddUserTech() {
     const getUserInfo = async () => {
         try {
             console.log(reg_no)
-            const res = await fetch(`http://127.0.0.1:8000/api/tech_reg/${reg_no}`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/tech_reg/${reg_no}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -144,7 +144,7 @@ export default function AddUserTech() {
         if (client_code, vendor_name, IMEI_no, Gsm_no, Tavl_mang_id, device_id, technician_name, sim, Gps_check, mobilizer, operational_status, webtrack_id, webtrack_pass) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/technical_create",
+                    `${process.env.REACT_APP_BACKEND_URL}/technical_create`,
                     customer,
                     {
                         headers: {
@@ -206,7 +206,7 @@ export default function AddUserTech() {
                         <div className=' flex flex-col justify-center'>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Customer Id :</p><input onChange={getUserData} className=' ml-3 custum_input p-1 ' value={customer.client_code} style={{ width: "55%" }} readOnly /> </div>
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Vender:</p><input onChange={getUserData} name='vendor_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
-                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input value={customer.device_id} onChange={getDeviceData} name='device_id' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
+                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Device ID :</p><input value={customer.device_id} onChange={getDeviceData} name='device_id' className=' ml-3 custum_input p-1 position-relative ' style={{ width: "55%" }} /> </div>
                             {isListOpen && (
                                 <div className='flex justify-end my-2'>
                                     <div className='flex flex-col justify-center items-center shadow px-5 space-y-2 my-2'>
@@ -218,6 +218,7 @@ export default function AddUserTech() {
                                     </div>
                                 </div>
                             )}
+                            <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Add Another Device :</p><button onClick={(e)=> setSecondDevice(true)} className='btn btn-primary mx-2'>+</button> { secondDevice && ( <> <button onClick={(e)=> setSecondDevice(false)} className='btn btn-danger'>-</button> <input onChange={getUserData} name='technician_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </> )} </div>
                             {/* <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input onChange={getUserData} name='IMEI_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div> */}
                             {/* <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%"    }}> GSM Number :</p><input onChange={getUserData} name='Gsm_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div> */}
                             <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> Designated Technician:</p><input onChange={getUserData} name='technician_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>

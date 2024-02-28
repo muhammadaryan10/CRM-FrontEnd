@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 export default function Login() {
   const navigate = useNavigate();
 
-  
+  const BaseUrl = process.env.REACT_APP_BACKEND_URL;
 
   const [user, setUser] = useState({
     login_Id: "",
@@ -37,7 +37,7 @@ export default function Login() {
     if (login_Id && password) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/empLogin",
+          `${BaseUrl}empLogin`,
           { em_loginid: login_Id, password },
           { withCredentials: true } // Include credentials (cookies)
         );

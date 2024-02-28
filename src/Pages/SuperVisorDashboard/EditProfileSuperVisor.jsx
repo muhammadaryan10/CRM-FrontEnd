@@ -11,7 +11,7 @@ export default function EditProfileSuperVisor() {
 
   const getData = async (e,empId) => {
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/view_update",
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/view_update`,
         { emp_id: empid },
         {
           headers: {

@@ -28,7 +28,7 @@ export default function SimInventory() {
         if (  icc_id && provider && status) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/create_sim_inventtory",
+                    `${process.env.REACT_APP_BACKEND_URL}/create_sim_inventtory`,
                     newSim,
                     {
                         headers: {

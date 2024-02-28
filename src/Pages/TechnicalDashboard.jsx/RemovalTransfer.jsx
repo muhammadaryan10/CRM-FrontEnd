@@ -57,7 +57,7 @@ export default function RemowalTransfer() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/removalate",
+        `${process.env.REACT_APP_BACKEND_URL}/removalate`,
         { search_term: search_term }
       );
       if (response.status == 200) {
@@ -69,7 +69,7 @@ export default function RemowalTransfer() {
         setRemoval({
           ...removal,
           client_id: response.data.user.id,
-          old_reg: response.data.user.customer_name,
+          old_reg: response.data.user.registeration_no,
           old_chasis: response.data.user.chasis_no,
           old_eng: response.data.user.engine_no,
           old_make: response.data.user.make,
@@ -133,7 +133,7 @@ export default function RemowalTransfer() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/create_removal_transfer",
+        `${process.env.REACT_APP_BACKEND_URL}/create_removal_transfer`,
         removal,
         {
           headers: {
@@ -186,14 +186,14 @@ export default function RemowalTransfer() {
             <p className='text-start text-sm' style={{ width: "40%" }}> Customer Name  :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal.customer_name} readOnly />
           </div>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Old Contact Number :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} onChange={getUserdata} value={removal.old_mob} name="mobileno_1" readOnly />
-          </div>
-          <div className='flex justify-center'>
-            <p className='text-start text-sm' style={{ width: "40%" }}> New Contact Number :</p>
+          </div> */}
+          {/* <div className='flex justify-center'>
+            <p className='text-start text-sm' style={{ width: "40%" }}>  Contact Number :</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_mob" />
-          </div>
+          </div> */}
           <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Old Registration Number:</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} onChange={getUserdata} value={removal.old_reg} name="registeration_no" readOnly />
@@ -202,57 +202,57 @@ export default function RemowalTransfer() {
             <p className='text-start text-sm' style={{ width: "40%" }}> New Registration Number:</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_reg" />
           </div>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}>  Old Make :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_make} readOnly />
-          </div>
+          </div> */}
           <div className='flex justify-center'>
-            <p className='text-start text-sm' style={{ width: "40%" }}> New Make  :</p>
+            <p className='text-start text-sm' style={{ width: "40%" }}>  Make  :</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} name='new_make' onChange={getUserdata} />
           </div>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Old Model :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_model} readOnly />
-          </div>
+          </div> */}
           <div className='flex justify-center'>
-            <p className='text-start text-sm' style={{ width: "40%" }}> New Model :</p>
+            <p className='text-start text-sm' style={{ width: "40%" }}>  Model :</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} name='new_model' onChange={getUserdata} />
           </div>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Old Year :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed  ' style={{ width: "55%" }} value={removal && removal.old_year}  readOnly/>
-          </div>
+          </div> */}
           <div className='flex justify-center'>
-            <p className='text-start text-sm' style={{ width: "40%" }}> New Year :</p>
+            <p className='text-start text-sm' style={{ width: "40%" }}>  Year :</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} name='new_year' onChange={getUserdata} />
           </div>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Old  Color :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_color} readOnly />
-          </div>
+          </div> */}
           <div className='flex justify-center'>
-            <p className='text-start text-sm' style={{ width: "40%" }}> New Color :</p>
+            <p className='text-start text-sm' style={{ width: "40%" }}>  Color :</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} name='new_color' onChange={getUserdata} />
           </div>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Old Device :</p>
             <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal && removal.old_device} readOnly />
-          </div>
+          </div> */}
           <div className='flex justify-center'>
-            <p className='text-start text-sm' style={{ width: "40%" }}> New Device :</p>
+            <p className='text-start text-sm' style={{ width: "40%" }}>  Device :</p>
             <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} value={removal && removal.new_device} name='new_device' onChange={getUserdata} />
           </div>
         </div >
         <div className='space-y-3'>
           <div className=' flex flex-col justify-center space-y-3'>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Engine Number :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_eng} readOnly /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> New Engine Number :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} onChange={getUserdata} name="new_eng" /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Chassis Number :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_chasis} onChange={getUserdata} name="chasis_no" readOnly /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Transmision :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_trans} onChange={getUserdata} name="chasis_no" readOnly /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> New Transmision :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_trans" /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> New Chassis Number :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_chasis" /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old cc :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_cc} onChange={getUserdata} name="chasis_no" readOnly /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> New cc :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_cc" /> </div>
+            {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Engine Number :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_eng} readOnly /> </div> */}
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Engine Number :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} onChange={getUserdata} name="new_eng" /> </div>
+            {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Chassis Number :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_chasis} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
+            {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Transmision :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_trans} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Transmision :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_trans" /> </div>
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Chassis Number :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_chasis" /> </div>
+            {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old cc :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_cc} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  cc :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_cc" /> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Installation Date :</p><input type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_inst_date" /> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Remarks :</p><input className=' ml-3 p-1 ' style={{ width: "55%" }} value={removal.remarks} onChange={getUserdata} name="remarks" /> </div>
           </div>

@@ -35,7 +35,7 @@ export default function EditEmployeSuperAdmin() {
         e.preventDefault()
         try {
             console.log('agaya hn ')
-            const res = await axios.post('http://127.0.0.1:8000/api/view_update',
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/view_update`,
                 { login_id: search_term, }
             );
             console.log(res)
@@ -77,7 +77,7 @@ export default function EditEmployeSuperAdmin() {
     };
 
     const getRoles = async () => {
-        const res = await fetch("http://127.0.0.1:8000/api/roles");
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/roles`);
         const response = await res.json();
         console.log(response.data)
         setRoles(response.data)
@@ -87,7 +87,7 @@ export default function EditEmployeSuperAdmin() {
         e.preventDefault()
         try {
             console.log('agaya hn ')
-            const res = await axios.post('http://127.0.0.1:8000/api/create_update_emp',
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/create_update_emp`,
                 user
             );
             console.log(res)

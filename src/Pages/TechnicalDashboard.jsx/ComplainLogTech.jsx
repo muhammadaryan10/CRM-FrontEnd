@@ -20,7 +20,7 @@ const ComplainLogTech = () => {
     
     const fetchData = async () => {
         try {
-            const res = await fetch("http://127.0.0.1:8000/api/allcomplain");
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/allcomplain`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -38,7 +38,7 @@ const ComplainLogTech = () => {
         if (complain.actions && complain.actions.length > 0) {
           return complain.actions[0].resolved_by;
         } else {
-          return 'Not Resolved'; 
+          return 'Pending'; 
         }
       };
       
@@ -46,7 +46,7 @@ const ComplainLogTech = () => {
         if (complain.actions && complain.actions.length > 0) {
           return complain.actions[0].date;
         } else {
-          return 'Not Resolved'; 
+          return 'Pending'; 
         }
       };
 
@@ -54,7 +54,7 @@ const ComplainLogTech = () => {
         if (complain.actions && complain.actions.length > 0) {
           return complain.actions[0].time;
         } else {
-          return 'Not Resolved'; 
+          return 'Pending'; 
         }
       };
     const columns = useMemo(

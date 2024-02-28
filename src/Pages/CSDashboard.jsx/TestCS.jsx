@@ -24,7 +24,7 @@ const TestCS = () =>{
         if (chasis_no && eng_no && reg_no) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/test_api",
+                    `${process.env.REACT_APP_BACKEND_URL}/test_api`,
                     newCustomer, // send newCustomer directly as the request body
                     {
                         headers: {

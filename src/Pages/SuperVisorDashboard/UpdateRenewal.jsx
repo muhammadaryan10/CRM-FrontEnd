@@ -24,7 +24,7 @@ export default function AddPayment() {
     const getUserInfo = async () => {
         try {
             console.log(reg_no)
-            const res = await fetch(`http://127.0.0.1:8000/api/renewals_info/${reg_no}`);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/renewals_info/${reg_no}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -53,7 +53,7 @@ export default function AddPayment() {
         if ( status, renewal_id) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/update_status_renewal",
+                    `${process.env.REACT_APP_BACKEND_URL}/update_status_renewal`,
                     addPayment,
                     {
                         headers: {

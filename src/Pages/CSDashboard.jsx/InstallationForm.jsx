@@ -24,7 +24,7 @@ export default function InstallationForm() {
       try {
         console.log(search_term)
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/device_certificate",
+          `${process.env.REACT_APP_BACKEND_URL}/device_certificate`,
           { search_term: search_term },
           {
             headers: {

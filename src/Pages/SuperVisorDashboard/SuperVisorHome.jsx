@@ -36,7 +36,7 @@ export default function SuperVisorHome() {
 
   const getNewInstallation = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/alert_security");
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/alert_security`);
       if (!res.ok) {
         throw new Error(`Failed to fetch data. Status: ${res}`);
       }
@@ -52,7 +52,7 @@ export default function SuperVisorHome() {
 
   const getComplains = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/complain_queue");
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/complain_queue`);
       if (!res.ok) {
         throw new Error(`Failed to fetch data. Status: ${res}`);
       }

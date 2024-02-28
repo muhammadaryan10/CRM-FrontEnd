@@ -40,7 +40,7 @@ export default function RemowalFromTech() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/removal_search",
+        `${process.env.REACT_APP_BACKEND_URL}/removal_search`,
         { search_term: search_term }
       );
       if (response.status == 200) {
@@ -109,7 +109,7 @@ export default function RemowalFromTech() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/createremoval",
+        `${process.env.REACT_APP_BACKEND_URL}/createremoval`,
         removal,
         {
           headers: {

@@ -19,7 +19,7 @@ const AllUserSuperVisor = () => {
 
     const fetchData = async () => {
         try {
-            const res = await fetch("http://127.0.0.1:8000/api/completedetails");
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/completedetails`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }

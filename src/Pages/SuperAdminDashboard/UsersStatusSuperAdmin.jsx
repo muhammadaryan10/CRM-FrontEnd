@@ -59,7 +59,7 @@ const UsersStatusSuperAdmin = () => {
   const [ data,setData]=useState([])
   const fetchData = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/active_inactive");
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/active_inactive`);
       if (!res.ok) {
         throw new Error(`Failed to fetch data. Status: ${res}`);
       }

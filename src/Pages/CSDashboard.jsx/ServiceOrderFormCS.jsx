@@ -24,7 +24,7 @@ export default function ServiceOrderFormCS() {
       try {
         console.log(search_term)
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/service_order_form",
+          `${process.env.REACT_APP_BACKEND_URL}/service_order_form`,
           { search_term: search_term },
           {
             headers: {

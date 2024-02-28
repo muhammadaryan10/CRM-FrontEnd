@@ -17,7 +17,7 @@ const AllEmployeesSuperAdmin = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/allemp");
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/allemp`);
       if (!res.ok) {
         throw new Error(`Failed to fetch data. Status: ${res}`);
       }
