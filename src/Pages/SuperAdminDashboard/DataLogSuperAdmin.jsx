@@ -10,7 +10,7 @@ import axios from 'axios';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function DataLogSuperAdmin({ data }) {
+export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
   const [createLog, setCreateLog] = useState({
     client_id: "",
     customer_name: "",
@@ -63,6 +63,7 @@ export default function DataLogSuperAdmin({ data }) {
           // console.log("Request successful");
           setMsg('Data Added  Successfully')
           setSuccessAlert(true)
+          onFetchDataSuccess()
         }  else {
           setMsg("Please Try Again Later")
           setErrorAlert(true)
@@ -89,6 +90,8 @@ export default function DataLogSuperAdmin({ data }) {
     }
   }
 
+  
+
 
   useEffect(() => {
     const loginID = cookies.get('em_loginid');
@@ -101,7 +104,7 @@ export default function DataLogSuperAdmin({ data }) {
       client_id: data && data && data.data.user.id,
       customer_name: data && data.data.user.customer_name,
       reg_no: data && data.data.user.registeration_no,
-      em_loginid: loginID,
+      // em_loginid: loginID,
       representative: empName
     });
   }, [data]);
@@ -151,7 +154,7 @@ export default function DataLogSuperAdmin({ data }) {
                 </select>
                 </div>
                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.customer_name || " "} name='customer_name' readOnly /> </div>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='bg-gray-200  ml-4 p-1 ' type='number' style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='number' style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Person</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} onChange={getUserData} name='contact_person' /> </div>
                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.registeration_no || " "} name='' readOnly /> </div>
               </div >

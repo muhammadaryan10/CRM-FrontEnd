@@ -104,6 +104,8 @@ const DataLogSuperVisor = () => {
   }
   });
 
+  
+
   useEffect(() => {
     fetchData();
 }, []);

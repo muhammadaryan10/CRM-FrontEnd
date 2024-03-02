@@ -73,7 +73,9 @@ export default function ComplainResolveTech() {
                 if (response.status === 200) {
                     console.log("Request successful");
                     toast.success('Complain Resolved Succfully')
-                    //    navigate("/superAdmin");
+                    setTimeout(() => {
+                        navigate('/tech'); 
+                    }, 500);
                 }
             } catch (error) {
                 if (error.response.status === 400) {

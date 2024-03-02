@@ -82,8 +82,12 @@ export default function CROLogs() {
     };
 
     useEffect(() => {
-        Authentication()
+        // Authentication()
     }, []);
+
+    const handleFetchDataSuccess = () => {
+        fetchData(); // Call the fetchData function
+    }
 
     return (
         <div>
@@ -125,10 +129,10 @@ export default function CROLogs() {
                     <button className={`mr-1 text-xs font-bold  bg-white p-2 ${selectedLog === 'NR' ? 'bg-gray-500' : ''}`}
                         onClick={() => handleLogButtonClick('NR')}>N/R (No Report)</button>
                 </div>
-                {selectedLog === 'data' && <DataLogSuperAdmin data={data} />}
-                {selectedLog === 'complain' && <ComplainLogSuperAdmin data={data} />}
+                {selectedLog === 'data' && <DataLogSuperAdmin data={data} onFetchDataSuccess={handleFetchDataSuccess} />}
+                {selectedLog === 'complain' && <ComplainLogSuperAdmin data={data}   onFetchDataSuccess={handleFetchDataSuccess}/>}
                 {selectedLog === 'NR' && <NRSuperAdmin data={data} />}
-                {selectedLog === 'Redo' && <RedoSuperAdmin data={data} />}
+                {selectedLog === 'Redo' && <RedoSuperAdmin data={data}/>}
             </div>
         </div>
     )

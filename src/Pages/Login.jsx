@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import bg from "../Assets/back.jpeg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTty } from '@fortawesome/free-solid-svg-icons'
@@ -7,9 +7,24 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import SuccesAlert from '../Components/SuccesAlert';
 import { ToastContainer, toast } from 'react-toastify';
+import { ClockLoader } from 'react-spinners';
+import { Watch } from 'react-loader-spinner';
+
 
 export default function Login() {
+  // const override: CSSProperties = {
+  //   position: "fixed",
+  //   top: "0",
+  //   left: "0",
+  //   width: "100vw",
+  //   height: "100vh",
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // /* Semi-transparent background */
+  // };
   const navigate = useNavigate();
+  let [loading, setLoading] = useState(false);
 
   const BaseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -35,6 +50,7 @@ export default function Login() {
 
     let data;
     if (login_Id && password) {
+      setLoading(true)
       try {
         const response = await axios.post(
           `${BaseUrl}/empLogin`,
@@ -83,6 +99,7 @@ export default function Login() {
         }
       } catch (error) {
         if (error.response.status === 401) {
+          setLoading(false)
           toast.error(error.response.data.message);
           // console.log(error);
           return
@@ -91,8 +108,8 @@ export default function Login() {
           toast.error(error.response.data.message);
           // console.log(error);
           return
-        } 
-         else {
+        }
+        else {
           toast.error("Please  Try again Later");
           // console.log("Please Try Again Later .");
           return
@@ -103,9 +120,35 @@ export default function Login() {
     }
   };
 
+  // useEffect(() => {
+  //   document.addEventListener('keydown',handleKeyPress,true)
+  // }, [])
+
+  // const handleKeyPress = (event) => {
+  //   if (event && event.key === 'Enter') {
+  //     event.preventDefault();
+  //     console.log(event.key)
+  //     sendData(event)
+  //   }
+  // };
+
   return (
     <div>
-        <ToastContainer/>
+      <ToastContainer />
+      {loading && (
+        <div className='h-[100vh] w-[100vw] flex justify-center items-center'>
+          <Watch
+            visible={true}
+            width="80"
+            radius="48"
+            color="#000000"
+            ariaLabel="watch-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      )}
+
       <section class="bg-gray-100" style={{ backgroundImage: bg, backgroundSize: "cover" }}>
         <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
           <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
@@ -139,7 +182,7 @@ export default function Login() {
                     placeholder="Password"
                     onChange={getUserdata}
                     name='password'
-                    type="text"
+                    type="password"
                     id="password"
                   />
                 </div>

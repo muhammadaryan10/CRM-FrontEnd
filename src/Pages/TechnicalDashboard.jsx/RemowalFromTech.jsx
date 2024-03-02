@@ -75,7 +75,7 @@ export default function RemowalFromTech() {
     catch (error) {
       console.log(error)
       if (error.response.status === 422) {
-       toast.error("Please Enter All Feilds")
+       toast.error("Please Enter Registration Number First ")
       }
       else if (error.response.status === 400) {
         setRemoval({

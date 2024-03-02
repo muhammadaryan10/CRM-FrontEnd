@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import CS_Sidebar from '../../Components/CS_Sidebar';
+import React, { useState } from 'react'
+import SuperAdminSidebar from '../../Components/SuperAdminSidebar';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import CS_Sidebar from '../../Components/CS_Sidebar';
 
-
-export default function UserInfoCS() {
+export default function VehicleInformation() {
     const { reg_no } = useParams();
     const [data, setData] = useState();
     console.log(reg_no)
@@ -16,7 +17,8 @@ export default function UserInfoCS() {
     const fetchData = async () => {
         try {
             console.log('agaya hn ')
-            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/testedit/${reg_no}`);
+            console.log(reg_no)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/edit/${reg_no}`);
             if (!res.ok) {
                 throw new Error(`Failed to fetch data. Status: ${res}`);
             }
@@ -67,14 +69,18 @@ export default function UserInfoCS() {
                                     <p className='text-sm font-bold w-40'>Contact 1</p>
                                     <p className='text-sm  w-60'>{data && data.user.mobileno_1 || "N/A"}</p>
                                 </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Contact 2</p>
-                                    <p className='text-sm  w-60'>{data && data.user.mobileno_2 || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Contact 3</p>
-                                    <p className='text-sm  w-60'>{data && data.user.mobileno_3 || "N/A"}</p>
-                                </div>
+                                {data && data.user.mobileno_2 && data.user.mobileno_2 !== null ? (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Contact 2</p>
+                                        <p className='text-sm  w-60'>{data && data.user.mobileno_2 || "N/A"}</p>
+                                    </div>
+                                ) : (<></>)}
+                                {data && data.user.mobileno_3 && data.user.mobileno_3 !== null ? (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Contact 3</p>
+                                        <p className='text-sm  w-60'>{data && data.user.mobileno_3 || "N/A"}</p>
+                                    </div>
+                                ) : (<></>)}
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>CNIC</p>
                                     <p className='text-sm  w-60'>{data && data.user.cnic || "N/A"}</p>
@@ -191,37 +197,59 @@ export default function UserInfoCS() {
                                     <p className='text-sm  w-60'>{data && data.technical.IMEI_no || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>GSM #:</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.Gsm_no || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Device ID:</p>
                                     <p className='text-sm  w-60'>{data && data.technical.device_id || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Sim Activation:</p>
+                                    <p className='text-sm font-bold w-40'>Sim No:</p>
                                     <p className='text-sm  w-60'>{data && data.technical.sim || "N/A"}</p>
                                 </div>
+                                {data && data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
+                                    <>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
+                                            <p className='text-sm  w-60'>{data && data.device_information.vendor_name_1 || "N/A"}</p>
+                                        </div>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
+                                            <p className='text-sm  w-60'>{data && data.technical.device_id_1 || "N/A"}</p>
+                                        </div>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Secendory Sim #:</p>
+                                            <p className='text-sm  w-60'>{data && data.technical.sim_1 || "N/A"}</p>
+                                        </div>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Secondery Device IMEI #:</p>
+                                            <p className='text-sm  w-60'>{data && data.technical.IMEI_no_1 || "N/A"}</p>
+                                        </div>
+                                    </>
+                                ) : (<></>)
+                                }
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>GPS Activation :</p>
                                     <p className='text-sm  w-60'>{data && data.technical.Gps_check || "N/A"}</p>
                                 </div>
-                                <div className='flex'>
+                                {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Tavl. Management Id :</p>
                                     <p className='text-sm  w-60'>{data && data.technical.Tavl_mang_id || "N/A"}</p>
-                                </div>
+                                </div> */}
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Operational Status :</p>
                                     <p className='text-sm  w-60'>{data && data.technical.operational_status || "N/A"}</p>
                                 </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Webtrack Id :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.webtrack_id || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Webtrack Password :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.webtrack_pass || "N/A"}</p>
-                                </div>
+                                {data && data.technical.webtrack_id && data.technical.webtrack_pass && data.technical.webtrack_id !== null ? (
+                                    <>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Webtrack Id :</p>
+                                            <p className='text-sm  w-60'>{data && data.technical.webtrack_id || "N/A"}</p>
+                                        </div>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Webtrack Password :</p>
+                                            <p className='text-sm  w-60'>{data && data.technical.webtrack_pass || "N/A"}</p>
+                                        </div>
+                                    </>
+                                ) : (<></>)
+                                }
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>SMS Alert :</p>
                                     <p className='text-sm  w-60'>{data && data.technical.hh || "N/A"}</p>
@@ -414,12 +442,12 @@ export default function UserInfoCS() {
                             </div>
                         </div> */}
                         {/* Special Instruction  */}
-                        <div className='bg-white mt-3 border border-gray-600'>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Specail Instruction</h1>
                             <div className='p-4'>
                                 <p className='text-sm font-bold '>Instruction :</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

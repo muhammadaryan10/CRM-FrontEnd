@@ -102,6 +102,7 @@ const RemovalTech = () => {
     data,
     enableColumnActions: false,
     enableColumnFilters: false,
+    initialState: { density: 'compact' },
     enableSorting: false, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     muiTableHeadCellProps: {
       sx: {

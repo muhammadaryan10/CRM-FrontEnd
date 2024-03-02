@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function ComplainLogSuperAdmin({ data }) {
+export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [additionalFields, setAdditionalFields] = useState(false);
     const [tableData, setTableData] = useState([]);
@@ -24,6 +24,7 @@ export default function ComplainLogSuperAdmin({ data }) {
         last_location: "",
         em_loginid: "",
     });
+    
     const [errorAlert, setErrorAlert] = useState(false);
     const [msg, setMsg] = useState("");
     const [successAlert, setSuccessAlert] = useState(false)
@@ -41,7 +42,7 @@ export default function ComplainLogSuperAdmin({ data }) {
         console.log(complain);
     };
 
-    const cookies = new Cookies();
+        const cookies = new Cookies();
 
     const sendComplain = async () => {
 
@@ -65,6 +66,11 @@ export default function ComplainLogSuperAdmin({ data }) {
                     // console.log("Request successful");
                     setMsg(response.data.messsage)
                     setSuccessAlert(true)
+                    setComplain({
+                        ...complain,
+                        remarks:""
+                    })
+                    onFetchDataSuccess();
                 } else {
                     setErrorAlert(true)
                     setMsg("Please Try Again Later.");
@@ -73,12 +79,27 @@ export default function ComplainLogSuperAdmin({ data }) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
                     setErrorAlert(true)
+                    setComplain({
+                        ...complain,
+                        remarks:""
+                    })
                     setMsg("Data Not Found");
                 }
                 else if (error.response.status === 402) {
                     setErrorAlert(true)
+                    setComplain({
+                        ...complain,
+                        remarks:""
+                    })
                     setMsg("Plesae Fill All the feilds")
+                }
+                else if (error.response.status === 401) {
+                    setErrorAlert(true)
+                    setMsg("The Complain With The same Nature is Already Registered Against this Registration Number")
                 } else {
+                    setComplain({
+                        remarks:""
+                    })
                     console.log("Internal Server Error", error);
                     setErrorAlert(true)
                     setMsg("Internal Server Error")
@@ -246,6 +267,8 @@ export default function ComplainLogSuperAdmin({ data }) {
             setTableData(data.complain.complains);
         }
     }, [data]);
+
+
     useEffect(() => {
         const loginID = cookies.get('em_loginid');
         const emp_name = cookies.get('name');
@@ -257,7 +280,7 @@ export default function ComplainLogSuperAdmin({ data }) {
             customer_name: data && data.data.user.customer_name,
             reg_no: data && data.data.user.registeration_no,
             em_loginid: loginID,
-            representative: empName
+            representative: empName,
         });
     }, [complain])
 
@@ -311,7 +334,7 @@ export default function ComplainLogSuperAdmin({ data }) {
                             <div className='flex flex-col justify-center  ' >
                                 <div className='flex justify-centerm my-2'>
                                     <p>Remarks</p>
-                                    <textarea className='input-field ml-4 p-1 border w-100' name="remarks" onChange={getUserData}></textarea>
+                                    <textarea className='input-field ml-4 p-1 border w-100' value={complain.remarks} name="remarks" onChange={getUserData}></textarea>
                                 </div>
                                 {additionalFields && (
                                     <div>

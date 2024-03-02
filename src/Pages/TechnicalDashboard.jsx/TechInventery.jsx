@@ -4,6 +4,7 @@ import Technical_Sidebar from '../../Components/Technical_Sidebar';
 import SimInventory from './SimInventory';
 import AtachSimNumber from './AtachSimNumber';
 import UpdateICC from './UpdateICC';
+import UpdateSimStatus from './UpdateSimStatus';
 
 export default function TechInventery() {
     const [selectedLog, setSelectedLog] = useState('device');
@@ -42,11 +43,14 @@ export default function TechInventery() {
                             onClick={() => handleLogButtonClick('atachSim')}>Attach Sim Number</button>
                             <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'updateICC' ? 'bg-gray-400' : 'bg-white'}`}
                             onClick={() => handleLogButtonClick('updateICC')}>Update ICC ID</button>
+                             <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'updateSim' ? 'bg-gray-400' : 'bg-white'}`}
+                            onClick={() => handleLogButtonClick('updateSim')}>Update Sim Status</button>
                     </div>
                     {selectedLog === 'device' && <DeviceInventoryTech />}
                     {selectedLog === 'sim' && <SimInventory />}
                     {selectedLog === 'atachSim' && <AtachSimNumber />} 
                     {selectedLog === 'updateICC' && <UpdateICC />} 
+                    {selectedLog === 'updateSim' && <UpdateSimStatus />} 
                 </div>
             </div>
         </div>

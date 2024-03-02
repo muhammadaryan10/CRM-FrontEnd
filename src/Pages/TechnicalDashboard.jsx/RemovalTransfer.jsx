@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
 
 export default function RemowalTransfer() {
+  const navigate = useNavigate();
   const [removal, setRemoval] = useState({
     client_id: "",
     old_reg: "",
@@ -33,24 +35,76 @@ export default function RemowalTransfer() {
     old_inst_date: "",
     new_inst_date: "",
     representative: "",
+    eng_type:"",
+    mobilizer:""
   });
 
   const cookies = new Cookies();
   const [search_term, setSearch_term] = useState("")
   const [empName, setEmpName] = useState("") // Corrected initialization
-
+  const [apiResult, setApiResult] = useState([]);
+  const [isListOpen, setIsListOpen] = useState(false);
+  const [selectedDeviceId, setSelectedDeviceId] = useState("");
   let value, name;
 
   const getUserdata = (e) => {
-   
     name = e.target.name;
     value = e.target.value;
-    setRemoval({
+    if (name === "registeration_no") {
+      // Convert the value to uppercase
+      const uppercaseValue = value.toUpperCase();
+
+      // Update the state with the uppercase value
+      setRemoval({
+        ...removal,
+        [name]: uppercaseValue
+      })
+    }
+    else {
+      setRemoval({
+        ...removal,
+        [name]: value,
+        representative: empName,
+      });
+      console.log(removal);
+    }
+  };
+
+  const getDeviceData = async (e) => {
+    const { name, value } = e.target;
+    if (name === "new_device") {
+      setIsListOpen(value.trim().length === 0);
+      setIsListOpen(false) // Close list only if value is not empty
+    }
+
+    const search_term = [value];
+    setRemoval({ ...removal, [name]: value });
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/getdevices`,
+        { search_term: value },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      setApiResult(response.data.data || [])
+      console.log(apiResult);
+      setIsListOpen(true)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  };
+
+  const handleDeviceIdSelect = (deviceId, vender, imei, sim) => {
+    setSelectedDeviceId(deviceId);
+    setRemoval(removal => ({
       ...removal,
-      [name]: value,
-      representative: empName,
-    });
-    console.log(removal);
+      new_device: deviceId,
+    }));
+    setIsListOpen(false)
   };
 
   const getRemoavalData = async (e) => {
@@ -82,6 +136,7 @@ export default function RemowalTransfer() {
           customer_name: response.data.user.customer_name,
           old_year: response.data.user.year,
           old_inst_date: response.data.user.date_of_installation,
+          new_device:response.data.device.device
         })
         console.log(removal)
         return
@@ -89,8 +144,12 @@ export default function RemowalTransfer() {
     }
     catch (error) {
       console.log(error)
-      if (error.response.status === 422) {
-        toast.error("Please Enter All Feilds")
+      if (error.response.status === 402) {
+        toast.error("Please Enter A Valid Registration Number")
+      }
+      else if (error.response.status === 401) {
+        console.log(error);
+        toast.error("Removal Already Done")
       }
       else if (error.response.status === 400) {
         setRemoval({
@@ -121,7 +180,7 @@ export default function RemowalTransfer() {
           new_device: ""
         })
         console.log(error.response.data.message)
-        // toast.error(error.response.data.message)
+        toast.error(error.response.data.message)
       }
       else {
         toast.error("Internal Server Error")
@@ -143,7 +202,10 @@ export default function RemowalTransfer() {
       );
       console.log(response)
       if (response.status === 200) {
-        toast.success("Removal Done")
+        toast.success("Removal TransFer Done")
+        setTimeout(() => {
+          navigate('/tech'); 
+      }, 3000);
       } else {
         toast.error("Internal Server Error");
       }
@@ -158,7 +220,12 @@ export default function RemowalTransfer() {
       } else if (err.response.status === 404) {
         console.log(err);
         toast.error(err.response.data.message)
-      } else if (err.response.status === 402) {
+      } 
+      else if (err.response.status === 400) {
+        console.log(err);
+        toast.error(err.response.data.message)
+      }
+      else if (err.response.status === 402) {
         console.log(err);
         toast.error("Please Fill All the Feilds")
       }
@@ -240,8 +307,22 @@ export default function RemowalTransfer() {
           </div> */}
           <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}>  Device :</p>
-            <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} value={removal && removal.new_device} name='new_device' onChange={getUserdata} />
+            <input className='ml-3 p-1 custom_input ' style={{ width: "55%" }} value={removal && removal.new_device} name='new_device' onChange={getDeviceData} />
+
           </div>
+          {isListOpen && (
+            <div className='flex justify-center my-2 relative' >
+              <div className='absolute -top-2 right-2 z-0 bg-white overflow-y-scroll shadow' style={{ width: "55%", maxHeight: "300px" }}>
+                <div className='flex flex-col justify-center items-center  space-y-2  p-2'>
+                  {apiResult.map(item => (
+                    <div key={item.id} className='w-100 hover:bg-gray-300 p-1' onClick={() => handleDeviceIdSelect(item.device_serialno, item.vendor, item.imei_no, item.sim.id)}>
+                      {item.device_serialno}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div >
         <div className='space-y-3'>
           <div className=' flex flex-col justify-center space-y-3'>
@@ -249,7 +330,43 @@ export default function RemowalTransfer() {
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Engine Number :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} onChange={getUserdata} name="new_eng" /> </div>
             {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Chassis Number :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_chasis} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
             {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old Transmision :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_trans} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Transmision :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_trans" /> </div>
+            {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Transmision :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_trans" /> </div> */}
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Transmission :</p>
+              {/* <input onChange={getUserData} name="transmission" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} /> */}
+              <select className='input-field  ml-4 p-1  border bg-white' name='new_trans' onChange={getUserdata} style={{ width: "55%" }} aria-label=".form-select-lg example">
+                <option value="">Select Transmission </option>
+                <option value="Auto">Auto </option>
+                <option value="Manual">Manual </option>
+              </select>
+            </div>
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Engine Type  :</p>
+                  {/* <input onChange={getUserData} name="engine_type" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} />  */}
+                  <select className='input-field  ml-4 p-1  border bg-white' name='eng_type' onChange={getUserdata} style={{ width: "55%" }} aria-label=".form-select-lg example">
+                    <option value="">Select Engine Type </option>
+                    <option value="Petrol">Petrol </option>
+                    <option value="Diesel">Diesel </option>
+                    <option value="Hybrid">Hybrid</option>
+                  </select>
+                </div>
+            <div className='flex justify-around ' >
+              <div className='w-50'>
+                Mobilizer
+              </div>
+              <div className='flex justify-around space-x-5'>
+                <div class="form-check">
+                  <input class="border" type="radio" name="mobilizer" value="Yes" onChange={getUserdata} />
+                  <label class="ml-3" for="new_mob">
+                    Yes
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="border" type="radio" name="mobilizer" value="No" onChange={getUserdata} />
+                  <label class="ml-3" for="new_mob">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Chassis Number :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_chasis" /> </div>
             {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old cc :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_cc} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  cc :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_cc" /> </div>

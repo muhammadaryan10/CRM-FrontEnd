@@ -69,6 +69,7 @@ export default function RedoSuperAdmin({ data }) {
     enableColumnActions: false,
     enableColumnFilters: false,
     enableSorting: false,
+    initialState: { density: 'compact' },
     muiTableHeadCellProps: {
       sx: {
         fontWeight: 'bold',

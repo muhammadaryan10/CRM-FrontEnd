@@ -83,7 +83,7 @@ export default function SimInventory() {
                     <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> ICC ID  :</p><input name='icc_id' onChange={getUserData} className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                 </div>
                 <div className=' flex flex-col justify-between'>
-                    <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Nature of Complain</p><select className='input-field  ml-4 p-1  border bg-white' onChange={getUserData} name='status' style={{ width: "55%" }} aria-label=".form-select-lg example">
+                    <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Nature of Sim</p><select className='input-field  ml-4 p-1  border bg-white' onChange={getUserData} name='status' style={{ width: "55%" }} aria-label=".form-select-lg example">
                         <option value="">Select Nature Of Sim </option>
                         <option value="availiable">Available</option>
                         <option value="in stock">IN Stock </option>

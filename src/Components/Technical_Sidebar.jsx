@@ -31,7 +31,7 @@ export default function Technical_Sidebar() {
   }
 
   useEffect(() => {
-    Authentication()
+    // Authentication()
     const userNameFromCookie = cookies.get('name');
     const designation = cookies.get('designation');
     const image = cookies.get("image");
@@ -120,7 +120,7 @@ export default function Technical_Sidebar() {
                 to="/tech/addInventory"
                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500  hover:text-white"
               >
-               Inventeries
+               Inventory
               </Link>
             </li>
             <li>

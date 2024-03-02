@@ -48,6 +48,7 @@ export default function LogsCS() {
             }
             else if (error.response.status === 500) {
                 setData()
+                console.log(error)
                 setErrorAlert(true)
                 setMsg("Internal Server Error")
             }

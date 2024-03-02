@@ -50,7 +50,7 @@ export default function AddPayment() {
             ...addPayment,
             status: value
         })
-        if (value === "paid" || value == "bad debts") {
+        if (value === "paid" || value == "bad debts" || value == "partial payment") {
             setAdditionalFields(true)
         } else {
             setAdditionalFields(false)
@@ -208,6 +208,7 @@ export default function AddPayment() {
                                         <option value="unpaid">Un Paid </option>
                                         <option value="removed">Removed</option>
                                         <option value="bad debts">Bad Debts </option>
+                                        <option value="partial payment">Partail Payment </option>
                                     </select>
                                 </div>
                                 <label className='mr-3 w-40' >Renewal Amount :</label><input className='w-60 p-2 border border-black rounded-2' readOnly value={data && data.renewal_charges} />

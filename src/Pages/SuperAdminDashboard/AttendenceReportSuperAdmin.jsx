@@ -88,6 +88,7 @@ const AttendenceReportSuperAdmin = () => {
     data,
     enableColumnActions: false,
     enableColumnFilters: false,
+    initialState: { density: 'compact' },
     enableSorting: false, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     muiTableHeadCellProps: {
       //simple styling with the `sx` prop, works just like a style prop in this example

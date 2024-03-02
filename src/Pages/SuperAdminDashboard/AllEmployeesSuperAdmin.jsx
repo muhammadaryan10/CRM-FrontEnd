@@ -83,9 +83,9 @@ const AllEmployeesSuperAdmin = () => {
     enableColumnActions: false,
     enableColumnFilters: false,
     enableSorting: false,
-    data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    initialState: { density: 'compact' },
+    data, 
     muiTableHeadCellProps: {
-      //simple styling with the `sx` prop, works just like a style prop in this example
       sx: {
         fontWeight: 'bold',
         fontSize: '12px',

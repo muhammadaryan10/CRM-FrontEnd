@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SuperVisorSidebar from '../../Components/SuperVisorSidebar';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function AddUserSuperVisor() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -10,7 +10,9 @@ export default function AddUserSuperVisor() {
         setIsSidebarOpen(!isSidebarOpen);
     };
     const { reg_no } = useParams();
+    const navigate = useNavigate();
     console.log(reg_no)
+
     const [ data , setData ]=useState()
     const [customer, setCustomer] = useState({
         customer_email: "",
@@ -69,6 +71,9 @@ export default function AddUserSuperVisor() {
                 if (response.status === 200) {
                     console.log("Request successful");
                     window.alert('user Register Succfully')
+                    setTimeout(() => {
+                        navigate('/sv'); 
+                    }, 3000);
                 } 
             } catch (error) {
                 if (error.response.status === 420) {
@@ -80,7 +85,8 @@ export default function AddUserSuperVisor() {
                     window.alert("Device not found");
                 } 
                 else if (error.response.status === 402) {
-                    window.alert("validations Fail")
+                    console.log("Device is already installed", error);
+                    window.alert("Please Enter a valid Email Address")
                 }  else {
                     console.log("Internal Server Error", error);
                     window.alert("Internal Server Error")
@@ -116,7 +122,7 @@ export default function AddUserSuperVisor() {
                     <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>
                         <div className=' flex flex-col mt-3 p-2'>
                             <h1 className='text-xl font-semibold bg-gray-400 p-2 m-2'>User Details</h1>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Customer Email :</p><input onChange={getUserData} name='customer_email' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Customer Email :</p><input onChange={getUserData} name='customer_email' type='email' className=' ml-3 custum_input p-1 ' /> </div>
                             <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Password :</p><input onChange={getUserData} name='emergency_pass' className=' ml-3 custum_input p-1 ' /> </div>
                             <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Person </p><input onChange={getUserData} name='emergency_person' className=' ml-3 custum_input p-1 ' /> </div>
                             <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Person Contact:</p><input onChange={getUserData} name='emergency_person_contact' className=' ml-3 custum_input p-1 ' /> </div>

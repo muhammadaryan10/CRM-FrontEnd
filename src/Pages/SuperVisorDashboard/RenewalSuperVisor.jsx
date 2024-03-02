@@ -63,13 +63,35 @@ export default function RenewalSuperVisor() {
                 accessorKey: 'Status',
                 header: 'Action',
                 size: 80,
-                Cell: ({ row }) => (
-                    <div>
-                        <Link to={`/sv/addPayment/${row.original.registeration_no}`} target='blank' onClick={() => console.log(row, 'action1')}><FontAwesomeIcon className='mx-2 h-4' icon={faWallet} /></Link>
-                        <Link to={`/sv/view/${row.original.registeration_no}`} target='blank' onClick={() => console.log(row, 'action2')}><FontAwesomeIcon className='mx-2 h-4' icon={faEye} /></Link>
-                        <Link to={`/sv/updaterenewal/${row.original.registeration_no}`} target='blank' onClick={() => console.log(row, 'action3')}> <FontAwesomeIcon icon={faPenToSquare} className='mx-2 h-4' /></Link>
-                    </div>
-                ),
+                Cell: ({ row }) => {
+                    if (row.original.status === 'paid') {
+                        // Show 2 links if status is 'paid'
+                        return (
+                            <div>
+
+                                {/* <Link to={`/sv/view/${row.original.registeration_no}`} target='blank'>
+                                    <FontAwesomeIcon className='mx-2 h-4' icon={faEye} />
+                                </Link> */}
+
+                            </div>
+                        );
+                    } else {
+                        // Show 3 links for other statuses
+                        return (
+                            <div>
+                                <Link to={`/sv/addPayment/${row.original.registeration_no}`} target='blank'>
+                                    <FontAwesomeIcon className='mx-2 h-4' icon={faWallet} />
+                                </Link>
+                                {/* <Link to={`/sv/view/${row.original.registeration_no}`} target='blank'>
+                                    <FontAwesomeIcon className='mx-2 h-4' icon={faEye} />
+                                </Link> */}
+                                {/* <Link to={`/sv/updaterenewal/${row.original.registeration_no}`} target='blank'>
+                                    <FontAwesomeIcon icon={faPenToSquare} className='mx-2 h-4' />
+                                </Link> */}
+                            </div>
+                        );
+                    }
+                },
             },
         ],
         [],
@@ -80,6 +102,7 @@ export default function RenewalSuperVisor() {
         data,
         enableColumnActions: false,
         enableColumnFilters: false,
+        initialState: { density: 'compact' },
         muiTableHeadCellProps: {
             sx: {
                 fontWeight: 'bold',

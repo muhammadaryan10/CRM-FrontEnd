@@ -18,6 +18,8 @@ export default function SuperVisorHome() {
   const [isComplain, setIsComplain] = useState(false)
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const [Alert, setAlerts] = useState([])
+  const [AlertVisibility, setAlertVisibility] = useState(false)
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -66,6 +68,22 @@ export default function SuperVisorHome() {
     }
   }
 
+  const getAlert = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/demo_days_alert`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data. Status: ${res}`);
+      }
+
+      const response = await res.json();
+      console.log("data>>", response.data);
+      setAlerts(response.data);
+      // setComplaincount(response.count)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
   const toggleInstallationVisibility = () => {
     setIsInstallationVisible(!isInstallationVisible);
   };
@@ -74,8 +92,12 @@ export default function SuperVisorHome() {
     setIsComplain(!isComplain);
   };
 
+  const toggleAlertVisibility = () => {
+    setAlertVisibility(!AlertVisibility);
+  };
+
   useEffect(() => {
-    Authentication()
+    // Authentication()
     const updateDate = () => {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit' };
@@ -88,6 +110,7 @@ export default function SuperVisorHome() {
     const intervalId = setInterval(updateDate, 1000); // Update every second
     getNewInstallation()
     getComplains()
+    getAlert()
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, []);
 
@@ -154,7 +177,7 @@ export default function SuperVisorHome() {
               </div>
             </Link> */}
         </div>
-        <div>
+        <div className='mt-4'>
           <div>
             <div>
               <h2 className='m-2 p-2 border shadow-md'><button onClick={toggleInstallationVisibility}>New Installation Que ({count})</button></h2>
@@ -201,6 +224,71 @@ export default function SuperVisorHome() {
               {isComplain && (
                 <div>
                   {Complains.map((e, index) => (
+                      <div key={index} className='m-2'>
+                      <div className='bg-gray-300 p-2 flex justify-between  '>
+                        {/* <div className='flex'> */}
+                        <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-0'>
+                          <div className=''>
+                            {/* <div className='space-x-4'> */}
+                            <p>Customer Name</p>
+                            {/* </div> */}
+                            {/* <div className='space-x-4'> */}
+                            <p>Complain</p>
+                            {/* </div> */}
+                            {/* <div className='space-x-4'> */}
+                            <p>Remarks </p>
+                            {/* </div> */}
+                            {/* <div className='space-x-4'> */}
+                            <p>Date </p>
+                            {/* </div> */}
+                          </div>
+                          <div className=''>
+                            <p>: {e.customer_name}</p>
+                            <p >: {e.nature}</p>
+                            <p>: {e.remarks}</p>
+                            <p>: {e.date}</p>
+                          </div>
+                        </div>
+                        {/* </div> */}
+                        <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-1'>
+                          <div className=''>
+                            {/* <div className='flex space-x-4'> */}
+                            <p>Representative</p>
+                            {/* </div> */}
+                            {/* <div className='flex space-x-4'> */}
+                            <p>Ticker</p>
+                            {/* </div> */}
+                            {/* <div className='flex space-x-4'> */}
+                            <p>Registration</p>
+                            {/* </div> */}
+                            {/* <div className='flex space-x-4'> */}
+                            <p>Time</p>
+                            {/* </div> */}
+                          </div>
+                          <div className=''>
+                            <p>: {e.representative}</p>
+                            <p>: {e.complain_id}</p>
+                            <p>: {e.reg_no}</p>
+                            <p>: {e.time}</p>
+
+                          </div>
+                        </div>
+                        <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status : <Link to={`/tech/resolve/${e.complain_id}`}>{e.Status}</Link></span></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div>
+              <h2 className='m-2 p-2 border shadow-md'><button onClick={toggleAlertVisibility}>Demo Alerts ( {Alert.length} )</button></h2>
+              {AlertVisibility && (
+                <div>
+                  {Alert.map((e, index) => (
                     <div key={index} className='m-2'>
                       <div className='bg-gray-300 p-2 flex justify-between'>
                         <div className='flex space-x-4'>
@@ -210,38 +298,25 @@ export default function SuperVisorHome() {
                               <p>{e.customer_name}</p>
                             </div>
                             <div className='flex space-x-4'>
-                              <p>Complain :</p>
-                              <p>{e.nature}</p>
+                              <p>Date OF Installation :</p>
+                              <p>{e.date_of_installation}</p>
                             </div>
                             <div className='flex space-x-4'>
-                              <p>Remarks :</p>
-                              <p>{e.remarks}</p>
-                            </div>
-                            <div className='flex space-x-4'>
-                              <p>Date :</p>
-                              <p>{e.date}</p>
+                              <p>Demp Expire Date :</p>
+                              <p>{e.demo_duration}</p>
                             </div>
                           </div>
                           <div>
                             <div className='flex space-x-4'>
-                              <p>Representative  # :</p>
-                              <p>{e.representative}</p>
+                              <p>Sales Person :</p>
+                              <p>{e.sales_person}</p>
                             </div>
                             <div className='flex space-x-4'>
-                              <p>Ticker :</p>
-                              <p>{e.complain_id}</p>
-                            </div>
-                            <div className='flex space-x-4'>
-                              <p>Registration # :</p>
-                              <p>{e.reg_no}</p>
-                            </div>
-                            <div className='flex space-x-4'>
-                              <p>Time :</p>
-                              <p>{e.time}</p>
+                              <p>Special Instruction :</p>
+                              <p>{e.remarks}</p>
                             </div>
                           </div>
                         </div>
-                        <div className='flex justify-center items-center'>Status : <span className='mx-2'>{e.Status}</span></div>
                       </div>
                     </div>
                   ))}

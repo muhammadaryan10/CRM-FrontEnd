@@ -68,6 +68,7 @@ export default function RenewalLogSuperAdmin({data}) {
         enableColumnActions: false,
         enableColumnFilters: false,
         enableSorting: false,
+        initialState: { density: 'compact' },
         muiTableHeadCellProps: {
             sx: {
                 fontWeight: 'bold',
