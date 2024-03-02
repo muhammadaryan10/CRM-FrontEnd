@@ -184,31 +184,29 @@ export default function SuperVisorHome() {
               {isInstallationVisible && (
                 <div>
                   {newInstall.map((installation, index) => (
-                    <div key={index} className='m-2'>
+                      <div key={index} className='m-2'>
                       <div className='bg-gray-300 p-2 flex justify-between'>
-                        <div className='flex space-x-4'>
+                        <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
                           <div>
-                            <div className='flex space-x-4'>
-                              <p>Cleint Id # :</p>
-                              <p>{installation.client_id}</p>
-                            </div>
-                            <div className='flex space-x-4'>
-                              <p>Registration # :</p>
-                              <p>{installation.reg_no}</p>
-                            </div>
+                            <p>Client ID</p>
+                            <p>Registration</p>
                           </div>
                           <div>
-                            <div className='flex space-x-4'>
-                              <p>Representative  # :</p>
-                              <p>{installation.representative}</p>
-                            </div>
-                            <div className='flex space-x-4'>
-                              <p>Date / Time :</p>
-                              <p>{installation.date}</p>
-                            </div>
+                            <p>: {installation.client_id}</p>
+                            <p>: {installation.reg_no}</p>
                           </div>
                         </div>
-                        <div className='flex justify-center items-center'>Status : <span className='mx-2'><Link to={`/sv/addUser/${installation.reg_no}`}>{installation.status}</Link></span></div>
+                        <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-0'>
+                          <div>
+                            <p>Representative</p>
+                            <p>Date / Time</p>
+                          </div>
+                          <div >
+                            <p>: {installation.representative}</p>
+                            <p>: {installation.date} / {installation.time}</p>
+                          </div>
+                        </div>
+                        <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status : <Link to={`/sv/addUser/${installation.reg_no}`}>{installation.status}</Link></span></div>
                       </div>
                     </div>
                   ))}

@@ -203,7 +203,7 @@ const AddUserCS = () => {
     };
 
 
-    if (customer_name && father_name && address && mobileno_1 && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && remarks && campaign_point && dealership && dealer_name && sales_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
+    // if (customer_name && father_name && address && mobileno_1 && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && remarks && campaign_point && dealership && dealer_name && sales_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/storedata`,
@@ -253,10 +253,10 @@ const AddUserCS = () => {
           console.log(error)
         }
       }
-    } else {
-      setErrorAlert(true)
-      setMsg("Plesae Fill All the feilds")
-    }
+    // } else {
+    //   setErrorAlert(true)
+    //   setMsg("Plesae Fill All the feilds")
+    // }
   }
 
 
@@ -435,7 +435,7 @@ const AddUserCS = () => {
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Campaign Point Allocation :</p><input placeholder='Enter Campaign Point' onChange={getUserData} name="campaign_point" className=' ml-3 p-2  custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Renewal Charges :</p><input placeholder='Enter Renewal Charges' onChange={getUserData} name="renewal_charges" className=' ml-3 p-2  custum_input  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-sm' style={{ width: "40%" }}>Segment :</p>
-                <div className=' ml-3 p-2 rounded-0 text-sm flex justify-start grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 space-x-1' style={{ width: "55%" }} >
+                <div className=' ml-3 p-2 rounded-0 text-sm flex justify-start grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 space-x-1' style={{ width: "55%" }} >
                   <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="cash" />OwnerShip </div>
                   <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="rental" />Rental </div>
                   <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="demo" />Demo </div>
