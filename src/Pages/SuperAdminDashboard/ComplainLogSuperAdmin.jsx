@@ -70,7 +70,7 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
                         ...complain,
                         remarks:""
                     })
-                    onFetchDataSuccess();
+                    // onFetchDataSuccess();    
                 } else {
                     setErrorAlert(true)
                     setMsg("Please Try Again Later.");
@@ -313,7 +313,7 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
                 </div>
             )}
             <div className='flex h-100 pt-0 mt-0'>
-                <div className='bg-gray-200 rounded-xl m-2 mt-0 pt-0 p-2 w-100'>
+                <div className=' rounded-xl m-2 mt-0 pt-0 p-2 w-100' >
                     <div className='m-2 mt-0 p-2 bg-white'>
                         <h1 className='text-xl font-semibold bg-gray-200 p-2 m-2'>Complain Box </h1>
                         <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>

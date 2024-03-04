@@ -3,6 +3,7 @@
 } */
 
 
+
 .theme_btn_md{
     background-color: black;
     padding-left: 10px;
@@ -59,29 +60,28 @@
   }
 
   
-/* SuperAdminSidebar.css */
-
-/* For Webkit browsers (Chrome, Safari) */
-.sidebar-container.overflow-y-scroll::-webkit-scrollbar {
-  width: 0.5rem; /* Adjust the width as needed */
-  display: none !important; /* Hide scrollbar */
+/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+.sidebar-container::-webkit-scrollbar {
+  width: 0;  /* Set the width to 0 to hide the scrollbar */
+  display: none; /* Hide scrollbar for Webkit */
 }
 
-/* For Firefox */
-.sidebar-container.overflow-y-scroll {
-  scrollbar-width: thin !important; /* Adjust the width as needed */
-  -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer 11 */
-}
-
-/* Show scrollbar on hover (optional) */
-.sidebar-container.overflow-y-scroll:hover::-webkit-scrollbar {
-  display: initial; /* Show scrollbar on hover in Webkit browsers */
+/* Hide scrollbar for Firefox */
+.sidebar-container {
+  scrollbar-width: none; /* Hide the scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer 11 */
 }
 
 /* Show scrollbar on hover (optional) */
-.sidebar-container.overflow-y-scroll:hover {
-  scrollbar-width: thin; /* Show scrollbar on hover in Firefox */
+.sidebar-container:hover::-webkit-scrollbar {
+  width: auto; /* Show scrollbar on hover for Webkit */
 }
+
+/* Show scrollbar on hover (optional) */
+.sidebar-container:hover {
+  scrollbar-width: auto; /* Show scrollbar on hover for Firefox */
+}
+
     
 .no-spinners::-webkit-inner-spin-button,
 .no-spinners::-webkit-outer-spin-button {
@@ -92,3 +92,4 @@
 .no-spinners {
   -moz-appearance: textfield;
 }
+

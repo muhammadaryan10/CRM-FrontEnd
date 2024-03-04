@@ -12,17 +12,6 @@ import { Watch } from 'react-loader-spinner';
 
 
 export default function Login() {
-  // const override: CSSProperties = {
-  //   position: "fixed",
-  //   top: "0",
-  //   left: "0",
-  //   width: "100vw",
-  //   height: "100vh",
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // /* Semi-transparent background */
-  // };
   const navigate = useNavigate();
   let [loading, setLoading] = useState(false);
 
@@ -32,6 +21,32 @@ export default function Login() {
     login_Id: "",
     password: "",
   });
+
+  const Authentication = async () => {
+    setLoading(true)
+    const check = cookies.get('role');
+    if (check === "Technical") {
+        navigate("/tech");
+    } else if (check === "Super Visor") {
+        navigate("/sv");
+    }
+    else if (check === "Customer services") {
+        navigate("/cs");
+    }
+    else if (check === "CRO") {
+        navigate("/cro");
+    } else if (check === "Head") {
+        navigate("/superAdmin");
+    }
+    else {
+      setLoading(false)
+    }
+    
+  }
+
+  useEffect(() => {
+    Authentication()
+  }, [])
 
   const cookies = new Cookies();
 
@@ -70,27 +85,17 @@ export default function Login() {
         if (response.status === 200) {
           console.log(data.message);
           if (data.role === "Technical") {
-            setTimeout(() => {
               navigate("/tech");
-            }, 1000);
           } else if (data.role === "Super Visor") {
-            setTimeout(() => {
               navigate("/sv");
-            }, 1000);
           }
           else if (data.role === "Customer services") {
-            setTimeout(() => {
               navigate("/cs");
-            }, 1000);
           }
           else if (data.role === "CRO") {
-            setTimeout(() => {
               navigate("/cro");
-            }, 1000);
           } else if (data.role === "Head") {
-            setTimeout(() => {
               navigate("/superAdmin");
-            }, 1000);
           }
           else {
             toast.error("Opps it looks Like You are not Eligble");
@@ -120,17 +125,6 @@ export default function Login() {
     }
   };
 
-  // useEffect(() => {
-  //   document.addEventListener('keydown',handleKeyPress,true)
-  // }, [])
-
-  // const handleKeyPress = (event) => {
-  //   if (event && event.key === 'Enter') {
-  //     event.preventDefault();
-  //     console.log(event.key)
-  //     sendData(event)
-  //   }
-  // };
 
   return (
     <div>
@@ -161,7 +155,7 @@ export default function Login() {
             </div>
 
             <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-              <form action="" class="space-y-4 text-center">
+              <form onSubmit={sendData} class="space-y-4 text-center">
                 <h1 className='text-3xl font-bold'>Welcome</h1>
                 <div>
                   <label class="sr-only" for="name">Login Id </label>
@@ -188,14 +182,14 @@ export default function Login() {
                 </div>
                 <div class="mt-4">
                   <button
-                    type="button"
-                    onClick={sendData}
-                    class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white "
+                    type="submit" // Change type to submit
+                    class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white"
                   >
                     Login
                   </button>
                 </div>
               </form>
+
             </div>
           </div>
         </div>

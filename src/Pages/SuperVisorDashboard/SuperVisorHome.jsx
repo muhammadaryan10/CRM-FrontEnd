@@ -4,6 +4,8 @@ import { faUsers, faUsersGear, faBook, faTruck, faEye, faExpand } from '@fortawe
 import { Link, useNavigate } from 'react-router-dom';
 import SuperVisorSidebar from '../../Components/SuperVisorSidebar';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function SuperVisorHome() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -96,8 +98,45 @@ export default function SuperVisorHome() {
     setAlertVisibility(!AlertVisibility);
   };
 
+  const logout = async (e) => {
+    console.log(active_id)
+    e.preventDefault();
+
+    let data;
+    if (active_id) {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/logout",
+          { active_id },
+          { withCredentials: true } // Include credentials (cookies)
+        );
+        if (response.status === 200) {
+          const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
+          for (const cookieName of cookieNames) {
+            cookies.remove(cookieName);
+          }
+          toast.success("Logged out SuccesFullly")
+          // console.log(response)
+          navigate("/");
+        }
+      }
+      catch (error) {
+        if (error.response.status === 402) {
+          toast.error("Validation Error")
+          // console.log(error)
+        }
+        else if (error.response.status === 460) {
+          toast.error("Already Log out")
+          // console.log(error)
+        }
+      }
+    }
+    else {
+      alert("Please Login First")
+    }
+  }
+
   useEffect(() => {
-    // Authentication()
     const updateDate = () => {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit' };
@@ -114,20 +153,7 @@ export default function SuperVisorHome() {
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, []);
 
-  const Authentication =async()=>{
-    const check = cookies.get('role');
-    if (check === "Super Visor") { 
 
-    }
-    else if (!check) { 
-      // alert("Please Login First")
-      navigate("/")
-    }
-    else{
-      // alert("You Are Not Autherize")
-      navigate("/")
-    }
-  }
 
   return (
     <div className='flex h-[100vh] bg-black'>

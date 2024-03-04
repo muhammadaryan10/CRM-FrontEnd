@@ -13,7 +13,24 @@ export default function SuperVisorSidebar() {
 
     const cookies = new Cookies();
     const navigate = useNavigate();
+
+    const Authentication =async()=>{
+        const check = cookies.get('role');
+        if (check === "Super Visor") { 
+    
+        }
+        else if (!check) { 
+          // alert("Please Login First")
+          navigate("/")
+        }
+        else{
+          // alert("You Are Not Autherize")
+          navigate("/")
+        }
+      }
+
     useEffect(() => {
+    Authentication()
       const userNameFromCookie = cookies.get('name');
       const designation=cookies.get('designation');
       const active_id = cookies.get('active_id');
@@ -22,47 +39,11 @@ export default function SuperVisorSidebar() {
       setUserName(userNameFromCookie);
   }, []);
 
-  const logout = async (e) => {
-    console.log(active_id)
-    e.preventDefault();
-
-    let data;
-    if (active_id) {
-      try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/logout",
-          { active_id },
-          { withCredentials: true } // Include credentials (cookies)
-        );
-        if (response.status === 200) {
-          const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
-          for (const cookieName of cookieNames) {
-            cookies.remove(cookieName);
-          }
-          toast.success("Logged out SuccesFullly")
-          // console.log(response)
-          navigate("/");
-        }
-      }
-      catch (error) {
-        if (error.response.status === 402) {
-          toast.error("Validation Error")
-          // console.log(error)
-        }
-        else if (error.response.status === 460) {
-          toast.error("Already Log out")
-          // console.log(error)
-        }
-      }
-    }
-    else {
-      alert("Please Login First")
-    }
-  }
+ 
     return (
         <div>
                <ToastContainer/>
-            <div className="flex h-[100vh] sidebar-container flex-col justify-centere bg-black w-64 overflow-y-scroll">
+            <div className="flex h-[100vh] sidebar-container flex-col justify-centere bg-black w-56 overflow-y-scroll">
                 <div className="sticky inset-x-0 bottom-0">
                     <Link to="#" className="flex flex-col items-center space-y-3 p-4">
                         <img
