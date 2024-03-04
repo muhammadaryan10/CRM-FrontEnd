@@ -9,7 +9,6 @@ import { ToastContainer, toast } from 'react-toastify';
 export default function SuperVisorSidebar() {
     const [ userName , setUserName ] = useState("");
     const [designation,setDesignation]=useState("");
-    const [active_id, setActive_id] = useState("")
 
     const cookies = new Cookies();
     const navigate = useNavigate();
@@ -33,9 +32,7 @@ export default function SuperVisorSidebar() {
     Authentication()
       const userNameFromCookie = cookies.get('name');
       const designation=cookies.get('designation');
-      const active_id = cookies.get('active_id');
       setDesignation(designation);
-      setActive_id(active_id)
       setUserName(userNameFromCookie);
   }, []);
 
@@ -110,7 +107,6 @@ export default function SuperVisorSidebar() {
                         </li>
                     </ul>
                 </div>
-                <button type="button" className=" text-white" onClick={logout}>Logout</button>
             </div>
         </div>
     )
