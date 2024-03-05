@@ -113,7 +113,7 @@ export default function TechHome() {
     if (active_id) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/logout",
+          `${process.env.REACT_APP_BACKEND_URL}/logout`,
           { active_id },
           { withCredentials: true } // Include credentials (cookies)
         );

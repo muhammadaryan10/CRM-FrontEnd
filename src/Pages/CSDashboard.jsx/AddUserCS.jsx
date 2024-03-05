@@ -5,6 +5,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { faCircleXmark, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Watch } from 'react-loader-spinner';
 
 
 const AddUserCS = () => {
@@ -60,6 +61,7 @@ const AddUserCS = () => {
   const [errorAlert, setErrorAlert] = useState(false);
   const [msg, setMsg] = useState("");
   const [successAlert, setSuccessAlert] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -213,6 +215,7 @@ const AddUserCS = () => {
   };
 
   const sendData = async (e) => {
+    setLoading(true)
     e.preventDefault();
     const { id, customer_name, mobileno_2, mobileno_3, father_name, address, mobileno_1, remarks, cnic, seconadryuser_name, relationship, secondaryuser_con1, registeration_no, engine_no, chasis_no, CC, make, model, year, color, installation_loc, date, campaign_point, dealership, dealer_name, sales_person, conatct_person, insurance_partner, tracker_charges, date_of_installation, int_comission, ext_comission, discount, renewal_charges, engine_type, transmission, vas, vas_options, segment, demo_duration, representative } = newCustomer;
     const vasOptionsString = JSON.stringify(newCustomer.vas_options).replace(/[\[\]"]+/g, '');
@@ -229,6 +232,7 @@ const AddUserCS = () => {
 
     // if (customer_name && father_name && address && mobileno_1 && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && remarks && campaign_point && dealership && dealer_name && sales_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
     try {
+
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/storedata`,
         dataToSend,
@@ -243,6 +247,7 @@ const AddUserCS = () => {
       console.log(response); // use response.data to get the server response
 
       if (response.status === 200) {
+        setLoading(false)
         console.log("Request successful");
         setMsg('User Register Succfully')
         setSuccessAlert(true)
@@ -251,6 +256,7 @@ const AddUserCS = () => {
           navigate('/cs');
         }, 1000);
       } else if (response.response.request.status === 402) {
+        setLoading(false)
         setErrorAlert(true)
         setMsg("validations Fail")
       } else {
@@ -259,6 +265,7 @@ const AddUserCS = () => {
       }
     } catch (error) {
       if (error.response.status === 400) {
+        setLoading(false)
         console.log("Error:", "User Already Registered With This Credentials", error);
         setErrorAlert(true);
         let errorMessage = "";
@@ -269,11 +276,15 @@ const AddUserCS = () => {
       }
 
       else if (error.response.status === 500) {
+        setLoading(false)
         console.log("Internal Server Error", error);
         setErrorAlert(true)
         setMsg("Internal Server Error")
       }
       else {
+        setLoading(false)
+        setErrorAlert(true)
+        setMsg("Internal Server Error")
         console.log(error)
       }
     }
@@ -320,6 +331,19 @@ const AddUserCS = () => {
               {msg}
             </div>
           </div>
+        </div>
+      )}
+       {loading && (
+        <div className='h-[100vh] w-[100vw] flex justify-center items-center'>
+          <Watch
+            visible={true}
+            width="80"
+            radius="48"
+            color="#000000"
+            ariaLabel="watch-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
         </div>
       )}
       <div className='rounded-xl m-2 p-2 w-100 overflow-y-scroll' style={{ backgroundColor:"#F0F0F0"}}>

@@ -21,7 +21,9 @@ export default function SuperVisorHome() {
   const [errorAlert, setErrorAlert] = useState(false);
   const [msg, setMsg] = useState("");
   const [successAlert, setSuccessAlert] = useState(false)
-  
+  const [loading, setLoading] = useState(false);
+
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -128,12 +130,11 @@ export default function SuperVisorHome() {
   const logout = async (e) => {
     console.log(active_id)
     e.preventDefault();
-
     let data;
     if (active_id) {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/logout",
+          `${process.env.REACT_APP_BACKEND_URL}/logout`,
           { active_id },
           { withCredentials: true } // Include credentials (cookies)
         );

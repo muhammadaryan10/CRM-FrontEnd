@@ -107,14 +107,14 @@ export default function SuperVisorHome() {
 
   const logout = async (e) => {
     e.preventDefault();
-    console.log(active_id)
     let data;
     if (active_id) {
       try {
+    console.log(active_id)
+
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/logout`,
-          { active_id },
-          { withCredentials: true } // Include credentials (cookies)
+          { active_id : active_id }, // Include credentials (cookies)
         );
         if (response.status === 200) {
           const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
@@ -129,7 +129,7 @@ export default function SuperVisorHome() {
       catch (error) {
         if (error.response.status === 402) {
           toast.error("Validation Error")
-          // console.log(error)
+          console.log(error)
         }
         else if (error.response.status === 460) {
           toast.error("Already Log out")
