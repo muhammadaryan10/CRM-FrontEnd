@@ -242,7 +242,7 @@ export default function RemowalTransfer() {
     <div className='p-3'>
       <ToastContainer />
       <div className='flex justify-content-center mb-8'>
-        <input className='w-96 mx-4  p-2' placeholder='Enter Registration , Engine or  Chachis Number ' onChange={(e) => setSearch_term(e.target.value)} />
+        <input className='w-96 mx-4  p-2' placeholder='Enter Registration , Engine or  Chassis Number ' onChange={(e) => setSearch_term(e.target.value)} />
         <button className='theme_btn_md mx-4 rounded' onClick={getRemoavalData}>Search</button>
       </div>
 
