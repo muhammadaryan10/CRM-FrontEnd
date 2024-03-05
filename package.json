@@ -1,7 +1,6 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "homepage": "https://test.magmaconsutingcorporation.com/api",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.3",
