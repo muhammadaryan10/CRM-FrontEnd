@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faUsersGear, faBook, faTruck, faEye, faExpand, faPowerOff } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faUsersGear, faBook, faTruck, faEye, faExpand, faPowerOff, faCircleXmark, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate } from 'react-router-dom';
 import SuperVisorSidebar from '../../Components/SuperVisorSidebar';
 import Cookies from 'universal-cookie';
@@ -23,6 +23,12 @@ export default function SuperVisorHome() {
   const [Alert, setAlerts] = useState([])
   const [AlertVisibility, setAlertVisibility] = useState(false)
   const [active_id, setActive_id] = useState("")
+  const [popup, setPopup] = useState(false)
+
+
+  const hideAlerts = () => {
+    setPopup(false);
+  }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -164,44 +170,66 @@ export default function SuperVisorHome() {
         {isSidebarOpen && (
         <div className="sidebar"><SuperVisorSidebar /></div>
       )}
-      <div className='bg-white rounded-xl m-2 p-2 w-100 overflow-y-scroll'>
+      {popup && (
+        <div className="overlay">
+          <div className="popup w-100">
+            <div className="alert bg-black" role="alert">
+              <div className="flex justify-end">
+                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8 text-white' icon={faCircleXmark} /></button>
+              </div>
+              <div className='flex'>
+                <FontAwesomeIcon icon={faRightFromBracket} className='h-12 text-white' /> <h1 className="font-bold fs-4 m-2 text-white">Log Out ?</h1>
+              </div>
+              <div className='space-y-2 mt-3 text-white'>
+                <p>Are you sure you want to log out?</p>
+                <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
+              </div>
+              <div className="flex justify-end space-x-2">
+                <button className='bg-green-400 text-black p-2' onClick={logout}>YES</button>
+                <button className='bg-white text-black p-2' onClick={hideAlerts}>No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className='rounded-xl m-2 p-2 w-100 overflow-y-scroll' style={{ backgroundColor:"#F0F0F0"}}>
       <div className='flex justify-between m-2'>
         <button onClick={toggleSidebar}><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAY1BMVEX///8AAADPz89LS0uWlpaPj4/4+PhfX1/29vawsLAdHR3b29v8/PzExMQzMzOEhIRzc3MPDw+hoaGysrLq6uo8PDwXFxfh4eFkZGRXV1fGxsZGRkaHh4fX19d6enqnp6e7u7sLhoRgAAAChUlEQVR4nO3di1LCQAyF4eWOCIgIqPWC7/+UWhm8jZNs2Z3JJP2/J8gZK+1u02xKAAAAAAAAAAAAAAAAABDfcjWZjfyYTVbLTvl2rwN/Nrv8gBPrYi80ycw33VtXerH9NCvgwbrOAoeciGvrKous9YA31jUWutEC3ltXWOxeSfhgXWCxBzng3Lq+CuZiwivr8iq4EhNurMurYCMm9H2rOJFvGNbVVdHzhJ6f2M4WYsJH6/IqeBQTel03/SSvoYbW5VUwFBOmW+v6it3KAdPRusBiRyVhWlhXWEj+JW29WJdY6EVN6PzhW71GW1vrKgtscwKm1FjXebEmL+DHOtjjhvDHskle+/7JOPa2abofd9jyPpleD/24ztoKBgAAAAAAAAAAPs2b49iPY9PlvVPrbWT9Lqmz0VuHfEOf7QoLpZPm27N1qRdT29hPZtZ1FpjlBPTdJiw3CH+6s66x0J0W0H+zvnbb8P7JzGDwLAdcWtdXgfyp5cq6vApWwS9S7ab4ZF1eBU9iQv8twlqTsHV1VfT8bxj//zD+b2n8+2GEZxoxoOfV75nyXBpgbaH20vr+GCFjfdiDNX4P9mk8/9povzJfwu+Xpvh73q3o7y0AAAAAAAAAAIAjwedE7cbeZiavO836mvt8050/r83vzD25WehL+LmJvme0Zsy+jD+/1GeTwjd1Bq3va7SlXaf+m4SVWdDx53nHn8kef65+hLMRDmJC6+qq6HlCb2um/8jnzPhcNv0mtwl77/JuyZ3e/lv11Q+Bw5+71oOz89x/25UxOML3DSPjDMsenEMa/yzZ5HcNlXsecHJ6pvNrtwMulo2zc7mbbudyAwAAAAAAAAAAAAAAAIBP7y86VZGfUH/eAAAAAElFTkSuQmCC' className='h-8 w-8' /></button>
-        <button onClick={toggleScreen}><FontAwesomeIcon icon={faExpand} /></button>
-        <button type="button" className="p-2 h-8 w-8" onClick={logout}><FontAwesomeIcon icon={faPowerOff} /></button>
+        {/* <button onClick={toggleScreen}><FontAwesomeIcon icon={faExpand} /></button> */}
+          <button type="button" className="p-2 h-8 w-8" onClick={(e) => setPopup(!popup)}><FontAwesomeIcon icon={faPowerOff} /></button>
         </div>  
         <div className='grid lg:grid-cols-3  gap-2 '>
-          <Link to="/sv/updateProfile" className='border  p-2 flex rounded-2 bg-gray-300 shadow-md hover:bg-gray-400'>
+          <Link to="/sv/updateProfile" className='border  p-2 flex rounded-2 bg-white shadow-md hover:bg-gray-400'>
             <FontAwesomeIcon icon={faUsersGear} className='h-16 p-2' />
             <div className=' ml-3'>
               <h1 className='text-2xl text-black'>Update Profile</h1>
             </div>
           </Link>
-          <Link to="/sv/logs" className=' border  p-2 flex rounded-2 bg-gray-300 shadow-md hover:bg-gray-400'>
+          <Link to="/sv/logs" className=' border  p-2 flex rounded-2 bg-white shadow-md hover:bg-gray-400'>
             <FontAwesomeIcon icon={faBook} className='h-16 p-2' />
             <div className=' ml-3'>
               <h1 className='text-2xl text-black'>View Logs</h1>
             </div>
           </Link>
-          <Link to="/sv/complains" className=' border  p-2 flex rounded-2 bg-gray-300 shadow-md hover:bg-gray-400'>
+          <Link to="/sv/complains" className=' border  p-2 flex rounded-2 bg-white shadow-md hover:bg-gray-400'>
             <FontAwesomeIcon icon={faBook} className='h-16 p-2' />
             <div className=' ml-3'>
               <h1 className='text-2xl text-black'>Complain Logs</h1>
             </div>
           </Link>
-          <div className='border bg-gray-200 p-2'>
+          <div className='border bg-white p-2'>
             <div className='text-center'>
               <h1 className='text-3xl text-black text-center'>{currentHours}:{currentMinutes}</h1>
               <p className='text-lg font-bold text-black text-center'>{currentDate}</p>
             </div>
           </div>
-          <Link to="/sv/DataLog" className=' border  p-2 flex rounded-2 bg-gray-300 shadow-md hover:bg-gray-400'>
+          <Link to="/sv/DataLog" className=' border  p-2 flex rounded-2 bg-white shadow-md hover:bg-gray-400'>
             <FontAwesomeIcon icon={faEye} className='h-16 p-2' />
             <div className=' ml-3'>
               <h1 className='text-2xl text-black'>View Data Logs</h1>
             </div>
           </Link>
-            {/* <Link to="/sv/updateTracker" className=' border  p-2 flex rounded-2 bg-gray-300 shadow-md hover:bg-gray-400'>
+            {/* <Link to="/sv/updateTracker" className=' border  p-2 flex rounded-2 bg-white shadow-md hover:bg-gray-400'>
               <FontAwesomeIcon icon={faEye} className='h-16 p-2' />
               <div className=' ml-3'>
                 <h1 className='text-2xl text-black'>Update Tracker</h1>
@@ -211,12 +239,12 @@ export default function SuperVisorHome() {
         <div className='mt-4'>
           <div>
             <div>
-              <h2 className='m-2 p-2 border shadow-md'><button onClick={toggleInstallationVisibility}>New Installation Que ({count})</button></h2>
+              <h2 className='m-2 p-2 shadow-md border-t border-black'><button onClick={toggleInstallationVisibility}>New Installation Que ({count})</button></h2>
               {isInstallationVisible && (
                 <div>
                   {newInstall.map((installation, index) => (
                       <div key={index} className='m-2'>
-                      <div className='bg-gray-300 p-2 flex justify-between'>
+                      <div className='bg-white p-2 flex justify-between'>
                         <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
                           <div>
                             <p>Client ID</p>
@@ -249,12 +277,12 @@ export default function SuperVisorHome() {
         <div>
           <div>
             <div>
-              <h2 className='m-2 p-2 border shadow-md'><button onClick={toggleComplainVisibility}>New Complains  ({complaincount})</button></h2>
+              <h2 className='m-2 p-2 shadow-md border-t border-black'><button onClick={toggleComplainVisibility}>New Complains  ({complaincount})</button></h2>
               {isComplain && (
                 <div>
                   {Complains.map((e, index) => (
                       <div key={index} className='m-2'>
-                      <div className='bg-gray-300 p-2 flex justify-between  '>
+                      <div className='bg-white p-2 flex justify-between  '>
                         {/* <div className='flex'> */}
                         <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-0'>
                           <div className=''>
@@ -302,7 +330,7 @@ export default function SuperVisorHome() {
 
                           </div>
                         </div>
-                        <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status : <Link to={`/tech/resolve/${e.complain_id}`}>{e.Status}</Link></span></div>
+                        <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status :{e.Status}</span></div>
                       </div>
                     </div>
                   ))}
@@ -314,12 +342,12 @@ export default function SuperVisorHome() {
         <div>
           <div>
             <div>
-              <h2 className='m-2 p-2 border shadow-md'><button onClick={toggleAlertVisibility}>Demo Alerts ( {Alert.length} )</button></h2>
+              <h2 className='m-2 p-2 shadow-md border-t border-black'><button onClick={toggleAlertVisibility}>Demo Alerts ( {Alert.length} )</button></h2>
               {AlertVisibility && (
                 <div>
                   {Alert.map((e, index) => (
                     <div key={index} className='m-2'>
-                      <div className='bg-gray-300 p-2 flex justify-between'>
+                      <div className='bg-white p-2 flex justify-between'>
                         <div className='flex space-x-4'>
                           <div>
                             <div className='flex space-x-4'>

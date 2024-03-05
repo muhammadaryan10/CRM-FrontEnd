@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
 
 export default function SimInventory() {
@@ -42,25 +43,25 @@ export default function SimInventory() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    window.alert('Device Added Successfully')
+                    toast.success('Sim Added Successfully')
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
-                    window.alert("This Sim already exists");
+                    toast.error("This Sim already exists");
                 }
                 else if (error.response.status === 402) {
                     console.log(error);
-                    window.alert("This SimmNo Or ICC ID has Been Already Registered")
+                    toast.error("This SimmNo Or ICC ID has Been Already Registered")
                 } else {
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Plesae Fill All the feilds")
+            toast.error("Plesae Fill All the feilds")
         }
     }
 
@@ -77,6 +78,7 @@ export default function SimInventory() {
 
     return (
         <div>
+            <ToastContainer position="top-center"/>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1 my-4'>
                 <div className=' flex flex-col justify-between'>
                     <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Sim Num :</p><input name='sim_no' onChange={getUserData} className=' ml-3 custum_input  p-1 ' style={{ width: "55%" }} /> </div>

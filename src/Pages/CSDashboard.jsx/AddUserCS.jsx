@@ -187,6 +187,30 @@ const AddUserCS = () => {
   //   ]);
   // };
 
+  const handleChange = (event) => {
+    let name = event.target.name
+    let input = event.target.value.replace(/\D/g, '');
+    // if (name === 'cnic') {
+    //   if (input.length > 4 && input.length <= 12) {
+    //     input = input.slice(0, 4) + '-' + input.slice(4); // Add hyphen after the first four characters
+    //   } else if (input.length > ) {
+    //     input = input.slice(0, 4) + '-' + input.slice(4, 5) + '-' + input.slice(5); // Add hyphen after the first four characters and after the fifth character
+    //   }
+    // }
+    // Remove non-numeric characters
+    if (input.length > 4) {
+      input = input.slice(0, 4) + '-' + input.slice(4); // Add hyphen after the first four characters
+    }
+      // Ensure mobile number doesn't exceed 11 characters
+      if (input.length > 12) {
+        return; // Don't update state if mobile number exceeds 11 characters
+      }
+    setnewCustomer({
+      ...newCustomer,
+      [name]: input
+    }
+    );
+  };
 
   const sendData = async (e) => {
     e.preventDefault();
@@ -309,30 +333,30 @@ const AddUserCS = () => {
             className='h-6 w-6'
           />
         </button>
-        <div className='p-3 mt-3 max-w-3xl' >
-          <div className='flex grid lg:grid-cols-1 gap-x-2 md:grid-cols-1 space-y-4'>
+        <form  className='p-3 mt-3' >
+          <div className='flex grid lg:grid-cols-2 gap-x-2 md:grid-cols-1'>
             <div className=' flex flex-col  space-y-3'>
               <h1 className='text-lg font-bold bg-black text-white p-2'>User Details</h1>
-              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Client ID :</p><input placeholder='Enter   ' className=' ml-3 p-1  custum_input ' value={newCustomer.id} style={{ width: "55%" }} /></div> */}
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Customer Name :</p><input placeholder='Enter Customer Name' onChange={getUserData} name="customer_name" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Father Name:</p><input placeholder='Enter Father Name' onChange={getUserData} name="father_name" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Address :</p><input placeholder='Enter Address' onChange={getUserData} name="address" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Mobile Number :</p><input placeholder='Enter First Mobile ' onChange={getUserData} name="mobileno_1" type='number' className=' ml-3 p-1  custum_input no-spinners ' style={{ width: "55%" }} /> </div>
+              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Client ID :</p><input required placeholder='Enter   ' className=' ml-3 p-1  custum_input required ' value={newCustomer.id} style={{ width: "55%" }} /></div> */}
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Customer Name :</p><input required placeholder='Enter Customer Name' onChange={getUserData} name="customer_name" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Father Name:</p><input required placeholder='Enter Father Name' onChange={getUserData} name="father_name" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Address :</p><input required placeholder='Enter Address' onChange={getUserData} name="address" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Mobile Number :</p><input required placeholder='Enter First Mobile ' onChange={handleChange} name="mobileno_1" type='text' className=' ml-3 p-1  custum_input required no-spinners ' style={{ width: "55%" }} value={newCustomer.mobileno_1} /> </div>
               <div className='flex justify-between my-2'><button onClick={(e) => setmobile2(true)} className='bg-white p-1 rounded-1'><FontAwesomeIcon icon={faPlus} /></button>
-                {mobile2 && (<> <button onClick={(e) => setmobile2(false)} className='bg-white ml-2 p-2 rounded-1'><FontAwesomeIcon icon={faMinus} /></button> <input placeholder='Enter Second Mobile Number' onChange={getUserData} name='mobileno_2' className='mr-3  custum_input p-1 ' style={{ width: "55%" }} />  </>
+                {mobile2 && (<> <button onClick={(e) => setmobile2(false)} className='bg-white ml-2 p-1 rounded-1'><FontAwesomeIcon icon={faMinus} /></button> <input  placeholder='Enter Second Mobile Number' onChange={handleChange} name='mobileno_2' className='mr-3  custum_input required p-1 ' style={{ width: "55%" }} value={newCustomer.mobileno_2}/>  </>
                 )} </div>
               <div className='flex justify-between my-2'><button onClick={(e) => setmobile3(true)} className='bg-white p-1 rounded-1'><FontAwesomeIcon icon={faPlus} /></button>
-                {mobile3 && (<> <button onClick={(e) => setmobile3(false)} className='bg-white ml-2 p-2 rounded-1'><FontAwesomeIcon icon={faMinus} /></button> <input placeholder='Enter Third Mobile Number' onChange={getUserData} name='mobileno_3' className=' mr-3  custum_input p-1 ' style={{ width: "55%" }} />  </>
+                {mobile3 && (<> <button onClick={(e) => setmobile3(false)} className='bg-white ml-2 p-1 rounded-1'><FontAwesomeIcon icon={faMinus} /></button> <input  placeholder='Enter Third Mobile Number' onChange={handleChange} name='mobileno_3' className=' mr-3  custum_input required p-1 ' style={{ width: "55%" }} value={newCustomer.mobileno_3}/>  </>
                 )} </div>
-              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> 3 Mobile Number :</p><input placeholder='Enter   ' onChange={getUserData} name="mobileno_3" type='number' className=' ml-3 p-1  custum_input  no-spinners' style={{ width: "55%" }} /> </div> */}
+              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> 3 Mobile Number :</p><input required placeholder='Enter   ' onChange={getUserData} name="mobileno_3" type='number' className=' ml-3 p-1  custum_input required  no-spinners' style={{ width: "55%" }} /> </div> */}
               {/* <div className="flex items-center space-x-2">
-                            <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Telephone Residence :</p><input placeholder='Enter   ' onChange={getUserData} name="telephone_residence" type='number' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
+                            <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Telephone Residence :</p><input required placeholder='Enter   ' onChange={getUserData} name="telephone_residence" type='number' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
 
                 {serviceList.map((singleService, index) => (
                   <div key={index} className="services">
                     <div className="first-division">
                     
-                      <input placeholder='Enter   '
+                      <input required placeholder='Enter   '
                         name="service"
                         type="text"
                         id="service"
@@ -364,28 +388,28 @@ const AddUserCS = () => {
                   </div>
                 ))}
               </div> */}
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> CNIC :</p><input placeholder='Enter CNIC' onChange={getUserData} name="cnic" className=' ml-3 p-1  custum_input no-spinners ' style={{ width: "55%" }} /> </div>
-              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Primary  User :</p><input placeholder='Enter   ' onChange={getUserData} name="primaryuser_name" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div> */}
-              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Primary User CNIC :</p><input placeholder='Enter   ' onChange={getUserData} name="primaryuser_cnic" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div> */}
-              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Primary User Contact:</p><input placeholder='Enter   ' onChange={getUserData} name="primaryuser_con1" type='number' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div> */}
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Secondary User :</p><input placeholder='Enter Secondary User Name' onChange={getUserData} name="seconadryuser_name" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Relationship with Primary  User :</p><input placeholder='Enter Relation' onChange={getUserData} name="relationship" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Secondary User Contact:</p><input placeholder='Enter Secondary User Contact' onChange={getUserData} name="secondaryuser_con1" type='number' className=' ml-3 p-1  custum_input no-spinners' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> CNIC :</p><input required placeholder='Enter CNIC' onChange={getUserData} name="cnic" className=' ml-3 p-1  custum_input required no-spinners ' style={{ width: "55%" }} value={newCustomer.cnic} type='text'/> </div>
+              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Primary  User :</p><input required placeholder='Enter   ' onChange={getUserData} name="primaryuser_name" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div> */}
+              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Primary User CNIC :</p><input required placeholder='Enter   ' onChange={getUserData} name="primaryuser_cnic" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div> */}
+              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Primary User Contact:</p><input required placeholder='Enter   ' onChange={getUserData} name="primaryuser_con1" type='number' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div> */}
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Secondary User :</p><input required placeholder='Enter Secondary User Name' onChange={getUserData} name="seconadryuser_name" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Relationship with Primary  User :</p><input required placeholder='Enter Relation' onChange={getUserData} name="relationship" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Secondary User Contact:</p><input required placeholder='Enter Secondary User Contact' onChange={handleChange} name="secondaryuser_con1" type='text' className=' ml-3 p-1  custum_input required no-spinners' style={{ width: "55%" }}  value={newCustomer.secondaryuser_con1}/> </div>
             </div >
             <div className='space-y-3'>
               <div className=' flex flex-col justify-center space-y-3'>
                 <h1 className='text-lg font-bold bg-black text-white p-2'>Vehicle Details</h1>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Registration Number :</p><input placeholder='Enter Registration Number' onChange={getUserData} name="registeration_no" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Engine Number :</p><input placeholder='Enter Engine Number' onChange={getUserData} name="engine_no" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Chassis Number :</p><input placeholder='Enter Chassis Number' onChange={getUserData} name="chasis_no" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> CC :</p><input placeholder='Enter CC' onChange={getUserData} name="CC" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Make :</p><input placeholder='Enter Make' onChange={getUserData} name="make" type="text" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Model :</p><input placeholder='Enter Model' onChange={getUserData} name="model" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Year :</p><input placeholder='Enter Year' onChange={getUserData} name="year" type='number' className=' ml-3 p-1  custum_input no-spinners' style={{ width: "55%" }} /> </div>
-                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Color  :</p><input placeholder='Enter Color' onChange={getUserData} name="color" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Registration Number :</p><input required placeholder='Enter Registration Number' onChange={getUserData} name="registeration_no" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Engine Number :</p><input required placeholder='Enter Engine Number' onChange={getUserData} name="engine_no" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Chassis Number :</p><input required placeholder='Enter Chassis Number' onChange={getUserData} name="chasis_no" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> CC :</p><input required placeholder='Enter CC' onChange={getUserData} name="CC" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Make :</p><input required placeholder='Enter Make' onChange={getUserData} name="make" type="text" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Model :</p><input required placeholder='Enter Model' onChange={getUserData} name="model" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Year :</p><input required placeholder='Enter Year' onChange={getUserData} name="year" type='number' className=' ml-3 p-1  custum_input required no-spinners' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Color  :</p><input required placeholder='Enter Color' onChange={getUserData} name="color" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
                 <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Engine Type  :</p>
-                  {/* <input placeholder='Enter   ' onChange={getUserData} name="engine_type" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} />  */}
-                  <select className='input-field  ml-4 p-2  border bg-white' name='engine_type' onChange={getUserData} style={{ width: "55%" }} aria-label=".form-select-lg example">
+                  {/* <input required placeholder='Enter   ' onChange={getUserData} name="engine_type" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} />  */}
+                  <select className='input required-field  ml-4 p-2  border bg-white' name='engine_type' onChange={getUserData} style={{ width: "55%" }} aria-label=".form-select-lg example">
                     <option value="">Select Engine Type </option>
                     <option value="Petrol">Petrol </option>
                     <option value="Diesel">Diesel </option>
@@ -393,75 +417,75 @@ const AddUserCS = () => {
                   </select>
                 </div>
                 <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Transmission :</p>
-                  {/* <input placeholder='Enter   ' onChange={getUserData} name="transmission" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> */}
-                  <select className='input-field  ml-4 p-1  border bg-white' name='transmission' onChange={getUserData} style={{ width: "55%" }} aria-label=".form-select-lg example">
+                  {/* <input required placeholder='Enter   ' onChange={getUserData} name="transmission" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> */}
+                  <select className='input required-field  ml-4 p-1  border bg-white' name='transmission' onChange={getUserData} style={{ width: "55%" }} aria-label=".form-select-lg example">
                     <option value="">Select Transmission </option>
                     <option value="Auto">Auto </option>
                     <option value="Manual">Manual </option>
                   </select>
                 </div>
-                {/* <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Date :</p><input placeholder='Enter   ' onChange={getUserData} name="date" type="date" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div> */}
+                {/* <div className='flex justify-between'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Date :</p><input required placeholder='Enter   ' onChange={getUserData} name="date" type="date" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div> */}
               </div>
             </div>
             {/* Product Details  */}
             <div className=' flex flex-col justify-center space-y-3 mt-4'>
               <h1 className='text-lg font-bold bg-black text-white p-2'>Product Details</h1>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Insurance Partner :</p><input placeholder='Enter Insurance Partner' onChange={getUserData} name="insurance_partner" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Insurance Partner :</p><input required placeholder='Enter Insurance Partner' onChange={getUserData} name="insurance_partner" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>VAS :</p>
                 <div className=' ml-3 p-2 rounded-0  flex justify-start space-x-3' style={{ width: "55%" }} >
-                  <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' name='vas' value='Yes'
+                  <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' name='vas' value='Yes'
                     onChange={handleVasOptionChange} />Yes
                   </div>
-                  <div className='flex justify-between'><input placeholder='Enter   ' type="radio" name='vas'
+                  <div className='flex justify-between'><input required placeholder='Enter   ' type="radio" name='vas'
                     value='No'
                     onChange={handleVasOptionChange} className='mr-2' />No </div>
                 </div>
               </div>
               {showAdditionalFields && (
                 <div className='space-y-2'>
-                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Ignition On :</p><input placeholder='Enter   ' onChange={handleCheckboxChange} value="Ignition On " type='checkbox' className=' ml-3 p-2 rounded-0 custum_input' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Ignition Off :</p><input placeholder='Enter   ' onChange={handleCheckboxChange} value="Ignition Off" type='checkbox' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Webtrack :</p><input placeholder='Enter   ' onChange={handleCheckboxChange} value="Webtrack" type='checkbox' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Geofence Alerts :</p><input placeholder='Enter   ' onChange={handleCheckboxChange} value="Geofence Alerts" type='checkbox' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Mobile App :</p><input placeholder='Enter   ' onChange={handleCheckboxChange} value="Mobile App" type='checkbox' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-                  <div className='flex justify-center mb-3'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Over Speed :</p><input placeholder='Enter   ' onChange={handleCheckboxChange} value="Over Speed" type='checkbox' className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
+                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Ignition On :</p><input required placeholder='Enter   ' onChange={handleCheckboxChange} value="Ignition On " type='checkbox' className=' ml-3 p-2 rounded-0 custum_input required' style={{ width: "55%" }} /> </div>
+                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Ignition Off :</p><input required placeholder='Enter   ' onChange={handleCheckboxChange} value="Ignition Off" type='checkbox' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Webtrack :</p><input required placeholder='Enter   ' onChange={handleCheckboxChange} value="Webtrack" type='checkbox' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Geofence Alerts :</p><input required placeholder='Enter   ' onChange={handleCheckboxChange} value="Geofence Alerts" type='checkbox' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                  <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Mobile App :</p><input required placeholder='Enter   ' onChange={handleCheckboxChange} value="Mobile App" type='checkbox' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+                  <div className='flex justify-center mb-3'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Over Speed :</p><input required placeholder='Enter   ' onChange={handleCheckboxChange} value="Over Speed" type='checkbox' className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
                 </div>
               )}
             </div >
             {/* Other Details  */}
             <div className=' flex flex-col justify-center space-y-3'>
               <h1 className='text-lg font-bold bg-black text-white p-2'>Other Details</h1>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Dealership :</p><input placeholder='Enter Dealership' onChange={getUserData} name="dealership" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Dealer Name :</p><input placeholder='Enter Dealer Name' onChange={getUserData} name="dealer_name" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Sales Person :</p><input placeholder='Enter Sales Person' onChange={getUserData} name="sales_person" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Installation Location :</p><input placeholder='Enter Installation Location' onChange={getUserData} name="installation_loc" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Contact Person :</p><input placeholder='Enter   ' onChange={getUserData} name="conatct_person" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div> */}
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Special Instruction :</p><input placeholder='Enter Special Instruction' onChange={getUserData} name="remarks" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Dealership :</p><input required placeholder='Enter Dealership' onChange={getUserData} name="dealership" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Dealer Name :</p><input required placeholder='Enter Dealer Name' onChange={getUserData} name="dealer_name" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Sales Person :</p><input required placeholder='Enter Sales Person' onChange={getUserData} name="sales_person" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Installation Location :</p><input required placeholder='Enter Installation Location' onChange={getUserData} name="installation_loc" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              {/* <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Contact Person :</p><input required placeholder='Enter   ' onChange={getUserData} name="conatct_person" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div> */}
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Special Instruction :</p><input required placeholder='Enter Special Instruction' onChange={getUserData} name="remarks" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
             </div >
             {/* Payment Details  */}
             <div className=' flex flex-col justify-center space-y-3'>
               <h1 className='text-lg font-bold bg-black text-white p-2'>Payment Details</h1>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Campaign Point Allocation :</p><input placeholder='Enter Campaign Point' onChange={getUserData} name="campaign_point" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Renewal Charges :</p><input placeholder='Enter Renewal Charges' onChange={getUserData} name="renewal_charges" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Campaign Point Allocation :</p><input required placeholder='Enter Campaign Point' onChange={getUserData} name="campaign_point" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Renewal Charges :</p><input required placeholder='Enter Renewal Charges' onChange={getUserData} name="renewal_charges" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Segment :</p>
                 <div className=' ml-3 p-2 rounded-0 text-sm flex justify-start grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 space-x-1' style={{ width: "55%" }} >
-                  <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="cash" />OwnerShip </div>
-                  <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="rental" />Rental </div>
-                  <div className='flex'><input placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="demo" />Demo </div>
+                  <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="cash" />OwnerShip </div>
+                  <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="rental" />Rental </div>
+                  <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="demo" />Demo </div>
                 </div>
               </div>
               {showDemoFields && (
-                <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Demo Duration :</p><input placeholder='Enter Demo Duration' onChange={getUserData} name="demo_duration" className=' ml-3 p-1  custum_input  ' type='date' style={{ width: "55%" }} /> </div>
+                <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Demo Duration :</p><input required placeholder='Enter Demo Duration' onChange={getUserData} name="demo_duration" className=' ml-3 p-1  custum_input required  ' type='date' style={{ width: "55%" }} /> </div>
               )}
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Tracker Charges :</p><input placeholder='Enter Tracker Charges' onChange={getUserData} name="tracker_charges" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Installation Date :</p><input placeholder='Enter   ' onChange={getUserData} name="date_of_installation" type='date' className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Internal Commission :</p><input placeholder='Enter Internal Commission' onChange={getUserData} name="int_comission" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> External Commission :</p><input placeholder='Enter External Commission' onChange={getUserData} name="ext_comission" className=' ml-3 p-1  custum_input ' style={{ width: "55%" }} /> </div>
-              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Discount :</p><input placeholder='Enter Discount' onChange={getUserData} name="discount" className=' ml-3 p-1  custum_input  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Tracker Charges :</p><input required placeholder='Enter Tracker Charges' onChange={getUserData} name="tracker_charges" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Installation Date :</p><input required placeholder='Enter   ' onChange={getUserData} name="date_of_installation" type='date' className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Internal Commission :</p><input required placeholder='Enter Internal Commission' onChange={getUserData} name="int_comission" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> External Commission :</p><input required placeholder='Enter External Commission' onChange={getUserData} name="ext_comission" className=' ml-3 p-1  custum_input required ' style={{ width: "55%" }} /> </div>
+              <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Discount :</p><input required placeholder='Enter Discount' onChange={getUserData} name="discount" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
             </div >
           </div>
           <button className='theme_btn_md rounded-0 float-end my-3' onClick={sendData}>Submit</button>
-        </div>
+        </form>
       </div>
     </div>
   )

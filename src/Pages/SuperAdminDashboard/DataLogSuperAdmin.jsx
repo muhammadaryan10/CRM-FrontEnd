@@ -10,7 +10,7 @@ import axios from 'axios';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
+export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
   const [createLog, setCreateLog] = useState({
     client_id: "",
     customer_name: "",
@@ -27,24 +27,30 @@ export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
   const cookies = new Cookies();
   const [errorAlert, setErrorAlert] = useState(false);
   const [msg, setMsg] = useState("");
-  const [successAlert,setSuccessAlert]=useState(false)
+  const [successAlert, setSuccessAlert] = useState(false)
+  const [formKey, setFormKey] = useState(0); // Key for form element
+
   const hideAlerts = () => {
-      setSuccessAlert(false)
-      setErrorAlert(false);
+    setSuccessAlert(false)
+    setErrorAlert(false);
   };
 
   let name, value
   const getUserData = (e) => {
     name = e.target.name;
     value = e.target.value;
-    setCreateLog({ ...createLog, [name]: value });
+    setCreateLog({
+      ...createLog,
+      representative: empName,
+      [name]: value
+    });
     console.log(createLog);
   };
 
-  const CreateNewDataLog = async () => {
-
+  const CreateNewDataLog = async (e) => {
+    e.preventDefault();
     const { nature, customer_name, reg_no, remarks, representative, contact_no, contact_person, em_loginid } = createLog
-    if (nature, customer_name, reg_no, remarks, representative, contact_no, contact_person, em_loginid) {
+    if (nature, customer_name, reg_no, remarks, representative, contact_no, contact_person) {
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/create_datalogs`,
@@ -60,11 +66,19 @@ export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
         console.log(response); // use response.data to get the server response
 
         if (response.status === 200) {
+          setFormKey((prevKey) => prevKey + 1);
           // console.log("Request successful");
+          // setCreateLog({
+          //   ...createLog,
+          //   contact_person: "",
+          //   contact_no: "",
+          //   representative: empName,
+          //   remarks: ""
+          // })
           setMsg('Data Added  Successfully')
           setSuccessAlert(true)
-          onFetchDataSuccess()
-        }  else {
+          // onFetchDataSuccess()
+        } else {
           setMsg("Please Try Again Later")
           setErrorAlert(true)
           // console.log("Please Try Again Later.");
@@ -90,7 +104,7 @@ export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
     }
   }
 
-  
+
 
 
   useEffect(() => {
@@ -105,45 +119,44 @@ export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
       customer_name: data && data.data.user.customer_name,
       reg_no: data && data.data.user.registeration_no,
       // em_loginid: loginID,
-      representative: empName
     });
   }, [data]);
 
   return (
     <div>
-       {successAlert && (  
-                    <div className="overlay">
-                        <div className="popup">
-                            <div className="alert alert-success" role="alert">
-                                <div className="flex justify-end">
-                                    <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
-                                </div>
-                                <h1 className="font-bold fs-4 my-2">Succes</h1>
-                                {msg}
-                            </div>
-                        </div>
-                    </div>
-                )}
-            {errorAlert && (
-                    <div className="overlay">
-                        <div className="popup">
-                            <div className="alert alert-danger" role="alert">
-                                <div className="flex justify-end">
-                                    <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
-                                </div>
-                                <h1 className="font-bold fs-4 my-2">An Errro Occured</h1>
-                                {msg}
-                            </div>
-                        </div>
-                    </div>
-                )}
+      {successAlert && (
+        <div className="overlay">
+          <div className="popup">
+            <div className="alert alert-success" role="alert">
+              <div className="flex justify-end">
+                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+              </div>
+              <h1 className="font-bold fs-4 my-2">Succes</h1>
+              {msg}
+            </div>
+          </div>
+        </div>
+      )}
+      {errorAlert && (
+        <div className="overlay">
+          <div className="popup">
+            <div className="alert alert-danger" role="alert">
+              <div className="flex justify-end">
+                <button onClick={hideAlerts}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+              </div>
+              <h1 className="font-bold fs-4 my-2">An Errro Occured</h1>
+              {msg}
+            </div>
+          </div>
+        </div>
+      )}
       <div className='flex h-100'>
         <div className='bg-gray-200 rounded-xl m-2 p-2 mt-0 pt-0  w-100 '>
-          <div className='m-2 p-2 bg-white mt-0'>
+          <form  key={formKey} onSubmit={CreateNewDataLog} className='m-2 p-2 bg-white mt-0'>
             <h1 className='text-xl font-semibold bg-gray-200 p-2 m-2'>Enter Data Log</h1>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>
               <div className=' flex flex-col justify-center'>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Nature of Alert</p><select className='input-field  ml-4 p-1  border bg-white' onChange={getUserData} name='nature' style={{ width: "55%" }} aria-label=".form-select-lg example">
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Nature of Alert</p><select className='input-field  ml-4 p-1  border bg-white' required onChange={getUserData} name='nature' style={{ width: "55%" }} aria-label=".form-select-lg example">
                   <option value="Pre Info">Pre Info</option>
                   <option value="National Highway">National Highway</option>
                   <option value="No Go Area">No Go Area</option>
@@ -153,20 +166,22 @@ export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
                   <option value="Karachi Exit">Karachi Exit</option>
                 </select>
                 </div>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.customer_name || " "} name='customer_name' readOnly /> </div>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='number' style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Person</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} onChange={getUserData} name='contact_person' /> </div>
-                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.registeration_no || " "} name='' readOnly /> </div>
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.customer_name || " "} name='customer_name' readOnly /> </div>
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='number' required style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Person</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required onChange={getUserData} name='contact_person' /> </div>
+                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.registeration_no || " "} name='' readOnly /> </div>
               </div >
-              <div className='flex justify-around ' >
-                <p>Remarks :</p>
-                <textarea className='boder bg-gray-200' onChange={getUserData} name='remarks'></textarea>
+              <div className='flex flex-col justify-center' >
+                <div className='flex justify-center m-2 space-x-4'>
+                  <p>Remarks:</p>
+                  <textarea className='boder bg-gray-200 w-100' onChange={getUserData} name='remarks'></textarea>
+                </div>
               </div>
             </div>
             <div className='bg-gray-200 flex justify-end p-2 mx-2'>
-              <button className='theme_btn_md rounded-0' onClick={CreateNewDataLog}>Submit</button>
+              <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
             </div>
-          </div>
+          </form>
 
           <div className='bg-white m-2 mt-4'>
             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Information</h1>
@@ -238,73 +253,73 @@ export default function DataLogSuperAdmin({ data , onFetchDataSuccess }) {
           <div className='m-2 bg-white mt-4'>
             <h1 className='text-xl font-semibold bg-black text-white p-2 '> Data Log</h1>
             <div className="overflow-x-auto ">
-            <table className="min-w-full">
-              <thead className="bg-gray-300 border">
-                <tr>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Alert
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Registration #
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Customer Name
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Contact Person
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Date
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Time
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Remarks
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Contact
-                  </th>
-                  <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                    Representative
-                  </th>
-                </tr>
-              </thead>
-              <tbody className=''>
-                {data && data.datalogs.map((log, index) => (
-                  index < 5 && (
-                  <tr key={index} className="bg-white border">
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.nature || " "}</td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                      {log.reg_no || " "}
-                    </td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                      {log.customer_name || " "}
-                    </td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                      {log.contact_person || ""}
-                    </td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.date || " "}</td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.time || " "}</td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                      {log.remarks || " "}
-                    </td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                      {log.contact_no || " "}
-                    </td>
-                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                      {log.representative || " "}
-                    </td>
+              <table className="min-w-full">
+                <thead className="bg-gray-300 border">
+                  <tr>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Alert
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Registration #
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Customer Name
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Contact Person
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Date
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Time
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Remarks
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Contact
+                    </th>
+                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                      Representative
+                    </th>
                   </tr>
-                  )
-                ))}
-              </tbody>
-              
-            </table>
-            <div className="flex justify-end" style={{width:"100%"}}>
+                </thead>
+                <tbody className=''>
+                  {data && data.datalogs.map((log, index) => (
+                    index < 5 && (
+                      <tr key={index} className="bg-white border">
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.nature || " "}</td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                          {log.reg_no || " "}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                          {log.customer_name || " "}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                          {log.contact_person || ""}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.date || " "}</td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.time || " "}</td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                          {log.remarks || " "}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                          {log.contact_no || " "}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                          {log.representative || " "}
+                        </td>
+                      </tr>
+                    )
+                  ))}
+                </tbody>
+
+              </table>
+              <div className="flex justify-end" style={{ width: "100%" }}>
                 <Link to={`/dataLog/${data && data.data.user.registeration_no}`} target='blank' className="p-1 mx-3 underline">View More >></Link>
-                </div>
-                </div>
+              </div>
+            </div>
           </div>
 
           {/* INformation  */}

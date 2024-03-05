@@ -24,24 +24,27 @@ export default function Login() {
 
   const Authentication = async () => {
     setLoading(true)
-    const check = cookies.get('role');
-    if (check === "Technical") {
+    setTimeout(() => {
+      const check = cookies.get('role');
+      if (check === "Technical") {
         navigate("/tech");
-    } else if (check === "Super Visor") {
+      } else if (check === "Super Visor") {
         navigate("/sv");
-    }
-    else if (check === "Customer services") {
+      }
+      else if (check === "Customer services") {
         navigate("/cs");
-    }
-    else if (check === "CRO") {
+      }
+      else if (check === "CRO") {
         navigate("/cro");
-    } else if (check === "Head") {
+      } else if (check === "Head") {
         navigate("/superAdmin");
-    }
-    else {
-      setLoading(false)
-    }
-    
+      }
+      else {
+        setLoading(false)
+      }
+
+    }, 1000);
+
   }
 
   useEffect(() => {
@@ -85,17 +88,17 @@ export default function Login() {
         if (response.status === 200) {
           console.log(data.message);
           if (data.role === "Technical") {
-              navigate("/tech");
+            navigate("/tech");
           } else if (data.role === "Super Visor") {
-              navigate("/sv");
+            navigate("/sv");
           }
           else if (data.role === "Customer services") {
-              navigate("/cs");
+            navigate("/cs");
           }
           else if (data.role === "CRO") {
-              navigate("/cro");
+            navigate("/cro");
           } else if (data.role === "Head") {
-              navigate("/superAdmin");
+            navigate("/superAdmin");
           }
           else {
             toast.error("Opps it looks Like You are not Eligble");
@@ -128,7 +131,7 @@ export default function Login() {
 
   return (
     <div>
-      <ToastContainer />
+      <ToastContainer position="top-center" />
       {loading && (
         <div className='h-[100vh] w-[100vw] flex justify-center items-center'>
           <Watch

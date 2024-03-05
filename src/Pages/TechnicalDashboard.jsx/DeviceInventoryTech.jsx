@@ -78,7 +78,7 @@ export default function DeviceInventoryTech() {
 
     return (
         <div>
-            <ToastContainer/>
+            <ToastContainer position="top-center"/>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1 my-4' >
                 <div className=' flex flex-col justify-between'>
                     <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Device ID :</p><input name='device_serialno' onChange={getUserData} className=' ml-3 custum_input  p-1 ' style={{ width: "55%" }} /> </div>

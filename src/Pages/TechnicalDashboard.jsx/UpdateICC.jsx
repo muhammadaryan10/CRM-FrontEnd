@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
 
 export default function UpdateICC() {
@@ -46,24 +47,24 @@ export default function UpdateICC() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    window.alert('Device Added Successfully')
+                    toast.success('Device Added Successfully')
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     console.log(error);
-                    window.alert("This device already exists");
+                    toast.error("This device already exists");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Sim OR ICC Id is not found in the Inventory")
+                    toast.error("Sim OR ICC Id is not found in the Inventory")
                 } else {
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Plesae Fill All the feilds")
+            toast.error("Plesae Fill All the feilds")
         }
     }
 
@@ -85,7 +86,7 @@ export default function UpdateICC() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    window.alert('Device Added Successfully')
+                    toast.success('Device Added Successfully')
                     setNewDevice({
                         ...newDevice,
                         device_serialno: response.data.device_details.device_serialno,
@@ -95,22 +96,22 @@ export default function UpdateICC() {
                         sim_id: response.data.device_details.sim_id,
                     })
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
-                    window.alert("Device is installed please unisntall first");
+                    toast.error("Device is installed please unisntall first");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Please Enter A Valid Device Num")
+                    toast.error("Please Enter A Valid Device Num")
                 } else {
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Plesae Fill All the feilds")
+            toast.error("Plesae Fill All the feilds")
         }
     }
 
@@ -120,6 +121,7 @@ export default function UpdateICC() {
 
     return (
         <div>
+            <ToastContainer position="top-center"/>
             <div className='flex justify-content-center my-3 mb-5'>
                 <input onChange={(e) => setSearch_term(e.target.value)} name="search_term" className='w-96 mx-4  p-2 custum_input' placeholder='Enter Device Num' />
                 <button className='theme_btn_md rounded-0 ' onClick={SearchDevice}>Search</button>

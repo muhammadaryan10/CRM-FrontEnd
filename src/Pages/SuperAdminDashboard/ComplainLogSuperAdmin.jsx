@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
+export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [additionalFields, setAdditionalFields] = useState(false);
     const [tableData, setTableData] = useState([]);
@@ -24,7 +24,7 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
         last_location: "",
         em_loginid: "",
     });
-    
+    const [formKey, setFormKey] = useState(0); // Key for form element
     const [errorAlert, setErrorAlert] = useState(false);
     const [msg, setMsg] = useState("");
     const [successAlert, setSuccessAlert] = useState(false)
@@ -32,6 +32,7 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
         setSuccessAlert(false)
         setErrorAlert(false);
     };
+
 
 
     let name, value
@@ -42,9 +43,10 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
         console.log(complain);
     };
 
-        const cookies = new Cookies();
+    const cookies = new Cookies();
+    const sendComplain = async (e) => {
 
-    const sendComplain = async () => {
+        e.preventDefault();
 
         const { nature_of_complain, client_id, customer_name, reg_no, remarks, Date, Time, last_location } = complain
         if (nature_of_complain, client_id, customer_name, reg_no, remarks) {
@@ -64,13 +66,14 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
 
                 if (response.status === 200) {
                     // console.log("Request successful");
+                    setFormKey((prevKey) => prevKey + 1);
+                    // onFetchDataSuccess();    
                     setMsg(response.data.messsage)
                     setSuccessAlert(true)
-                    setComplain({
-                        ...complain,
-                        remarks:""
-                    })
-                    // onFetchDataSuccess();    
+                    // setComplain({
+                    //     ...complain,
+                    //     remarks:""
+                    // })
                 } else {
                     setErrorAlert(true)
                     setMsg("Please Try Again Later.");
@@ -79,27 +82,16 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
                     setErrorAlert(true)
-                    setComplain({
-                        ...complain,
-                        remarks:""
-                    })
                     setMsg("Data Not Found");
                 }
                 else if (error.response.status === 402) {
                     setErrorAlert(true)
-                    setComplain({
-                        ...complain,
-                        remarks:""
-                    })
                     setMsg("Plesae Fill All the feilds")
                 }
                 else if (error.response.status === 401) {
                     setErrorAlert(true)
                     setMsg("The Complain With The same Nature is Already Registered Against this Registration Number")
                 } else {
-                    setComplain({
-                        remarks:""
-                    })
                     console.log("Internal Server Error", error);
                     setErrorAlert(true)
                     setMsg("Internal Server Error")
@@ -314,7 +306,7 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
             )}
             <div className='flex h-100 pt-0 mt-0'>
                 <div className=' rounded-xl m-2 mt-0 pt-0 p-2 w-100' >
-                    <div className='m-2 mt-0 p-2 bg-white'>
+                    <form key={formKey} onSubmit={sendComplain} className='m-2 mt-0 p-2 bg-white'>
                         <h1 className='text-xl font-semibold bg-gray-200 p-2 m-2'>Complain Box </h1>
                         <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>
                             <div className=' flex flex-col justify-center'>
@@ -332,9 +324,9 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
                                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.registeration_no || " "} readOnly /> </div>
                             </div >
                             <div className='flex flex-col justify-center  ' >
-                                <div className='flex justify-centerm my-2'>
+                                <div className='flex justify-center my-2'>
                                     <p>Remarks</p>
-                                    <textarea className='input-field ml-4 p-1 border w-100' value={complain.remarks} name="remarks" onChange={getUserData}></textarea>
+                                    <textarea className='input-field ml-4 p-1 border w-100' name="remarks" onChange={getUserData}></textarea>
                                 </div>
                                 {additionalFields && (
                                     <div>
@@ -374,9 +366,9 @@ export default function ComplainLogSuperAdmin({ data ,onFetchDataSuccess}) {
 
                         </div>
                         <div className='bg-gray-200 flex justify-end p-2 mx-2'>
-                            <button className='theme_btn_md rounded-0' onClick={sendComplain}>Submit</button>
+                            <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
                         </div>
-                    </div>
+                    </form>
                     <div className='bg-white m-2 mt-4'>
                         <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Information</h1>
                         <div className="flex flex-col">

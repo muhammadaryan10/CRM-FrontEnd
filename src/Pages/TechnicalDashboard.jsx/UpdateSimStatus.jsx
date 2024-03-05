@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
 
 export default function UpdateSimStatus() {
@@ -46,24 +47,24 @@ export default function UpdateSimStatus() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    window.alert('Sim updated Successfully')
+                    toast.success('Sim updated Successfully')
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     console.log(error);
-                    window.alert("This device already exists");
+                    toast.error("This device already exists");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Sim OR ICC Id is not found in the Inventory")
+                    toast.error("Sim OR ICC Id is not found in the Inventory")
                 } else {
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Plesae Fill All the feilds")
+            toast.error("Plesae Fill All the feilds")
         }
     }
 
@@ -85,7 +86,7 @@ export default function UpdateSimStatus() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    window.alert('Device Added Successfully')
+                    toast.success('Updated Successfully')
                     setNewDevice({
                         ...newDevice,
                         sim_id: response.data.data.id,
@@ -96,22 +97,22 @@ export default function UpdateSimStatus() {
                     })
                     console.log("newDevice",newDevice)
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
-                    window.alert("Sim NOt Found");
+                    toast.error("Sim NOt Found");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Please Enter A Valid Device Num")
+                    toast.error("Please Enter A Valid Device Num")
                 } else {
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Plesae Enter An ICC ID")
+            toast.error("Plesae Enter An ICC ID")
         }
     }
 
@@ -121,6 +122,7 @@ export default function UpdateSimStatus() {
 
     return (
         <div>
+            <ToastContainer position="top-center"/>
             <div className='flex justify-content-center my-3 mb-5'>
                 <input onChange={(e) => seticc_id(e.target.value)} name="search_term" className='w-96 mx-4  p-2 custum_input' placeholder='Enter ICC ID' />
                 <button className='theme_btn_md rounded-0 ' onClick={SearchDevice}>Search</button>

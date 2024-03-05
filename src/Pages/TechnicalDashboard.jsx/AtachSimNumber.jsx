@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
 
 export default function AtachSimNumber() {
@@ -39,27 +40,27 @@ export default function AtachSimNumber() {
                         representative:empName
                     })
                     console.log("Request successful");
-                    window.alert('Device Added Successfully')
+                    toast.success('Device Added Successfully')
                     console.log(Device)
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     setDevice()
-                    window.alert("This device Already Installed");
+                    toast.error("This device Already Installed");
                 }
                 else if (error.response.status === 402) {
                     setDevice()
-                    window.alert("Device Not Found")
+                    toast.error("Device Not Found")
                 } else {
                     setDevice()
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Please Enter The Device Num")
+            toast.error("Please Enter The Device Num")
         }
     }
 
@@ -87,28 +88,28 @@ export default function AtachSimNumber() {
                         representative:empName
                     })
                     console.log("Request successful");
-                    window.alert('Sinm Founded Successfully')
+                    toast.success('Sim Founded Successfully')
                     console.log(Attach)
                     return
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     setSim()
-                    window.alert("This Sim Already Installed");
+                    toast.error("This Sim Already Installed");
                 }
                 else if (error.response.status === 402) {
                     setSim()
-                    window.alert("Sim Not Found")
+                    toast.error("Sim Not Found")
                 } else {
                     setSim()
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Please Enter The Sim Num")
+            toast.error("Please Enter The Sim Num")
         }
     }
 
@@ -134,23 +135,23 @@ export default function AtachSimNumber() {
                     setDevice()
                     setAttach()
                     console.log("Request successful");
-                    window.alert('Device Attached  Successfully')
+                    toast.success('Device Attached  Successfully')
                 } else {
-                    window.alert("Please Try Again Later.");
+                    toast.error("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
-                    window.alert("Error In Submision ");
+                    toast.error("Error In Submision ");
                 }
                 else if (error.response.status === 402) {
-                    window.alert("Please Fill All the Feilds")
+                    toast.error("Please Fill All the Feilds")
                 } else {
                     console.log("Internal Server Error", error);
-                    window.alert("Internal Server Error")
+                    toast.error("Internal Server Error")
                 }
             }
         } else {
-            window.alert("Plesae Fill All the feilds")
+            toast.error("Plesae Fill All the feilds")
         }
     }
 
@@ -165,6 +166,7 @@ export default function AtachSimNumber() {
 
     return (
         <div>
+            <ToastContainer position="top-center"/>
             <div className='flex grid lg:grid-cols-2 md:grid-cols-1 my-4'>
                 <div className=' flex flex-col justify-between'>
                     <div className='flex justify-content-center my-3 mb-5'>

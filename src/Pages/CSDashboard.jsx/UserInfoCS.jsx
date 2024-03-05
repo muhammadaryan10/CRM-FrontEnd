@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SuperAdminSidebar from '../../Components/SuperAdminSidebar';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Technical_Sidebar from '../../Components/Technical_Sidebar';
 import CS_Sidebar from '../../Components/CS_Sidebar';
 
 export default function VehicleInformation() {
@@ -381,10 +382,10 @@ export default function VehicleInformation() {
                                 <div className='w-50'>
                                     <div className='w-60'>
                                         <div className='w-60'>
-                                            {data && data.vas && data.vas.map((option, index) => (
+                                            {data && data.user.vas_options && JSON.parse(data.user.vas_options).map((option, index) => (
                                                 <div className='flex' key={index}>
-                                                    <p className='text-sm font-bold w-60'>{option}:</p>
-                                                    <p className='text-sm ml w-40'>{"YES" || "N/A"}</p>
+                                                    <p className='text-sm font-bold w-40'>{option}</p>
+                                                    <p className='text-sm w-60'>Yes</p>
                                                 </div>
                                             ))}
                                         </div>
@@ -392,17 +393,14 @@ export default function VehicleInformation() {
                                     </div>
 
                                 </div>
-                                <div className='w-50'>
-                                    {data && data.vas && data.vas.map((option, index) => (
+                                {/* <div className='w-50'>
+                                    {data && data.user.vas_options.map((option, index) => (
                                         <div className='flex' key={index}>
-                                            <p className='text-sm font-bold w-40'>Time :</p>
-                                            <p className='text-sm  w-60'>  {new Date(data.user.created_at).toLocaleString("en-US", {
-                                                timeZone: "Asia/Karachi",
-                                            }) || "N/A"}</p>
+                                            <p className='text-sm font-bold w-40'>{option}</p>
+                                            <p className='text-sm w-60'>Yes</p>
                                         </div>
                                     ))}
-
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         {/* Records Table  */}
