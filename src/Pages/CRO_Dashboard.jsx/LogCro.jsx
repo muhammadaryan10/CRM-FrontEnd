@@ -158,7 +158,8 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                             <div className=' flex flex-col justify-center'>
                                 <div className='flex justify-center my-2'>
                                     <p className='text-end md:text-start' style={{ width: "40%" }}>Nature of Alert</p>
-                                    <select
+                                    <input
+                                        list="natureOptions"
                                         className='input-field ml-4 p-1 border bg-white'
                                         required
                                         onChange={getUserData}
@@ -166,15 +167,17 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                         style={{ width: "55%" }}
                                         aria-label=".form-select-lg example"
                                         value={createLog.nature}
-                                    >
-                                        <option value="Pre Info">Pre Info</option>
-                                        <option value="National Highway">National Highway</option>
-                                        <option value="No Go Area">No Go Area</option>
-                                        <option value="Battery Alert">Battery Alert</option>
-                                        <option value="Wrong Location">Wrong Location</option>
-                                        <option value="Gamer Alert">Gamer Alert</option>
-                                        <option value="Karachi Exit">Karachi Exit</option>
-                                    </select>
+                                    />
+
+                                    <datalist id="natureOptions">
+                                        <option value="Pre Info" />
+                                        <option value="National Highway" />
+                                        <option value="No Go Area" />
+                                        <option value="Battery Alert" />
+                                        <option value="Jammer Alert" />
+                                        <option value="Karachi Exit" />
+                                    </datalist>
+
                                 </div>
                                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.customer_name || " "} name='customer_name' readOnly /> </div>
                                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='number' required style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
@@ -370,10 +373,10 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                         <p className='text-sm  w-60'>{data && data.data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}
-                               
+
                             </div>
                             <div>
-                                <h1 className='bg-gray-200 p-2 text-sm font-bold  mr-4 underline'> Secendory User Information</h1>
+                                <h1 className='bg-gray-200 p-2 text-sm font-bold  mr-4 underline'> Secondary User Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'> Name:</p>
                                     <p className='text-sm  w-60 '>{data && data.data.user.seconadryuser_name || "N/A"}</p>
@@ -381,6 +384,10 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Contact:</p>
                                     <p className='text-sm  w-60'>{data && data.data.user.secondaryuser_con1 || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>RelationShip :</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.relationship || "N/A"}</p>
                                 </div>
                                 {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Address </p>

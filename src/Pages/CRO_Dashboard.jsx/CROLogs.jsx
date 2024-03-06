@@ -78,6 +78,7 @@ export default function CROLogs() {
             }
             else {
                 setData()
+                console.log(error)
                 setErrorAlert(true)
                 setMsg("Internal Server Error")
             }

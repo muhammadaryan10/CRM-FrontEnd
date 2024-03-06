@@ -482,14 +482,18 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                                
                             </div>
                             <div>
-                                <h1 className='bg-gray-200 p-2 text-sm font-bold  mr-4 underline'> Secendory User Information</h1>
+                                <h1 className='bg-gray-200 p-2 text-sm font-bold  mr-4 underline'> Secondary User Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'> Name:</p>
-                                    <p className='text-sm  w-60 '>{data && data.data.user.customer_name || "N/A"}</p>
+                                    <p className='text-sm  w-60 '>{data && data.data.user.seconadryuser_name || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Contact:</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.father_name || "N/A"}</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.secondaryuser_con1 || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>RelationShip :</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.relationship || "N/A"}</p>
                                 </div>
                                 {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Address </p>
@@ -725,57 +729,7 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                 </div> */}
                         {/*                                 
                             </div>
-                        </div> */}
-                        {/* Payment Details  */}
-                        {/* <div className='bg-white mt-3 border border-gray-600'>
-              <h1 className='text-xl font-semibold bg-black text-white p-2 '>Payment Details</h1>
-              <div className='p-2 flex'>
-                <div className='' style={{ width: "50%" }}>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Segment :</p>
-                    <p className='text-sm ml w-40'>{data && data.data.user.segment || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Demo Duration :</p>
-                    <p className='text-sm w-40'>{data && data.data.user.demo_duration || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Insurance Partner :</p>
-                    <p className='text-sm w-40'>{data && data.data.user.insurance_partner || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Dealership :</p>
-                    <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Install Location :</p>
-                    <p className='text-sm  w-40'>{data && data.data.user.date_of_installation || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Sales Person :</p>
-                    <p className='text-sm  w-40'>{data && data.data.user.sales_person || "N/A"}</p>
-                  </div>
-                </div>
-                <div className='' style={{ width: "50%" }}>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Bank Name :</p>
-                    <p className='text-sm ml w-60'>{data && data.data.technical.date_of_installation || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Dealer Name :</p>
-                    <p className='text-sm w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Technecian :</p>
-                    <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Contact Person:</p>
-                    <p className='text-sm w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
-                  </div>
-                </div>
-              </div>
-            </div> */}
+                        </div> */}                        
                         {/* Vehicle Status */}
                         {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Status</h1>
@@ -825,47 +779,11 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                                 </div>
                             </div>
                         </div> */}
-                        {/* Records Table  */}
-                        {/* <div className='bg-white mt-3 border border-gray-600'>
-                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Record Remarks</h1>
-                            <div class="overflow-x-auto ">
-                                <div class="py-2 inline-block min-w-full ">
-                                    <div class="overflow-x-auto ">
-                                        <table class="min-w-full">
-                                            <thead class="border border-black">
-                                                <tr>
-                                                    <th scope="col" class="text-xs font-medium text-gray-900  p-2 text-start border border-black">
-                                                        Status
-                                                    </th>
-                                                    <th scope="col" class="text-xs font-medium text-gray-900  p-2 text-start border border-black">
-                                                        Remark
-                                                    </th>
-                                                    <th scope="col" class="text-xs font-medium text-gray-900  p-2 text-start border border-black">
-                                                        Created AT
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="bg-white border border-black">
-                                                    <td class="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-black"> JU-7025</td>
-                                                    <td class="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-black">
-                                                        27684
-                                                    </td>
-                                                    <td class="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-black">
-                                                        r-black5
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                         {/* Special Instruction  */}
                         <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Specail Instruction</h1>
                             <div className='p-4'>
-                                <p className='text-sm font-bold '>Instruction :</p>
+                            <p className='text-sm font-bold mb-2'>Instruction :</p><span>{data && data.data.user.remarks || "N/A"}</span>
                             </div>
                         </div>
                     </div>
