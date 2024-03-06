@@ -654,7 +654,7 @@ export default function NRCRO({data}) {
                         </div> */}
                         {/* Special Instruction  */}
                         <div className='bg-white mt-3 border border-gray-600'>
-                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Specail Instruction</h1>
+                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Special Instruction</h1>
                             <div className='p-4'>
                                 <p className='text-sm font-bold mb-2'>Instruction :</p><span>{data && data.data.user.remarks || "N/A"}</span>
                             </div>
