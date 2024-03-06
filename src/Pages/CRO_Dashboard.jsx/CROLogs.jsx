@@ -11,6 +11,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LogCro from './LogCro';
+import ComplainLogCro from './ComplainLogCro';
+import RedoLogCRO from './RedoLogCRO';
+import NRCRO from './NRCRO';
 
 export default function CROLogs() {
     const [data, setData] = useState();
@@ -129,10 +133,10 @@ export default function CROLogs() {
                     <button className={`mr-1 text-xs font-bold  bg-white p-2 ${selectedLog === 'NR' ? 'bg-gray-500' : ''}`}
                         onClick={() => handleLogButtonClick('NR')}>N/R (No Report)</button>
                 </div>
-                {selectedLog === 'data' && <DataLogSuperAdmin data={data} onFetchDataSuccess={handleFetchDataSuccess} />}
-                {selectedLog === 'complain' && <ComplainLogSuperAdmin data={data}   onFetchDataSuccess={handleFetchDataSuccess}/>}
-                {selectedLog === 'NR' && <NRSuperAdmin data={data} />}
-                {selectedLog === 'Redo' && <RedoSuperAdmin data={data}/>}
+                {selectedLog === 'data' && <LogCro data={data} onFetchDataSuccess={handleFetchDataSuccess} />}
+                {selectedLog === 'complain' && <ComplainLogCro data={data}   onFetchDataSuccess={handleFetchDataSuccess}/>}
+                {selectedLog === 'NR' && <NRCRO data={data} />}
+                {selectedLog === 'Redo' && <RedoLogCRO data={data}/>}
             </div>
         </div>
     )

@@ -153,7 +153,7 @@ export default function Login() {
               <h1 className='text-5xl font-bold text-center'>MAGMA CONSULTING CORPORATION</h1>
               <div class="mt-8">
                 <p href="" class="text-2xl font-bold text-pink-600 text-center"><FontAwesomeIcon icon={faTty} /> 021 3453 5573 </p>
-                <address class="mt-2 not-italic text-center">282 Kevin Brook, Imogeneborough, CA 58517</address>
+                <address class="mt-2 not-italic text-center">59-B NAZR-UL-ISLAM ROAD PECHS BLOCK 2 KARACHI, PAKISTAN</address>
               </div>
             </div>
 

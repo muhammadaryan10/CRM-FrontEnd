@@ -1,59 +1,60 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import SuperAdminSidebar from '../../Components/SuperAdminSidebar';
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import {
+    MaterialReactTable,
+    useMaterialReactTable,
+} from 'material-react-table';
+import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [additionalFields, setAdditionalFields] = useState(false);
-    const [tableData, setTableData] = useState([]);
-    const [loginId, setLoginId] = useState("")
-    const [empName, setEmpName] = useState("")
-    const [complain, setComplain] = useState({
-        nature_of_complain: "",
+export default function LogCro({ data, onFetchDataSuccess }) {
+    const [createLog, setCreateLog] = useState({
         client_id: "",
         customer_name: "",
+        nature: "",
         reg_no: "",
-        Date: "",
-        Time: "",
-        remarks: "",
         representative: "",
-        last_location: "",
-        em_loginid: "",
+        contact_no: "",
+        contact_person: "",
+        remarks: "",
+        em_loginid: ""
     });
-    const [formKey, setFormKey] = useState(0); // Key for form element
+    const [empName, setEmpName] = useState("")
+    const [loginId, setLoginId] = useState("")
+    const cookies = new Cookies();
     const [errorAlert, setErrorAlert] = useState(false);
     const [msg, setMsg] = useState("");
     const [successAlert, setSuccessAlert] = useState(false)
+    const [formKey, setFormKey] = useState(0); // Key for form element
+
     const hideAlerts = () => {
         setSuccessAlert(false)
         setErrorAlert(false);
     };
 
-
-
     let name, value
     const getUserData = (e) => {
         name = e.target.name;
         value = e.target.value;
-        setComplain({ ...complain, [name]: value });
-        console.log(complain);
+        setCreateLog({
+            ...createLog,
+            representative: empName,
+            [name]: value
+        });
+        console.log(createLog);
     };
 
-    const cookies = new Cookies();
-    const sendComplain = async (e) => {
-
+    const CreateNewDataLog = async (e) => {
         e.preventDefault();
-
-        const { nature_of_complain, client_id, customer_name, reg_no, remarks, Date, Time, last_location } = complain
-        if (nature_of_complain, client_id, customer_name, reg_no, remarks) {
+        const { nature, customer_name, reg_no, remarks, representative, contact_no, contact_person, em_loginid } = createLog
+        if (nature, customer_name, reg_no, remarks, representative, contact_no, contact_person) {
             try {
                 const response = await axios.post(
-                    `${process.env.REACT_APP_BACKEND_URL}/createcomplain`,
-                    complain,
+                    `${process.env.REACT_APP_BACKEND_URL}/create_datalogs`,
+                    createLog,
                     {
                         headers: {
                             "Content-Type": "application/json",
@@ -65,200 +66,45 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                 console.log(response); // use response.data to get the server response
 
                 if (response.status === 200) {
-                    // console.log("Request successful");
                     setFormKey((prevKey) => prevKey + 1);
-                    // onFetchDataSuccess();    
-                    setMsg(response.data.messsage)
-                    setSuccessAlert(true)
-                    // setComplain({
-                    //     ...complain,
-                    //     remarks:""
+                    // console.log("Request successful");
+                    // setCreateLog({
+                    //   ...createLog,
+                    //   contact_person: "",
+                    //   contact_no: "",
+                    //   representative: empName,
+                    //   remarks: ""
                     // })
+                    setMsg('Data Added  Successfully')
+                    setSuccessAlert(true)
+                    // onFetchDataSuccess()
                 } else {
+                    setMsg("Please Try Again Later")
                     setErrorAlert(true)
-                    setMsg("Please Try Again Later.");
+                    // console.log("Please Try Again Later.");
                 }
             } catch (error) {
                 if (error.response.status === 400) {
                     // console.log("Error:", "User Already Registered With This Credentails", error);
+                    setMsg(error.response.data.message);
                     setErrorAlert(true)
-                    setMsg("Data Not Found");
                 }
                 else if (error.response.status === 402) {
+                    setMsg("Please Fill All The Feilds")
                     setErrorAlert(true)
-                    setMsg("Plesae Fill All the feilds")
-                }
-                else if (error.response.status === 401) {
-                    setErrorAlert(true)
-                    setMsg("The Complain With The same Nature is Already Registered Against this Registration Number")
                 } else {
-                    console.log("Internal Server Error", error);
-                    setErrorAlert(true)
+                    // console.log("Internal Server Error", error);
                     setMsg("Internal Server Error")
+                    setErrorAlert(true)
                 }
             }
         } else {
-            setErrorAlert(true)
             setMsg("Plesae Fill All the feilds")
+            setErrorAlert(true)
         }
     }
 
-    const getResolvedBy = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].resolved_by;
-        } else {
-            return 'Not Resolved';
-        }
-    };
 
-    const getResolvedByDate = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].date;
-        } else {
-            return 'Not Resolved';
-        }
-    };
-
-    const getResolvedByTime = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].time;
-        } else {
-            return 'Not Resolved';
-        }
-    };
-
-    const columns = useMemo(
-        () => [
-            {
-                accessorKey: 'complain_id',
-                header: 'Ticker',
-                size: 80,
-            },
-            {
-                accessorKey: 'customer_name', //access nested data with dot notation
-                header: 'Customer Name',
-                size: 100,
-            },
-            {
-                accessorKey: 'reg_no',
-                header: 'Registration #',
-                size: 90,
-            },
-            {
-                accessorKey: 'nature_of_complain',
-                header: 'Complain',
-                size: 100,
-            },
-            {
-                accessorKey: 'date',
-                header: 'Date',
-                size: 80,
-            },
-            {
-                accessorKey: 'time',
-                header: 'Time',
-                size: 80,
-            },
-            {
-                accessorKey: 'remarks',
-                header: 'Remarks',
-                size: 250,
-            },
-            {
-                accessorKey: 'emp_name',
-                header: 'Represtative',
-                size: 100,
-            },
-            {
-                accessorKey: 'resolved_by',
-                header: 'Resolved By',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedBy(row.original)}
-                    </p>
-
-                ),
-            },
-            {
-                accessorKey: 'Date',
-                header: 'Resolved Date',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedByDate(row.original)}
-                    </p>
-
-                ),
-            },
-            {
-                accessorKey: 'Time',
-                header: 'Resolved Time',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedByTime(row.original)}
-                    </p>
-
-                ),
-            },
-            {
-                accessorKey: 'Status',
-                header: 'Status',
-                size: 80,
-            },
-        ],
-        [],
-    );
-
-    const OptionSelect = async (e) => {
-        name = e.target.name
-        value = e.target.value
-        setComplain({
-            ...complain,
-            nature_of_complain: value
-        })
-        if (value === "N/R(no report)") {
-            setAdditionalFields(true)
-        } else {
-            setAdditionalFields(false)
-        }
-    }
-
-    const table = useMaterialReactTable({
-        columns,
-        data: tableData,
-        enableColumnActions: false,
-        enableColumnFilters: false,
-        enableSorting: false,
-        initialState: { density: 'compact' },
-        muiTableHeadCellProps: {
-            sx: {
-                fontWeight: 'bold',
-                fontSize: '12px',
-                border: '1px solid #e0e0e0',
-                color: "black"
-            },
-        },
-        muiTableBodyProps: {
-            sx: {
-                fontSize: "8px"
-            }
-        },
-        muiTableBodyCellProps: {
-            sx: {
-                fontSize: "11px",
-                borderRight: '2px solid #e0e0e0', //add a border between columns
-            },
-        }
-    });
-
-    useEffect(() => {
-        if (data && data.complain.complains) {
-            // console.log("New data received:", data.complain.complain);
-            setTableData(data.complain.complains);
-        }
-    }, [data]);
 
 
     useEffect(() => {
@@ -266,15 +112,15 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
         const emp_name = cookies.get('name');
         setEmpName(emp_name)
         setLoginId(loginID)
-        setComplain({
-            ...complain,
-            client_id: data && data.data.user.id,
+        console.log(data && data.data.user.registeration_no)
+        setCreateLog({
+            ...createLog,
+            client_id: data && data && data.data.user.id,
             customer_name: data && data.data.user.customer_name,
             reg_no: data && data.data.user.registeration_no,
-            em_loginid: loginID,
-            representative: empName,
+            // em_loginid: loginID,
         });
-    }, [complain])
+    }, [data]);
 
     return (
         <div>
@@ -304,71 +150,49 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                     </div>
                 </div>
             )}
-            <div className='flex h-100 pt-0 mt-0'>
-                <div className=' rounded-xl m-2 mt-0 pt-0 p-2 w-100' >
-                    <form key={formKey} onSubmit={sendComplain} className='m-2 mt-0 p-2 bg-white'>
-                        <h1 className='text-xl font-semibold bg-gray-200 p-2 m-2'>Complain Box </h1>
+            <div className='flex h-100'>
+                <div className='bg-gray-200 rounded-xl m-2 p-2 mt-0 pt-0  w-100 '>
+                    <form key={formKey} onSubmit={CreateNewDataLog} className='m-2 p-2 bg-white mt-0'>
+                        <h1 className='text-xl font-semibold bg-gray-200 p-2 m-2'>Enter Data Log</h1>
                         <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>
                             <div className=' flex flex-col justify-center'>
-                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Nature of Complain</p><select className='input-field  ml-4 p-1  border bg-white' name='nature_of_complain' onChange={OptionSelect} style={{ width: "55%" }} aria-label=".form-select-lg example">
-                                    <option value="">Select Nature Of complain </option>
-                                    <option value="Sms Issue">SMS Issue </option>
-                                    <option value="N/R">N/R No Report </option>
-                                    <option value="Update Form">Update Form</option>
-                                    <option value="Web Track">Web Track Issue </option>
-                                    <option value="Wrong Location">Wrong Location</option>
-                                </select>
-                                </div>
-                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Complain Id</p><input className='bg-gray-200  ml-4 p-1 ' value={data && data.complain.new_complain_id || " "} readOnly style={{ width: "55%" }} /> </div>
-                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.customer_name || " "} readOnly /> </div>
-                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} value={data && data.data.user.registeration_no || " "} readOnly /> </div>
-                            </div >
-                            <div className='flex flex-col justify-center  ' >
                                 <div className='flex justify-center my-2'>
-                                    <p>Remarks</p>
-                                    <textarea className='input-field ml-4 p-1 border w-100' name="remarks" onChange={getUserData}></textarea>
+                                    <p className='text-end md:text-start' style={{ width: "40%" }}>Nature of Alert</p>
+                                    <select
+                                        className='input-field ml-4 p-1 border bg-white'
+                                        required
+                                        onChange={getUserData}
+                                        name='nature'
+                                        style={{ width: "55%" }}
+                                        aria-label=".form-select-lg example"
+                                        value={createLog.nature}
+                                    >
+                                        <option value="Pre Info">Pre Info</option>
+                                        <option value="National Highway">National Highway</option>
+                                        <option value="No Go Area">No Go Area</option>
+                                        <option value="Battery Alert">Battery Alert</option>
+                                        <option value="Wrong Location">Wrong Location</option>
+                                        <option value="Gamer Alert">Gamer Alert</option>
+                                        <option value="Karachi Exit">Karachi Exit</option>
+                                    </select>
                                 </div>
-                                {additionalFields && (
-                                    <div>
-                                        <div className='flex justify-center my-2'>
-                                            <p className='text-end md:text-start' style={{ width: "40%" }}>Last Location </p>
-                                            <input
-                                                className='input-field ml-4 p-1 border bg-white'
-                                                type='text'
-                                                name='last_location'
-                                                onChange={getUserData}
-                                                style={{ width: "55%" }}
-                                            />
-                                        </div>
-                                        <div className='flex justify-center my-2'>
-                                            <p className='text-end md:text-start' style={{ width: "40%" }}>Date</p>
-                                            <input
-                                                className='input-field ml-4 p-1 border bg-white'
-                                                type='test'
-                                                name='Date'
-                                                onChange={getUserData}
-                                                style={{ width: "55%" }}
-                                            />
-                                        </div>
-                                        <div className='flex justify-center my-2'>
-                                            <p className='text-end md:text-start' style={{ width: "40%" }}>Time</p>
-                                            <input
-                                                className='input-field ml-4 p-1 border bg-white'
-                                                type='text'
-                                                name='Time'
-                                                onChange={getUserData}
-                                                style={{ width: "55%" }}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
+                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.customer_name || " "} name='customer_name' readOnly /> </div>
+                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='number' required style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
+                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Person</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required onChange={getUserData} name='contact_person' /> </div>
+                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.registeration_no || " "} name='' readOnly /> </div>
+                            </div >
+                            <div className='flex flex-col justify-center' >
+                                <div className='flex justify-center m-2 space-x-4'>
+                                    <p>Remarks:</p>
+                                    <textarea className='boder bg-gray-200 w-100' onChange={getUserData} name='remarks'></textarea>
+                                </div>
                             </div>
-
                         </div>
                         <div className='bg-gray-200 flex justify-end p-2 mx-2'>
                             <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
                         </div>
                     </form>
+
                     <div className='bg-white m-2 mt-4'>
                         <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Information</h1>
                         <div className="flex flex-col">
@@ -414,7 +238,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                                         {data && data.data.user.engine_no || " "}
                                                     </td>
                                                     <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.user.make || " "} / {data && data.data.user.model || ""}
+                                                        {data && data.data.user.make || " "}  / {data && data.data.user.model || ""}
                                                     </td>
                                                     <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{data && data.data.user.color || " "}</td>
                                                     <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
@@ -435,16 +259,83 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                         </div>
                     </div>
 
-                    {/* Complain Logs  */}
+                    {/* Data Logs  */}
                     <div className='m-2 bg-white mt-4'>
-                        <h1 className='text-xl font-semibold bg-black text-white p-2 '> Complain Log</h1>
-                        <MaterialReactTable table={table} />
+                        <h1 className='text-xl font-semibold bg-black text-white p-2 '> Data Log</h1>
+                        <div className="overflow-x-auto ">
+                            <table className="min-w-full">
+                                <thead className="bg-gray-300 border">
+                                    <tr>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Alert
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Registration #
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Customer Name
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Contact Person
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Date
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Time
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Remarks
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Contact
+                                        </th>
+                                        <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                            Representative
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className=''>
+                                    {data && data.datalogs.map((log, index) => (
+                                        index < 5 && (
+                                            <tr key={index} className="bg-white border">
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.nature || " "}</td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {log.reg_no || " "}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {log.customer_name || " "}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {log.contact_person || ""}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.date || " "}</td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{log.time || " "}</td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {log.remarks || " "}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {log.contact_no || " "}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {log.representative || " "}
+                                                </td>
+                                            </tr>
+                                        )
+                                    ))}
+                                </tbody>
+
+                            </table>
+                            <div className="flex justify-end" style={{ width: "100%" }}>
+                                <Link to={`/dataLog/${data && data.data.user.registeration_no}`} target='blank' className="p-1 mx-3 underline">View More >></Link>
+                            </div>
+                        </div>
                     </div>
 
                     {/* INformation  */}
                     <div className='m-2 bg-white mt-4'>
                         <h1 className='text-xl font-semibold bg-black text-white p-2'>Cleint Information</h1>
-                        <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-2 '>
+                        <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 p-2 space-y-4 '>
                             <div>
                                 <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Primary User Information</h1>
                                 <div className='flex'>
@@ -456,12 +347,13 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     <p className='text-sm  w-60'>{data && data.data.user.father_name || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>CNIC</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.cnic || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Address </p>
                                     <p className='text-sm  w-60'>{data && data.data.user.address || "N/A"}</p>
                                 </div>
-                            </div>
-                            <div>
-                                <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Contact Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Contact 1</p>
                                     <p className='text-sm  w-60'>{data && data.data.user.mobileno_1 || "N/A"}</p>
@@ -478,11 +370,27 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                         <p className='text-sm  w-60'>{data && data.data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>CNIC</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.cnic || "N/A"}</p>
-                                </div>
+                               
                             </div>
+                            <div>
+                                <h1 className='bg-gray-200 p-2 text-sm font-bold  mr-4 underline'> Secendory User Information</h1>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-40'> Name:</p>
+                                    <p className='text-sm  w-60 '>{data && data.data.user.seconadryuser_name || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>Contact:</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.secondaryuser_con1 || "N/A"}</p>
+                                </div>
+                                {/* <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>Address </p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.address || "N/A"}</p>
+                                </div> */}
+                            </div>
+                            {/* <div>
+                                <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Contact Information</h1>
+                              
+                            </div> */}
                             <div>
                                 <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
                                 <div className='flex'>
@@ -514,7 +422,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                     </div>
                     <div className='grid lg:grid-cols-2 md:grid-cols-1 gap-x-3 m-2 mt-2'>
                         {/* Vehicle Information  */}
-                        <div className='bg-white mt-3 border border-gray-600'>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Information</h1>
                             <div className='p-2'>
                                 <div className='flex'>
@@ -554,7 +462,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     <p className='text-sm  w-60'>{data && data.data.user.transmission || "N/A"}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Organiztion Detail */}
                         {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Oragnization Detail</h1>
@@ -630,10 +538,10 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     <p className='text-sm font-bold w-40'>Tavl. Management Id :</p>
                                     <p className='text-sm  w-60'>{data && data.data.technical.Tavl_mang_id || "N/A"}</p>
                                 </div> */}
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Operational Status :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.operational_status || "N/A"}</p>
-                                </div>
+                                {/* <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Operational Status :</p>
+                  <p className='text-sm  w-60'>{data && data.data.technical.operational_status || "N/A"}</p>
+                </div> */}
                                 {data && data.data.technical.webtrack_id && data.technical.webtrack_pass && data.technical.webtrack_id !== null ? (
                                     <>
                                         <div className='flex'>
@@ -647,114 +555,120 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     </>
                                 ) : (<></>)
                                 }
+                                {/* <div className='flex'>
+                  <p className='text-sm font-bold w-40'>SMS Alert :</p>
+                  <p className='text-sm  w-60'>{data && data.data.technical.hh || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Speed Alert :</p>
+                  <p className='text-sm  w-60'>{data && data.data.technical.overspeed_alerts || "N/A"}</p>
+                </div> */}
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>SMS Alert :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.hh || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Speed Alert :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.overspeed_alerts || "N/A"}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Other Information   */}
-                        <div className='bg-white mt-3 border border-gray-600'>
-                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Other Information  </h1>
-                            <div className='p-2'>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Compaign Point allocation :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.campaign_point || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Dealer Name :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Sales Person :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.sales_person || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Contact Person :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Remarks :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.remarks || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Tracker Charges :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.tracker_charges || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Internal Commission :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.int_comission || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>External Commission :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.ext_comission || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Discount :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.user.discount || "N/A"}</p>
+                                    <p className='text-sm font-bold w-40'>Technician Name:</p>
+                                    <p className='text-sm  w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Tracker Status :</p>
                                     <p className='text-sm  w-60'>{data && data.data.technical.tracker_status || "N/A"}</p>
                                 </div>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>Sales Person :</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.sales_person || "N/A"}</p>
+                                </div>
                             </div>
                         </div>
+                        {/* Other Information   */}
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
+                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Other Information  </h1>
+                            <div className='p-2'> */}
+                        {/* <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Compaign Point allocation :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.campaign_point || "N/A"}</p>
+                </div> */}
+                        {/* <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Dealer Name :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
+                </div> */}
+
+                        {/* <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>Contact Person :</p>
+                                    <p className='text-sm  w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
+                                </div> */}
+                        {/* <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Remarks :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.remarks || "N/A"}</p>
+                </div> */}
+                        {/* <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Tracker Charges :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.tracker_charges || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Internal Commission :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.int_comission || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                  <p className='text-sm font-bold w-40'>External Commission :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.ext_comission || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Discount :</p>
+                  <p className='text-sm  w-60'>{data && data.data.user.discount || "N/A"}</p>
+                </div> */}
+                        {/*                                 
+                            </div>
+                        </div> */}
                         {/* Payment Details  */}
-                        <div className='bg-white mt-3 border border-gray-600'>
-                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Payment Details</h1>
-                            <div className='p-2 flex'>
-                                <div className='' style={{ width: "50%" }}>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Segment :</p>
-                                        <p className='text-sm ml w-40'>{data && data.data.user.segment || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Demo Duration :</p>
-                                        <p className='text-sm w-40'>{data && data.data.user.demo_duration || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Insurance Partner :</p>
-                                        <p className='text-sm w-40'>{data && data.data.user.insurance_partner || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Dealership :</p>
-                                        <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Install Location :</p>
-                                        <p className='text-sm  w-40'>{data && data.data.user.date_of_installation || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Sales Person :</p>
-                                        <p className='text-sm  w-40'>{data && data.data.user.sales_person || "N/A"}</p>
-                                    </div>
-                                </div>
-                                <div className='' style={{ width: "50%" }}>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Bank Name :</p>
-                                        <p className='text-sm ml w-60'>{data && data.data.technical.date_of_installation || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Dealer Name :</p>
-                                        <p className='text-sm w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Technecian :</p>
-                                        <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact Person:</p>
-                                        <p className='text-sm w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
+              <h1 className='text-xl font-semibold bg-black text-white p-2 '>Payment Details</h1>
+              <div className='p-2 flex'>
+                <div className='' style={{ width: "50%" }}>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Segment :</p>
+                    <p className='text-sm ml w-40'>{data && data.data.user.segment || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Demo Duration :</p>
+                    <p className='text-sm w-40'>{data && data.data.user.demo_duration || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Insurance Partner :</p>
+                    <p className='text-sm w-40'>{data && data.data.user.insurance_partner || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Dealership :</p>
+                    <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Install Location :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.date_of_installation || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Sales Person :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.sales_person || "N/A"}</p>
+                  </div>
+                </div>
+                <div className='' style={{ width: "50%" }}>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-40'>Bank Name :</p>
+                    <p className='text-sm ml w-60'>{data && data.data.technical.date_of_installation || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-40'>Dealer Name :</p>
+                    <p className='text-sm w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-40'>Technecian :</p>
+                    <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-40'>Contact Person:</p>
+                    <p className='text-sm w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
+                  </div>
+                </div>
+              </div>
+            </div> */}
                         {/* Vehicle Status */}
-                        <div className='bg-white mt-3 border border-gray-600'>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Status</h1>
                             <div className='p-2'>
                                 <div className='flex'>
@@ -770,9 +684,9 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     <p className='text-sm  w-60'>{data && data.data.security.security_status || "Pending"}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Value Addition Services */}
-                        <div className='bg-white mt-3 border border-gray-600'>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Value Addition Services</h1>
                             <div className='p-2 flex'>
                                 <div className='w-50'>
@@ -801,7 +715,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
 
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Records Table  */}
                         {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Record Remarks</h1>
@@ -839,12 +753,12 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                             </div>
                         </div> */}
                         {/* Special Instruction  */}
-                        {/* <div className='bg-white mt-3 border border-gray-600'>
+                        <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Specail Instruction</h1>
                             <div className='p-4'>
-                                <p className='text-sm font-bold '>Instruction :</p>
+                                <p className='text-sm font-bold mb-2'>Instruction :</p><span>{data && data.data.user.remarks || "N/A"}</span>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>

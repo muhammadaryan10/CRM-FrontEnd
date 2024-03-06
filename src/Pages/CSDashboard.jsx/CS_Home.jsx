@@ -7,6 +7,7 @@ import { wait } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { ToastContainer, toast } from 'react-toastify';
+import { Watch } from 'react-loader-spinner';
 
 
 export default function SuperVisorHome() {
@@ -128,6 +129,7 @@ export default function SuperVisorHome() {
   }
 
   const logout = async (e) => {
+    setLoading(true)
     console.log(active_id)
     e.preventDefault();
     let data;
@@ -150,10 +152,12 @@ export default function SuperVisorHome() {
       }
       catch (error) {
         if (error.response.status === 402) {
+          setLoading(false)
           toast.error("Validation Error")
           // console.log(error)
         }
         else if (error.response.status === 460) {
+          setLoading(false)
           toast.error("Already Log out")
           // console.log(error)
         }
@@ -186,7 +190,20 @@ export default function SuperVisorHome() {
     setSuccessAlert(false)
   }
 
-  return (
+  return (<>
+    {loading && (
+      <div className='h-[100vh] w-[100vw] flex justify-center items-center'>
+        <Watch
+          visible={true}
+          width="80"
+          radius="48"
+          color="#000000"
+          ariaLabel="watch-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    )}
     <div className='flex h-[100vh] bg-black'>
       {isSidebarOpen && (
         <div className="sidebar"><CS_Sidebar /></div>
@@ -326,5 +343,6 @@ export default function SuperVisorHome() {
         </div>
       </div>
     </div>
+    </>
   )
 }
