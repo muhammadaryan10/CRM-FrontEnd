@@ -443,7 +443,7 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
 
                     {/* INformation  */}
                     <div className='m-2 bg-white mt-4'>
-                        <h1 className='text-xl font-semibold bg-black text-white p-2'>Cleint Information</h1>
+                        <h1 className='text-xl font-semibold bg-black text-white p-2'>Client Information</h1>
                         <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 p-2 space-y-4 '>
                             <div>
                                 <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Primary User Information</h1>
