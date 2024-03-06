@@ -68,7 +68,6 @@ export default function ComplainResolveTech() {
                         credentials: "include",
                     }
                 );
-
                 console.log(response);
                 if (response.status === 200) {
                     console.log("Request successful");
