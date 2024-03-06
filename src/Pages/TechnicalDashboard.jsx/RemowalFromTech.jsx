@@ -162,7 +162,7 @@ export default function RemowalFromTech() {
         <div className=' flex flex-col justify-center space-y-3'>
           <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Customer Name  :</p>
-            <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal.id} readOnly />
+            <input className='ml-3 p-1 custom_input cursor-not-allowed' style={{ width: "55%" }} value={removal.customer_name} readOnly />
           </div>
           <div className='flex justify-center'>
             <p className='text-start text-sm' style={{ width: "40%" }}> Contact Number :</p>

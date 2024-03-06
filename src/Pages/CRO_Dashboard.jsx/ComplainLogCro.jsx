@@ -169,17 +169,17 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                 header: 'Represtative',
                 size: 100,
             },
-            {
-                accessorKey: 'resolved_by',
-                header: 'Resolved By',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedBy(row.original)}
-                    </p>
+            // {
+            //     accessorKey: 'resolved_by',
+            //     header: 'Resolved By',
+            //     size: 100,
+            //     Cell: ({ row }) => (
+            //         <p className='' >
+            //             {getResolvedBy(row.original)}
+            //         </p>
 
-                ),
-            },
+            //     ),
+            // },
             {
                 accessorKey: 'Date',
                 header: 'Resolved Date',
