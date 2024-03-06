@@ -38,7 +38,6 @@ const RedoTech = () => {
         accessorKey: 'customer_name', //access nested data with dot notation
         header: 'Customer Name',
         size: 100,
-        onClick: (row) => navigate("/details")
       },
       {
         accessorKey: 'reg_no',
@@ -116,13 +115,13 @@ const RedoTech = () => {
       },
     },
     muiTableBodyRowProps: ({ row }) => ({
-      onClick: (event) => {
-        navigate(`/superAdmin/vehiclesInfo/${row.id}`)
-        console.info(event, row.id);
-      },
-      sx: {
-        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-      },
+      // onClick: (event) => {
+      //   navigate(`/superAdmin/vehiclesInfo/${row.id}`)
+      //   console.info(event, row.id);
+      // },
+      // sx: {
+      //   cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+      // },
     }),
     muiTableBodyProps: {
       sx: {

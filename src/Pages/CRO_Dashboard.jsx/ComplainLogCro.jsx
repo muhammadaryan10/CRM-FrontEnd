@@ -626,11 +626,11 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                                     <p className='text-sm font-bold w-40'>Sim No:</p>
                                     <p className='text-sm  w-60'>{data && data.data.technical.sim || "N/A"}</p>
                                 </div>
-                                {data && data.data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
+                                {data && data.data.technical.device_id_1 && data.data.technical.device_id_1 !== null ? (
                                     <>
                                         <div className='flex'>
                                             <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
-                                            <p className='text-sm  w-60'>{data && data.data.device_information.vendor_name_1 || "N/A"}</p>
+                                            <p className='text-sm  w-60'>{data && data.data.technical.vendor_name_1 || "N/A"}</p>
                                         </div>
                                         <div className='flex'>
                                             <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
@@ -659,7 +659,7 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                   <p className='text-sm font-bold w-40'>Operational Status :</p>
                   <p className='text-sm  w-60'>{data && data.data.technical.operational_status || "N/A"}</p>
                 </div> */}
-                                {data && data.data.technical.webtrack_id && data.technical.webtrack_pass && data.technical.webtrack_id !== null ? (
+                                {data && data.data.technical.webtrack_id && data.data.technical.webtrack_pass && data.data.technical.webtrack_id !== null ? (
                                     <>
                                         <div className='flex'>
                                             <p className='text-sm font-bold w-40'>Webtrack Id :</p>

@@ -91,7 +91,12 @@ const DevicesTech = () => {
       },
       {
         accessorKey: 'segment',
-        header: 'Segmentation',
+        header: 'Segment',
+        size: 100,
+      },
+      {
+        accessorKey: 'Status',
+        header: 'Segment',
         size: 100,
       },
     ],
