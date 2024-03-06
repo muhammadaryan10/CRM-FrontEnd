@@ -254,6 +254,10 @@ export default function RedoLogCRO({ data }) {
                   <p className='text-sm  w-60'>{data && data.data.security.emergency_person || "N/A"}</p>
                 </div>
                 <div className='flex'>
+                  <p className='text-sm font-bold w-40'>Emergency Person Contact:</p>
+                  <p className='text-sm  w-60'>{data && data.data.security.emergency_person_contact || "N/A"}</p>
+                </div>
+                <div className='flex'>
                   <p className='text-sm font-bold w-40'>Security Question:</p>
                   <p className='text-sm  w-60'>{data && data.data.security.security_ques || "N/A"}</p>
                 </div>

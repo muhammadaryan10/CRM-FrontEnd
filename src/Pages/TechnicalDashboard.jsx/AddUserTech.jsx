@@ -140,7 +140,8 @@ export default function AddUserTech() {
                 const vasArray = vasString.split(',');
                 setVas(vasArray);
                 const containsWebtrack = vasArray.includes('Webtrack');
-                if (containsWebtrack) {
+                const containsMobileApp = vasArray.includes('Mobile App');
+                if (containsWebtrack || containsMobileApp) {
                     setShowAdditionalFields(true)
                 }
                 console.log(vasArray);
@@ -192,7 +193,7 @@ export default function AddUserTech() {
 
     const sendData = async () => {
         const { client_code, vendor_name, IMEI_no, Gsm_no, Tavl_mang_id, device_id, technician_name, sim, Gps_check, mobilizer, operational_status, webtrack_id, webtrack_pass } = customer
-        if (client_code, vendor_name, IMEI_no, Gsm_no, Tavl_mang_id, device_id, technician_name, sim, Gps_check, mobilizer) {
+        if (client_code, vendor_name, IMEI_no, Gsm_no, Tavl_mang_id, device_id, technician_name, sim, mobilizer) {
             try {
                 const response = await axios.post(
                     `${process.env.REACT_APP_BACKEND_URL}/technical_create`,
@@ -273,7 +274,7 @@ export default function AddUserTech() {
                                     <div className='absolute -top-2 right-2 z-0 bg-white overflow-y-scroll shadow' style={{ width: "55%",maxHeight:"300px"  }}>
                                         <div className='flex flex-col justify-center items-center  space-y-2  p-2'>
                                             {apiResult.map(item => (
-                                                <div key={item.id} className='w-100 hover:bg-gray-300 p-1' onClick={() => handleDeviceIdSelect(item.device_serialno, item.vendor, item.imei_no, item.sim.id)}>
+                                                <div key={item.id} className='w-100 hover:bg-gray-300 p-1' onClick={() => handleDeviceIdSelect(item.device_serialno, item.vendor, item.imei_no, item.sim.sim_no)}>
                                                     {item.device_serialno}
                                                 </div>
                                             ))}
@@ -287,7 +288,7 @@ export default function AddUserTech() {
                                     <div className='absolute -top-2 right-4 z-0 bg-white' style={{ width: "55%" }}>
                                         <div className='flex flex-col justify-center items-center shadow-lg space-y-2  p-2'>
                                             {apiResult.map(item => (
-                                                <div key={item.id} className='p-1 w-100 hover:bg-gray-300' onClick={() => handleDeviceIdSelect1(item.device_serialno, item.vendor, item.imei_no, item.sim.id)}>
+                                                <div key={item.id} className='p-1 w-100 hover:bg-gray-300' onClick={() => handleDeviceIdSelect1(item.device_serialno, item.vendor, item.imei_no, item.sim.sim_no)}>
                                                     {item.device_serialno}
                                                 </div>
                                             ))}
@@ -300,7 +301,7 @@ export default function AddUserTech() {
                             <div className='flex justify-center my-2'><p className='text-start md:text-start' style={{ width: "40%" }}> Designated Technician:</p><input onChange={getUserData} name='technician_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                         </div >
                         <div className='space-y-3'>
-                            <div className='flex justify-around ' >
+                            {/* <div className='flex justify-around ' >
                                 <div className='w-50'>
                                     Sim Activated
                                 </div>
@@ -337,7 +338,7 @@ export default function AddUserTech() {
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='flex justify-around ' >
                                 <div className='w-50'>
                                     Mobilizer

@@ -417,6 +417,10 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                     <p className='text-sm  w-60'>{data && data.data.security.emergency_person || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
+                                    <p className='text-sm font-bold w-40'>Emergency Person Contact:</p>
+                                    <p className='text-sm  w-60'>{data && data.data.security.emergency_person_contact || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Security Question:</p>
                                     <p className='text-sm  w-60'>{data && data.data.security.security_ques || "N/A"}</p>
                                 </div>
@@ -537,10 +541,10 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                     </>
                                 ) : (<></>)
                                 }
-                                <div className='flex'>
+                                {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>GPS Activation :</p>
                                     <p className='text-sm  w-60'>{data && data.data.technical.Gps_check || "N/A"}</p>
-                                </div>
+                                </div> */}
                                 {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Tavl. Management Id :</p>
                                     <p className='text-sm  w-60'>{data && data.data.technical.Tavl_mang_id || "N/A"}</p>
