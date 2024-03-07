@@ -25,7 +25,7 @@ const DevicesTech = () => {
       console.error("Error fetching data:", error);
     }
   };
-
+  
 
 
   const toggleSidebar = () => {
