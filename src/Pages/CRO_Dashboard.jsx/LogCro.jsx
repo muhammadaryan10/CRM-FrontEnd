@@ -94,9 +94,9 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                     //   representative: empName,
                     //   remarks: ""
                     // })
+                    onFetchDataSuccess()
                     setMsg('Data Added  Successfully')
                     setSuccessAlert(true)
-                    // onFetchDataSuccess()
                 } else {
                     setMsg("Please Try Again Later")
                     setErrorAlert(true)

@@ -239,7 +239,7 @@ export default function RedoLogCRO({ data }) {
                 <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
                 <div className='flex'>
                   <p className='text-sm font-bold w-40'>Customer Email:</p>
-                  <p className='text-sm  w-60'>{data && data.data.technical.security || "N/A"}</p>
+                  <p className='text-sm  w-60'>{data && data.data.security.customer_email || "N/A"}</p>
                 </div>
                 <div className='flex'>
                   <p className='text-sm font-bold w-40'>Password </p>
@@ -390,7 +390,7 @@ export default function RedoLogCRO({ data }) {
                   <p className='text-sm font-bold w-40'>Operational Status :</p>
                   <p className='text-sm  w-60'>{data && data.data.technical.operational_status || "N/A"}</p>
                 </div> */}
-                {data && data.data.technical.webtrack_id && data.data.technical.webtrack_pass && data.data.technical.webtrack_id !== null ? (
+                {/* {data && data.data.technical.webtrack_id && data.data.technical.webtrack_pass && data.data.technical.webtrack_id !== null ? (
                   <>
                     <div className='flex'>
                       <p className='text-sm font-bold w-40'>Webtrack Id :</p>
@@ -401,8 +401,7 @@ export default function RedoLogCRO({ data }) {
                       <p className='text-sm  w-60'>{data && data.data.technical.webtrack_pass || "N/A"}</p>
                     </div>
                   </>
-                ) : (<></>)
-                }
+                ) : (<></>) */}
                 {/* <div className='flex'>
                   <p className='text-sm font-bold w-40'>SMS Alert :</p>
                   <p className='text-sm  w-60'>{data && data.data.technical.hh || "N/A"}</p>
