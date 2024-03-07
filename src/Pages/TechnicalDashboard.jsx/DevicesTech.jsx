@@ -49,7 +49,7 @@ const DevicesTech = () => {
         accessorKey: 'sim_no', //normal accessorKey
         header: 'Sim #',
         size: 100,
-      },
+      }, 
       {
         accessorKey: 'registeration_no',
         header: 'Registration #',
