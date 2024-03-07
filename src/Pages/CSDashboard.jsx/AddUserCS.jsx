@@ -192,13 +192,6 @@ const AddUserCS = () => {
   const handleChange = (event) => {
     let name = event.target.name
     let input = event.target.value.replace(/\D/g, '');
-    // if (name === 'cnic') {
-    //   if (input.length > 4 && input.length <= 12) {
-    //     input = input.slice(0, 4) + '-' + input.slice(4); // Add hyphen after the first four characters
-    //   } else if (input.length > ) {
-    //     input = input.slice(0, 4) + '-' + input.slice(4, 5) + '-' + input.slice(5); // Add hyphen after the first four characters and after the fifth character
-    //   }
-    // }
     // Remove non-numeric characters
     if (input.length > 4) {
       input = input.slice(0, 4) + '-' + input.slice(4); // Add hyphen after the first four characters

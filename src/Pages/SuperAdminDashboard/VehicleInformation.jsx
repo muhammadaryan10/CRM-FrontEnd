@@ -41,12 +41,12 @@ export default function VehicleInformation() {
                 {isSidebarOpen && (
                     <div className="sidebar"><SuperAdminSidebar /></div>
                 )}
-                <div className=' rounded-xl m-2 p-2 w-100 overflow-y-scroll ' style={{backgroundColor:"#F0EFEF"}}>
+                <div className='bg-white rounded-xl m-2 p-2 w-100 overflow-y-scroll bg'>
                     <button onClick={toggleSidebar} className='bg-black'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAY1BMVEX///8AAADPz89LS0uWlpaPj4/4+PhfX1/29vawsLAdHR3b29v8/PzExMQzMzOEhIRzc3MPDw+hoaGysrLq6uo8PDwXFxfh4eFkZGRXV1fGxsZGRkaHh4fX19d6enqnp6e7u7sLhoRgAAAChUlEQVR4nO3di1LCQAyF4eWOCIgIqPWC7/+UWhm8jZNs2Z3JJP2/J8gZK+1u02xKAAAAAAAAAAAAAAAAABDfcjWZjfyYTVbLTvl2rwN/Nrv8gBPrYi80ycw33VtXerH9NCvgwbrOAoeciGvrKous9YA31jUWutEC3ltXWOxeSfhgXWCxBzng3Lq+CuZiwivr8iq4EhNurMurYCMm9H2rOJFvGNbVVdHzhJ6f2M4WYsJH6/IqeBQTel03/SSvoYbW5VUwFBOmW+v6it3KAdPRusBiRyVhWlhXWEj+JW29WJdY6EVN6PzhW71GW1vrKgtscwKm1FjXebEmL+DHOtjjhvDHskle+/7JOPa2abofd9jyPpleD/24ztoKBgAAAAAAAAAAPs2b49iPY9PlvVPrbWT9Lqmz0VuHfEOf7QoLpZPm27N1qRdT29hPZtZ1FpjlBPTdJiw3CH+6s66x0J0W0H+zvnbb8P7JzGDwLAdcWtdXgfyp5cq6vApWwS9S7ab4ZF1eBU9iQv8twlqTsHV1VfT8bxj//zD+b2n8+2GEZxoxoOfV75nyXBpgbaH20vr+GCFjfdiDNX4P9mk8/9povzJfwu+Xpvh73q3o7y0AAAAAAAAAAIAjwedE7cbeZiavO836mvt8050/r83vzD25WehL+LmJvme0Zsy+jD+/1GeTwjd1Bq3va7SlXaf+m4SVWdDx53nHn8kef65+hLMRDmJC6+qq6HlCb2um/8jnzPhcNv0mtwl77/JuyZ3e/lv11Q+Bw5+71oOz89x/25UxOML3DSPjDMsenEMa/yzZ5HcNlXsecHJ6pvNrtwMulo2zc7mbbudyAwAAAAAAAAAAAAAAAIBP7y86VZGfUH/eAAAAAElFTkSuQmCC' className='h-8 w-8 bg-black' /></button>
                     {/*Cleint INformation  */}
                     <div className='m-2 bg-white mt-4'>
                         <h1 className='text-xl font-semibold bg-black text-white p-2'>Cleint Information</h1>
-                        <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-2 '>
+                        <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-2'>
                             <div>
                                 <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Primary User Information</h1>
                                 <div className='flex'>
@@ -76,7 +76,7 @@ export default function VehicleInformation() {
                                 ) : (<></>)}
                                 {data && data.user.mobileno_3 && data.user.mobileno_3 !== null ? (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact 2</p>
+                                        <p className='text-sm font-bold w-40'>Contact 3</p>
                                         <p className='text-sm  w-60'>{data && data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}
@@ -85,33 +85,45 @@ export default function VehicleInformation() {
                                     <p className='text-sm  w-60'>{data && data.user.cnic || "N/A"}</p>
                                 </div>
                             </div>
-                            <div>
-                                <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Customer Email:</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.security || "N/A"}</p>
+                            {data && data.security !== null ? (
+                                <div>
+                                    <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Customer Email:</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.security || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Password </p>
+                                        <p className='text-sm  w-60'>{data && data.security.password || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Emergency Password: </p>
+                                        <p className='text-sm  w-60'>{data && data.security.emergency_pass || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Emergency Person :</p>
+                                        <p className='text-sm  w-60'>{data && data.security.emergency_person || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Security Question:</p>
+                                        <p className='text-sm  w-60'>{data && data.security.security_ques || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Security Answer:</p>
+                                        <p className='text-sm  w-60'>{data && data.security.security_ans || "N/A"}</p>
+                                    </div>
                                 </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Password </p>
-                                    <p className='text-sm  w-60'>{data && data.security.password || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Emergency Password: </p>
-                                    <p className='text-sm  w-60'>{data && data.security.emergency_pass || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Emergency Person :</p>
-                                    <p className='text-sm  w-60'>{data && data.security.emergency_person || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Security Question:</p>
-                                    <p className='text-sm  w-60'>{data && data.security.security_ques || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Security Answer:</p>
-                                    <p className='text-sm  w-60'>{data && data.security.security_ans || "N/A"}</p>
-                                </div>
-                            </div>
+                            )
+                                : (
+                                    <div>
+                                        <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-100'>Security Details Is not Filled yet</p>
+                                        </div>
+
+                                    </div>
+                                )}
+
                         </div>
                     </div>
                     <div className='grid lg:grid-cols-2 md:grid-cols-1 gap-x-3 m-2 mt-2'>
@@ -147,10 +159,18 @@ export default function VehicleInformation() {
                                     <p className='text-sm font-bold w-40'>Color :</p>
                                     <p className='text-sm  w-60'>{data && data.user.color || "N/A"}</p>
                                 </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Mobilizer :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.mobilizer || "N/A"}</p>
-                                </div>
+                                {data && data.technical !== null ? (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Mobilizer :</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.mobilizer || "N/A"}</p>
+                                    </div>
+                                ) : (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Mobilizer :</p>
+                                        <p className='text-sm  w-60'>Pending</p>
+                                    </div>
+                                )}
+
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Transmission :</p>
                                     <p className='text-sm  w-60'>{data && data.user.transmission || "N/A"}</p>
@@ -184,104 +204,100 @@ export default function VehicleInformation() {
                             </div>
                         </div> */}
                         {/* Technical Information  */}
-                        <div className='bg-white mt-3 border border-gray-600'>
-                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Technical Information</h1>
-                            <div className='p-2'>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Vendor :</p>
-                                    <p className='text-sm  w-60'>{data && data.device_information.vendor || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>IMEI #:</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.IMEI_no || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Device ID:</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.device_id || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Sim No:</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.sim || "N/A"}</p>
-                                </div>
-                                {data && data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
-                                    <>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
-                                            <p className='text-sm  w-60'>{data && data.device_information.vendor_name_1 || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
-                                            <p className='text-sm  w-60'>{data && data.technical.device_id_1 || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secendory Sim #:</p>
-                                            <p className='text-sm  w-60'>{data && data.technical.sim_1 || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secondery Device IMEI #:</p>
-                                            <p className='text-sm  w-60'>{data && data.technical.IMEI_no_1 || "N/A"}</p>
-                                        </div>
-                                    </>
-                                ) : (<></>)
-                                }
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>GPS Activation :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.Gps_check || "N/A"}</p>
-                                </div>
-                                {/* <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Tavl. Management Id :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.Tavl_mang_id || "N/A"}</p>
-                                </div> */}
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Operational Status :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.operational_status || "N/A"}</p>
-                                </div>
-                                {data && data.technical.webtrack_id && data.technical.webtrack_pass && data.technical.webtrack_id !== null ? (
-                                    <>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Webtrack Id :</p>
-                                            <p className='text-sm  w-60'>{data && data.technical.webtrack_id || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Webtrack Password :</p>
-                                            <p className='text-sm  w-60'>{data && data.technical.webtrack_pass || "N/A"}</p>
-                                        </div>
-                                    </>
-                                ) : (<></>)
-                                }
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>SMS Alert :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.hh || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Speed Alert :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.overspeed_alerts || "N/A"}</p>
+                        {data && data.technical !== null ? (
+                            <div className='bg-white mt-3 border border-gray-600'>
+                                <h1 className='text-xl font-semibold bg-black text-white p-2 '>Technical Information</h1>
+                                <div className='p-2'>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Vendor :</p>
+                                        <p className='text-sm  w-60'>{data && data.device_information.vendor || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>IMEI #:</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.IMEI_no || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Device ID:</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.device_id || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Sim No:</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.sim || "N/A"}</p>
+                                    </div>
+                                    {data && data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
+                                        <>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
+                                                <p className='text-sm  w-60'>{data && data.device_information.vendor_name_1 || "N/A"}</p>
+                                            </div>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
+                                                <p className='text-sm  w-60'>{data && data.technical.device_id_1 || "N/A"}</p>
+                                            </div>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Secendory Sim #:</p>
+                                                <p className='text-sm  w-60'>{data && data.technical.sim_1 || "N/A"}</p>
+                                            </div>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Secondery Device IMEI #:</p>
+                                                <p className='text-sm  w-60'>{data && data.technical.IMEI_no_1 || "N/A"}</p>
+                                            </div>
+                                        </>
+                                    ) : (<></>)
+                                    }
+                                    {/* <div className='flex'>
+         <p className='text-sm font-bold w-40'>GPS Activation :</p>
+         <p className='text-sm  w-60'>{data && data.technical.Gps_check || "N/A"}</p>
+     </div> */}
+                                    {/* <div className='flex'>
+         <p className='text-sm font-bold w-40'>Tavl. Management Id :</p>
+         <p className='text-sm  w-60'>{data && data.technical.Tavl_mang_id || "N/A"}</p>
+     </div> */}
+                                    {/* <div className='flex'>
+         <p className='text-sm font-bold w-40'>Operational Status :</p>
+         <p className='text-sm  w-60'>{data && data.technical.operational_status || "N/A"}</p>
+     </div> */}
+                                    {data && data.technical.webtrack_id && data.technical.webtrack_pass && data.technical.webtrack_id !== null ? (
+                                        <>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Webtrack Id :</p>
+                                                <p className='text-sm  w-60'>{data && data.technical.webtrack_id || "N/A"}</p>
+                                            </div>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Webtrack Password :</p>
+                                                <p className='text-sm  w-60'>{data && data.technical.webtrack_pass || "N/A"}</p>
+                                            </div>
+                                        </>
+                                    ) : (<></>)
+                                    }
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Technician :</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.technician_name || "N/A"}</p>
+                                    </div>
+                                    {/* <div className='flex'>
+         <p className='text-sm font-bold w-40'>Speed Alert :</p>
+         <p className='text-sm  w-60'>{data && data.technical.overspeed_alerts || "N/A"}</p>
+     </div> */}
                                 </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div className='bg-white mt-3 border border-gray-600 text-center flex justify-center items-center'>
+                                {/* <h1 classNam='text-xl font-semibold bg-black text-white p-2'>Technical Information</h1> */}
+                                <p>Technical Form Is not Submited yet</p>
+                            </div>
+                        )}
+
                         {/* Other Information   */}
                         <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Other Information  </h1>
                             <div className='p-2'>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Compaign Point allocation :</p>
+                                    <p className='text-sm font-bold w-40'>Compaign Point :</p>
                                     <p className='text-sm  w-60'>{data && data.user.campaign_point || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Dealer Name :</p>
                                     <p className='text-sm  w-60'>{data && data.user.dealer_name || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Sales Person :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.sales_person || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Contact Person :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.conatct_person || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Remarks :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.remarks || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Tracker Charges :</p>
@@ -299,10 +315,18 @@ export default function VehicleInformation() {
                                     <p className='text-sm font-bold w-40'>Discount :</p>
                                     <p className='text-sm  w-60'>{data && data.user.discount || "N/A"}</p>
                                 </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Tracker Status :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.tracker_status || "N/A"}</p>
-                                </div>
+                                {data && data.technical !== null ? (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Tracker Status :</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.tracker_status || "N/A"}</p>
+                                    </div>
+                                ) : (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Tracker Status :</p>
+                                        <p className='text-sm  w-60'>Pending</p>
+                                    </div>
+                                )}
+
                             </div>
                         </div>
                         {/* Payment Details  */}
@@ -344,14 +368,6 @@ export default function VehicleInformation() {
                                         <p className='text-sm font-bold w-40'>Dealer Name :</p>
                                         <p className='text-sm w-60'>{data && data.user.dealer_name || "N/A"}</p>
                                     </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Technecian :</p>
-                                        <p className='text-sm w-60'>{data && data.technical.technician_name || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact Person:</p>
-                                        <p className='text-sm w-60'>{data && data.user.conatct_person || "N/A"}</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -363,14 +379,34 @@ export default function VehicleInformation() {
                                     <p className='text-sm font-bold w-40'>Customer Briefing :</p>
                                     <p className='text-sm  w-60'>{data && data.user.form_status || "Pending"}</p>
                                 </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Technical Briefing :</p>
-                                    <p className='text-sm  w-60'>{data && data.technical.technical_status || "Pending"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Security Briefing :</p>
-                                    <p className='text-sm  w-60'>{data && data.security.security_status || "Pending"}</p>
-                                </div>
+                                {data && data.technical !== null ? (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Technical Briefing :</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.technical_status || "Pending"}</p>
+                                    </div>
+                                ) : (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Technical Briefing :</p>
+                                        <p className='text-sm  w-60'>Pending</p>
+                                    </div>
+                                )
+                                }
+
+                                {data && data.security !== null ? (
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Security Briefing :</p>
+                                        <p className='text-sm  w-60'>{data && data.security.security_status || "Pending"}</p>
+                                    </div>
+                                ) :
+                                    (
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-40'>Security Briefing :</p>
+                                            <p className='text-sm  w-60'>Pending</p>
+                                        </div>
+                                    )
+
+                                }
+
                             </div>
                         </div>
                         {/* Value Addition Services */}
@@ -441,12 +477,13 @@ export default function VehicleInformation() {
                             </div>
                         </div> */}
                         {/* Special Instruction  */}
-                        {/* <div className='bg-white mt-3 border border-gray-600'>
+                        <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Specail Instruction</h1>
-                            <div className='p-4'>
+                            <div className='p-4 flex'>
                                 <p className='text-sm font-bold '>Instruction :</p>
+                                <p className='text-sm  w-60 ml-3'>{data && data.user.remarks || "N/A"}</p>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>

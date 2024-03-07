@@ -47,6 +47,25 @@ export default function LogCro({ data, onFetchDataSuccess }) {
         console.log(createLog);
     };
 
+    const handleChange = (event) => {
+        let name = event.target.name
+        let input = event.target.value.replace(/\D/g, '');
+        // Remove non-numeric characters
+        if (input.length > 4) {
+          input = input.slice(0, 4) + '-' + input.slice(4); // Add hyphen after the first four characters
+        }
+          // Ensure mobile number doesn't exceed 11 characters
+          if (input.length > 12) {
+            return; // Don't update state if mobile number exceeds 11 characters
+          }
+          setCreateLog({
+          ...createLog,
+          [name]: input
+        }
+        );
+      };
+    
+
     const CreateNewDataLog = async (e) => {
         e.preventDefault();
         const { nature, customer_name, reg_no, remarks, representative, contact_no, contact_person, em_loginid } = createLog
@@ -180,7 +199,7 @@ export default function LogCro({ data, onFetchDataSuccess }) {
 
                                 </div>
                                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Customer Name</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.customer_name || " "} name='customer_name' readOnly /> </div>
-                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='number' required style={{ width: "55%" }} onChange={getUserData} name='contact_no' /> </div>
+                                <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Number</p><input className='no-spinners bg-gray-200  ml-4 p-1 ' type='text' required style={{ width: "55%" }} value={createLog.contact_no} onChange={handleChange} name='contact_no' /> </div>
                                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Contact Person</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required onChange={getUserData} name='contact_person' /> </div>
                                 <div className='flex justify-center my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}> Registration Number</p><input className='bg-gray-200  ml-4 p-1 ' style={{ width: "55%" }} required value={data && data.data.user.registeration_no || " "} name='' readOnly /> </div>
                             </div >

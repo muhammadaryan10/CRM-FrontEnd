@@ -93,6 +93,14 @@ export default function Technical_Sidebar() {
             </li>
             <li>
               <Link
+                to="/tech/logs"
+                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500  hover:text-white"
+              >
+                Logs
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/tech/DataLog"
                 className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500  hover:text-white"
               >

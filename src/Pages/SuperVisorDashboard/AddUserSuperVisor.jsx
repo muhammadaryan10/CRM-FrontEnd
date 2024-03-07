@@ -56,7 +56,7 @@ export default function AddUserSuperVisor() {
     const sendData = async (e) => {
         e.preventDefault();
         const { client_code, customer_email, emergency_pass, emergency_person, security_ques, security_ans, password, emergency_person_contact, representative } = customer
-        if (client_code, customer_email, emergency_pass, emergency_person, security_ques, security_ans, emergency_person_contact, representative,password) {
+        if (client_code, emergency_pass, emergency_person, security_ques, security_ans, emergency_person_contact, representative,password) {
             try {
                 const response = await axios.post(
                     `${process.env.REACT_APP_BACKEND_URL}/security_create`,
@@ -124,22 +124,22 @@ export default function AddUserSuperVisor() {
                     <div className='flex grid lg:grid-cols-2 md:grid-cols-1'>
                         <div className=' flex flex-col mt-3 p-2'>
                             <h1 className='text-xl font-semibold bg-gray-400 p-2 m-2'>User Details</h1>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Customer Email :</p><input onChange={getUserData} name='customer_email' type='email' className=' ml-3 custum_input p-1 ' /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Password :</p><input onChange={getUserData} name='emergency_pass' className=' ml-3 custum_input p-1 ' /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Person </p><input onChange={getUserData} name='emergency_person' className=' ml-3 custum_input p-1 ' /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Person Contact:</p><input onChange={getUserData} name='emergency_person_contact' className=' ml-3 custum_input p-1 ' /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Security Question :</p><input onChange={getUserData} name='security_ques' className=' ml-3 custum_input p-1 ' /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Security Answer :</p><input onChange={getUserData} name='security_ans' className=' ml-3 custum_input p-1 ' /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Password :</p><input onChange={getUserData} name='password' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Customer Email :</p><input  onChange={getUserData} name='customer_email' type='email' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Password :</p><input required onChange={getUserData} name='password' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Password :</p><input required onChange={getUserData} name='emergency_pass' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Person </p><input required onChange={getUserData} name='emergency_person' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Emergency Person Contact:</p><input required onChange={getUserData} name='emergency_person_contact' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Security Question :</p><input required onChange={getUserData} name='security_ques' className=' ml-3 custum_input p-1 ' /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start ' style={{ width: "40%" }}>Security Answer :</p><input required onChange={getUserData} name='security_ans' className=' ml-3 custum_input p-1 ' /> </div>
 
                         </div >
                         <div className=' flex flex-col mt-3 p-2'>
                             <h1 className='text-xl font-semibold bg-gray-400 p-2 m-2'>Other Details</h1>
-                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Customer Name :</p><input value={data && data.customer_name} className=' ml-3 custum_input p-1 ' readOnly /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Registration Number :</p><input value={data && data.reg_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Chassis Number :</p><input value={data && data.chasis_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Engine Number :</p><input value={data && data.engine_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
-                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Contact Number :</p><input value={data && data.coontact_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Customer Name :</p><input required value={data && data.customer_name} className=' ml-3 custum_input p-1 ' readOnly /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Registration Number :</p><input required value={data && data.reg_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Chassis Number :</p><input required value={data && data.chasis_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Engine Number :</p><input required value={data && data.engine_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
+                            <div className='flex  my-2'><p className='text-end md:text-start' style={{ width: "40%" }}>Contact Number :</p><input required value={data && data.coontact_no} className=' ml-3 custum_input p-1 ' readOnly /> </div>
                         </div >
                     </div>
                     <div className='bg-gray-200 flex justify-end p-2 mx-2'>

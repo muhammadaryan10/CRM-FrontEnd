@@ -17,6 +17,7 @@ export default function HomeSuperAdmin() {
   const [isInstallationVisible, setIsInstallationVisible] = useState(false); // State to track visibility
   const [popup, setPopup] = useState(false)
   const [active_id, setActive_id] = useState("")
+  const [ total , setTotal ]=useState([])
 
 
   const toggleSidebar = () => {
@@ -100,6 +101,12 @@ export default function HomeSuperAdmin() {
     }
   }
 
+  const getCount = async (e) => {
+    const res = await fetch("http://127.0.0.1:8000/api/employees_count")
+    const data =await res.json()
+    setTotal(data)
+  }
+
   useEffect(() => {
     const updateDate = () => {
       const now = new Date();
@@ -109,6 +116,7 @@ export default function HomeSuperAdmin() {
       setCurrentHours(now.getHours());
       setCurrentMinutes(now.getMinutes());
     };
+    getCount()
     getNewInstallation()
     const active_id = cookies.get('active_id');
     setActive_id(active_id)
@@ -156,7 +164,7 @@ export default function HomeSuperAdmin() {
             <FontAwesomeIcon icon={faUsersGear} className='h-16 p-2' />
             <div className=' ml-3'>
               <h1 className='text-2xl text-black'>Total Employees</h1>
-              <p className='text-3xl font-bold text-black'>60</p>
+              <p className='text-3xl font-bold text-black'>{total.emp_count}</p>
               <h1 className='text-sm text-black'>In your Organization</h1>
             </div>
           </div>
@@ -164,7 +172,7 @@ export default function HomeSuperAdmin() {
             <FontAwesomeIcon icon={faUsers} className='h-16 p-2' />
             <div className=' ml-3'>
               <h1 className='text-2xl text-black'>Total Users</h1>
-              <p className='text-3xl font-bold text-black'>60</p>
+              <p className='text-3xl font-bold text-black'>{total.user_count}</p>
               <h1 className='text-sm text-black'>In your Organization</h1>
             </div>
           </div>
@@ -172,14 +180,6 @@ export default function HomeSuperAdmin() {
             <div className='text-center'>
               <h1 className='text-3xl text-black text-center'>{currentHours}:{currentMinutes}</h1>
               <p className='text-lg font-bold text-black text-center'>{currentDate}</p>
-            </div>
-          </div>
-          <div className=' border  p-2 flex hover:bg-gray-200 bg-white'>
-            <FontAwesomeIcon icon={faBook} className='h-16 p-2' />
-            <div className=' ml-3'>
-              <h1 className='text-2xl text-black'>Total Employees</h1>
-              <p className='text-3xl font-bold text-black'>60</p>
-              <h1 className='text-sm text-black'>In your Organization</h1>
             </div>
           </div>
           <Link to="/superAdmin/vehiclesInfo" className=' border  p-2 flex hover:bg-gray-200 bg-white'>
