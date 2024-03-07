@@ -489,7 +489,7 @@ const AddUserCS = () => {
                   <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="cash" />OwnerShip </div>
                   <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="rental" />Rental </div>
                   <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="demo" />Demo </div>
-                </div>
+                </div>  
               </div>
               {showDemoFields && (
                 <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}> Demo Duration :</p><input required placeholder='Enter Demo Duration' onChange={getUserData} name="demo_duration" className=' ml-3 p-1  custum_input required  ' type='date' style={{ width: "55%" }} /> </div>
