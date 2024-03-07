@@ -212,7 +212,7 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
               <div className='bg-black'>
                 <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
               </div>
-            </div>
+            </div>  
           </form>
 
           <div className='bg-white m-2 mt-4'>
