@@ -87,7 +87,7 @@ export default function CROLogs() {
     };
 
     useEffect(() => {
-        // Authentication()
+        Authentication()
     }, []);
 
     const handleFetchDataSuccess = () => {

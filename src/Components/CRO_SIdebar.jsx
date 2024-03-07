@@ -26,37 +26,34 @@ export default function CRO_SIdebar() {
     e.preventDefault();
 
     let data;
-    if (active_id) {
       try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/logout",
-          { active_id },
-          { withCredentials: true } // Include credentials (cookies)
-        );
-        if (response.status === 200) {
+        // const response = await axios.post(
+        //   "http://127.0.0.1:8000/api/logout",
+        //   { active_id },
+        //   { withCredentials: true } // Include credentials (cookies)
+        // );
+        // if (response.status === 200) {
           const cookieNames = ['name', 'designation', 'active_id',"session_token","image","em_loginid","role","emp_id",]; // Replace with your actual cookie names
           for (const cookieName of cookieNames) {
             cookies.remove(cookieName);
           }
           toast.success("Logged out SuccesFullly")
-          // console.log(response)
           navigate("/");
         }
-      }
       catch (error) {
-        if (error.response.status === 402) {
-          toast.error("Validation Error")
-          // console.log(error)
-        }
-        else if (error.response.status === 460) {
-          toast.error("Already Log out")
-          // console.log(error)
-        }
+        // if (error.response.status === 402) {
+        //   toast.error("Validation Error")
+        //   // console.log(error)
+        // }
+        // else if (error.response.status === 460) {
+        //   toast.error("Already Log out")
+        //   // console.log(error)
+        // }
+        // else{
+          console.log(error)
+        // }
       }
-    }
-    else {
-      alert("Please Login First")
-    }
+
   }
 
   const hideAlerts = () => {

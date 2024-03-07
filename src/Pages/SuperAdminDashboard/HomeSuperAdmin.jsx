@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import { Watch } from 'react-loader-spinner';
 
 export default function HomeSuperAdmin() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -18,6 +19,7 @@ export default function HomeSuperAdmin() {
   const [popup, setPopup] = useState(false)
   const [active_id, setActive_id] = useState("")
   const [ total , setTotal ]=useState([])
+  const [loading, setLoading] = useState(false);
 
 
   const toggleSidebar = () => {
@@ -64,18 +66,18 @@ export default function HomeSuperAdmin() {
   }
 
   const logout = async (e) => {
+    setLoading(true)
     console.log(active_id)
     e.preventDefault();
-
     let data;
     if (active_id) {
       try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/logout`,
-          { active_id },
-          { withCredentials: true } // Include credentials (cookies)
-        );
-        if (response.status === 200) {
+        // const response = await axios.post(
+        //   `${process.env.REACT_APP_BACKEND_URL}/logout`,
+        //   { active_id },
+        //   { withCredentials: true } // Include credentials (cookies)
+        // );
+        // if (response.status === 200) {
           const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
           for (const cookieName of cookieNames) {
             cookies.remove(cookieName);
@@ -83,14 +85,16 @@ export default function HomeSuperAdmin() {
           toast.success("Logged out SuccesFullly")
           // console.log(response)
           navigate("/");
-        }
+        // }
       }
       catch (error) {
         if (error.response.status === 402) {
+          setLoading(false)
           toast.error("Validation Error")
           // console.log(error)
         }
         else if (error.response.status === 460) {
+          setLoading(false)
           toast.error("Already Log out")
           // console.log(error)
         }
@@ -126,6 +130,20 @@ export default function HomeSuperAdmin() {
   }, []);
 
   return (
+    <>
+    {loading && (
+      <div className='h-[100vh] w-[100vw] flex justify-center items-center'>
+        <Watch
+          visible={true}
+          width="80"
+          radius="48"
+          color="#000000"
+          ariaLabel="watch-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
+    )}
     <div className='flex h-[100vh] bg-black'>
       {isSidebarOpen && (
         <div className="sidebar"><SuperAdminSidebar /></div>
@@ -233,5 +251,6 @@ export default function HomeSuperAdmin() {
         </div>
       </div>
     </div>
+    </>
   )
 }

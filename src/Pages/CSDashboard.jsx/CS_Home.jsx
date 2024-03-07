@@ -135,12 +135,12 @@ export default function SuperVisorHome() {
     let data;
     if (active_id) {
       try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/logout`,
-          { active_id },
-          { withCredentials: true } // Include credentials (cookies)
-        );
-        if (response.status === 200) {
+        // const response = await axios.post(
+        //   `${process.env.REACT_APP_BACKEND_URL}/logout`,
+        //   { active_id },
+        //   { withCredentials: true } // Include credentials (cookies)
+        // );
+        // if (response.status === 200) {
           const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
           for (const cookieName of cookieNames) {
             cookies.remove(cookieName);
@@ -148,7 +148,7 @@ export default function SuperVisorHome() {
           toast.success("Logged out SuccesFullly")
           // console.log(response)
           navigate("/");
-        }
+        // }
       }
       catch (error) {
         if (error.response.status === 402) {
