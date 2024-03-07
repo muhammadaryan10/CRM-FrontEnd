@@ -41,22 +41,22 @@ const DevicesTech = () => {
 
       },
       {
-        accessorKey: 'imei_no',
+        accessorKey: 'IMEI_no',
         header: 'IMEI',
         size: 100,
       },
       {
-        accessorKey: 'sim', //normal accessorKey
+        accessorKey: 'sim_no', //normal accessorKey
         header: 'Sim #',
         size: 100,
       },
       {
-        accessorKey: 'reg_no',
+        accessorKey: 'registeration_no',
         header: 'Registration #',
         size: 100,
         Cell: ({ renderedCellValue, row }) => (
           <p className=''>
-            {row.original.tracker_status === 'Removed' ? "" : row.original.reg_no}
+            {row.original.tracker_status === 'Removed' ? "" : row.original.registeration_no}
           </p>
         ),
       },
@@ -86,42 +86,42 @@ const DevicesTech = () => {
         ),
       },
       {
-        accessorKey: 'mobileno_1',
+        accessorKey: 'contact',
         header: 'Contact',
         size: 100,
         Cell: ({ renderedCellValue, row }) => (
           <p className=''>
-            {row.original.tracker_status === 'Removed' ? "" : row.original.mobileno_1}
+            {row.original.tracker_status === 'Removed' ? "" : row.original.contact}
           </p>
         ),
       },
       {
-        accessorKey: 'installation_loc',
+        accessorKey: 'location',
         header: 'Location',
         size: 100,
         Cell: ({ renderedCellValue, row }) => (
           <p className=''>
-            {row.original.tracker_status === 'Removed' ? "" : row.original.installation_loc}
+            {row.original.tracker_status === 'Removed' ? "" : row.original.location}
           </p>
         ),
       },
       {
-        accessorKey: 'date_of_installation',
+        accessorKey: 'DOI',
         header: 'DOI',
         size: 100,
         Cell: ({ renderedCellValue, row }) => (
           <p className=''>
-            {row.original.tracker_status === 'Removed' ? "" : row.original.date_of_installation}
+            {row.original.tracker_status === 'Removed' ? "" : row.original.DOI}
           </p>
         ),
       },
       {
-        accessorKey: 'technician',
+        accessorKey: 'technician_name',
         header: 'Technicain',
         size: 100,
         Cell: ({ renderedCellValue, row }) => (
           <p className=''>
-            {row.original.tracker_status === 'Removed' ? "" : row.original.technician}
+            {row.original.tracker_status === 'Removed' ? "" : row.original.technician_name}
           </p>
         ),
       },
