@@ -485,7 +485,7 @@ const AddUserCS = () => {
               <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Campaign Point Allocation :</p><input required placeholder='Enter Campaign Point' onChange={getUserData} name="campaign_point" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Renewal Charges :</p><input required placeholder='Enter Renewal Charges' onChange={getUserData} name="renewal_charges" className=' ml-3 p-1  custum_input required  ' style={{ width: "55%" }} /> </div>
               <div className='flex justify-center'><p className='text-start text-xs font-bold' style={{ width: "40%" }}>Segment :</p>
-                <div className=' ml-3 p-2 rounded-0 text-sm flex justify-start grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 space-x-1' style={{ width: "55%" }} >
+                <div className=' ml-3 p-2 rounded-0 text-sm flex justify-start grid lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 space-x-1' style={{ width: "55%" }} >
                   <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="cash" />OwnerShip </div>
                   <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="rental" />Rental </div>
                   <div className='flex'><input required placeholder='Enter   ' type="radio" className='mr-2' onChange={handleSegmentChange} name="segment" value="demo" />Demo </div>
