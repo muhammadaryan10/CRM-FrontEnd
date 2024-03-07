@@ -41,7 +41,7 @@ const DevicesTech = () => {
 
       },
       {
-        accessorKey: 'imei_no',
+        accessorKey: 'imei_no',  
         header: 'IMEI',
         size: 100,
       },
