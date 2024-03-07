@@ -111,11 +111,11 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
     if (input.length > 4) {
       input = input.slice(0, 4) + '-' + input.slice(4); // Add hyphen after the first four characters
     }
-      // Ensure mobile number doesn't exceed 11 characters
-      if (input.length > 12) {
-        return; // Don't update state if mobile number exceeds 11 characters
-      }
-      setCreateLog({
+    // Ensure mobile number doesn't exceed 11 characters
+    if (input.length > 12) {
+      return; // Don't update state if mobile number exceeds 11 characters
+    }
+    setCreateLog({
       ...createLog,
       [name]: input
     }
@@ -209,7 +209,9 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
               </div>
             </div>
             <div className='bg-gray-200 flex justify-end p-2 mx-2'>
-              <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
+              <div className='bg-black'>
+                <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
+              </div>
             </div>
           </form>
 

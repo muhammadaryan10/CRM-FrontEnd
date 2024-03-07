@@ -366,7 +366,9 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
 
                         </div>
                         <div className='bg-gray-200 flex justify-end p-2 mx-2'>
+                            <div className='bg-black'>
                             <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
+                            </div>
                         </div>
                     </form>
                     <div className='bg-white m-2 mt-4'>
