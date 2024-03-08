@@ -482,7 +482,7 @@ export default function RenewalLogSuperAdmin({ data }) {
                   <p className='text-sm font-bold w-40'>Engine #:</p>
                   <p className='text-sm  w-60'>{data && data.data.user.engine_no || "N/A"}</p>
                 </div>
-                <div className='flex'>
+                <div className='flex'>  
                   <p className='text-sm font-bold w-40'>Chassis #:</p>
                   <p className='text-sm  w-60'>{data && data.data.user.chasis_no || "N/A"}</p>
                 </div>
