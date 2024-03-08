@@ -153,8 +153,8 @@ export default function RedoFormTech() {
   const sendRedo = async (e) => {
     e.preventDefault();
     try {
-      const { remarks, new_device, charges, harness_change, backupbattery_change, install_loc } = createRedo
-      // if (remarks && new_device && charges && harness_change && backupbattery_change && install_loc) {
+      const { remarks, new_device, charges, harness_change, backupbattery_change, install_loc , technician} = createRedo
+      if (remarks && new_device && charges && harness_change && backupbattery_change && install_loc && technician) {
       const emp_name = cookies.get('name');
       setEmpName(emp_name)
       const response = await axios.post(
@@ -169,9 +169,9 @@ export default function RedoFormTech() {
       else {
         toast.error("Please Try Again Later");
       }
-      // } else {
-      //   toast.error("Plase Fill ALl the Feilds")
-      // }
+      } else {
+        toast.error("Plase Fill ALl the Feilds")
+      }
     }
     catch (error) {
       if (error.response.status === 402) {
@@ -334,13 +334,13 @@ export default function RedoFormTech() {
               </div>
               <div className='flex justify-between space-x-5'>
                 <div class="form-check">
-                  <input class="border" onChange={handleSegmentChange} type="radio" name='backupbattery_change' value="deviceYes" />
+                  <input class="border" onChange={handleSegmentChange} type="radio" name='new_device' value="deviceYes" />
                   <label class="ml-3" for="flexRadioDefault1">
                     Yes
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="border" onChange={handleSegmentChange} type="radio" name='backupbattery_change' value="deviceNo" />
+                  <input class="border" onChange={handleSegmentChange} type="radio" name='new_device' value="deviceNo" />
                   <label class="ml-3" for="flexRadioDefault2">
                     No
                   </label>
@@ -372,13 +372,13 @@ export default function RedoFormTech() {
               </div>
               <div className='flex justify-between space-x-5'>
                 <div class="form-check">
-                  <input class="border" onChange={handleSegmentChange} type="radio" name='backupbattery_change' value="simYes" />
+                  <input class="border" onChange={handleSegmentChange} type="radio" name='new_sim' value="simYes" />
                   <label class="ml-3" for="flexRadioDefault1">
                     Yes
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="border" onChange={handleSegmentChange} type="radio" name='backupbattery_change' value="simNo" />
+                  <input class="border" onChange={handleSegmentChange} type="radio" name='new_sim' value="simNo" />
                   <label class="ml-3" for="flexRadioDefault2">
                     No
                   </label>

@@ -55,6 +55,26 @@ const RedoTech = () => {
         size: 100,
       },
       {
+        accessorKey: 'old_sim', //normal accessorKey
+        header: 'Old Sim',
+        size: 100,
+      },
+      {
+        accessorKey: 'new_sim',
+        header: 'New Sim',
+        size: 100,
+      },
+      {
+        accessorKey: 'old_imei', //normal accessorKey
+        header: 'Old IMEI',
+        size: 100,
+      },
+      {
+        accessorKey: 'new_imei',
+        header: 'New IMEI',
+        size: 100,
+      },
+      {
         accessorKey: 'harness_change',
         header: 'Harness',
         size: 100,

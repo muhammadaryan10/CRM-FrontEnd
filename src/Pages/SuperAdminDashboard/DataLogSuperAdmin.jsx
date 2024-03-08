@@ -212,7 +212,7 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
               <div className='bg-black'>
                 <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
               </div>
-            </div>  
+            </div>
           </form>
 
           <div className='bg-white m-2 mt-4'>
@@ -421,7 +421,7 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
                 <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
                 <div className='flex'>
                   <p className='text-sm font-bold w-40'>Customer Email:</p>
-                  <p className='text-sm  w-60'>{data && data.data.technical.security || "N/A"}</p>
+                  <p className='text-sm  w-60'>{data && data.data.security.customer_email || "N/A"}</p>
                 </div>
                 <div className='flex'>
                   <p className='text-sm font-bold w-40'>Password </p>
@@ -608,34 +608,34 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
               <h1 className='text-xl font-semibold bg-black text-white p-2 '>Other Information  </h1>
               <div className='p-2'>
                 <div className='flex'>
-                  <p className='text-sm font-bold w-40'>Compaign Point  :</p>
-                  <p className='text-sm  w-60'>{data && data.data.user.campaign_point || "N/A"}</p>
+                  <p className='text-sm font-bold w-60'>Compaign Point  :</p>
+                  <p className='text-sm  w-40'>{data && data.data.user.campaign_point || "N/A"}</p>
                 </div>
                 <div className='flex'>
-                  <p className='text-sm font-bold w-40'>Dealer Name :</p>
-                  <p className='text-sm  w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
+                  <p className='text-sm font-bold w-60'>Dealer Name :</p>
+                  <p className='text-sm  w-40'>{data && data.data.user.dealer_name || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                  <p className='text-sm font-bold w-60'>Demo Duration :</p>
+                  <p className='text-sm w-40'>{data && data.data.user.demo_duration || "N/A"}</p>
                 </div>
 
                 <div className='flex'>
+                  <p className='text-sm font-bold w-60'>Insurance Partner :</p>
+                  <p className='text-sm w-40'>{data && data.data.user.insurance_partner || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                  <p className='text-sm font-bold w-60'>Dealership :</p>
+                  <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
+                </div>
+                <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Bank Name :</p>
+                    <p className='text-sm ml w-40'>{data && data.data.technical.date_of_installation || "N/A"}</p>
+                  </div>
+                {/* <div className='flex'>
                   <p className='text-sm font-bold w-40'>Contact Person :</p>
                   <p className='text-sm  w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
-                </div>
-                <div className='flex'>
-                  <p className='text-sm font-bold w-40'>Tracker Charges :</p>
-                  <p className='text-sm  w-60'>{data && data.data.user.tracker_charges || "N/A"}</p>
-                </div>
-                <div className='flex'>
-                  <p className='text-sm font-bold w-40'>Internal Commission :</p>
-                  <p className='text-sm  w-60'>{data && data.data.user.int_comission || "N/A"}</p>
-                </div>
-                <div className='flex'>
-                  <p className='text-sm font-bold w-40'>External Commission :</p>
-                  <p className='text-sm  w-60'>{data && data.data.user.ext_comission || "N/A"}</p>
-                </div>
-                <div className='flex'>
-                  <p className='text-sm font-bold w-40'>Discount :</p>
-                  <p className='text-sm  w-60'>{data && data.data.user.discount || "N/A"}</p>
-                </div>
+                </div> */}
 
               </div>
             </div>
@@ -643,40 +643,38 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
             <div className='bg-white mt-3 border border-gray-600'>
               <h1 className='text-xl font-semibold bg-black text-white p-2 '>Payment Details</h1>
               <div className='p-2 flex'>
-                <div className='' style={{ width: "50%" }}>
+                <div className='' style={{ width: "100%" }}>
                   <div className='flex'>
                     <p className='text-sm font-bold w-60'>Segment :</p>
                     <p className='text-sm ml w-40'>{data && data.data.user.segment || "N/A"}</p>
                   </div>
                   <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Demo Duration :</p>
-                    <p className='text-sm w-40'>{data && data.data.user.demo_duration || "N/A"}</p>
+                    <p className='text-sm font-bold w-60'>Tracker Charges :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.tracker_charges || "N/A"}</p>
                   </div>
                   <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Insurance Partner :</p>
-                    <p className='text-sm w-40'>{data && data.data.user.insurance_partner || "N/A"}</p>
+                    <p className='text-sm font-bold w-60'>Internal Commission :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.int_comission || "N/A"}</p>
                   </div>
                   <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Dealership :</p>
-                    <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
+                    <p className='text-sm font-bold w-60'>External Commission :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.ext_comission || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Discount :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.discount || "N/A"}</p>
                   </div>
                   <div className='flex'>
                     <p className='text-sm font-bold w-60'>Install Location :</p>
+                    <p className='text-sm  w-40'>{data && data.data.user.installation_loc || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Install Date :</p>
                     <p className='text-sm  w-40'>{data && data.data.user.date_of_installation || "N/A"}</p>
                   </div>
                   <div className='flex'>
                     <p className='text-sm font-bold w-60'>Sales Person :</p>
                     <p className='text-sm  w-40'>{data && data.data.user.sales_person || "N/A"}</p>
-                  </div>
-                </div>
-                <div className='' style={{ width: "50%" }}>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Bank Name :</p>
-                    <p className='text-sm ml w-60'>{data && data.data.technical.date_of_installation || "N/A"}</p>
-                  </div>
-                  <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Dealer Name :</p>
-                    <p className='text-sm w-60'>{data && data.data.user.dealer_name || "N/A"}</p>
                   </div>
                 </div>
               </div>
