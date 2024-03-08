@@ -45,7 +45,7 @@ export default function TechLogs() {
             }
             // window.alert("Data Found")
             console.log(res)
-            // console.log("data>>", res);
+            console.log("data>>", res);
             setData(res.data);
             // setCount(response.count)
         } catch (error) {

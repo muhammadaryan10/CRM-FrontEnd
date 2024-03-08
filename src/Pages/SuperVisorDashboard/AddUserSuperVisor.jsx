@@ -143,7 +143,8 @@ export default function AddUserSuperVisor() {
                         </div >
                     </div>
                     <div className='bg-gray-200 flex justify-end p-2 mx-2'>
-                        <button className='theme_btn_md rounded-0' type='submit'>Submit</button>
+                        <p className='bg-black p-1'>
+                        <button className='theme_btn_md rounded-0' type='submit'>Submit</button></p>
                     </div>
             </form>
         </div>

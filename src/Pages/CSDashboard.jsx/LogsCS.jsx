@@ -31,6 +31,11 @@ export default function LogsCS() {
             // setMsg("Data Found")
             console.log(res)
             console.log("data>>", res);
+            if (res.data.data.security === null || res.data.data.technical === null ) {
+                setMsg("This Registration num is Not Completed Registered")
+                setErrorAlert(true)
+                return
+            }
             if (res.data)
                 setData(res.data);
             // setCount(response.count)

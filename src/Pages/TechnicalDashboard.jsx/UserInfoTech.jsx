@@ -83,6 +83,45 @@ export default function VehicleInformation() {
                                 ) : (<></>)}
 
                             </div>
+                            {data && data.security !== null ? (
+                                <div>
+                                    <h1 className='bg-gray-200 text-sm font-bold my-2 mt-0 mr-2 p-2 underline'>Security  Information</h1>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Customer Email:</p>
+                                        <p className='text-sm  w-60'>{data && data.security.customer_email || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Password </p>
+                                        <p className='text-sm  w-60'>{data && data.security.password || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Emergency Password: </p>
+                                        <p className='text-sm  w-60'>{data && data.security.emergency_pass || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Emergency Person :</p>
+                                        <p className='text-sm  w-60'>{data && data.security.emergency_person || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Emergency Person Contact:</p>
+                                        <p className='text-sm  w-60'>{data && data.security.emergency_person_contact || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Security Question:</p>
+                                        <p className='text-sm  w-60'>{data && data.security.security_ques || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Security Answer:</p>
+                                        <p className='text-sm  w-60'>{data && data.security.security_ans || "N/A"}</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className='bg-white mt-3 border border-gray-600 text-center flex justify-center items-center'>
+                                    {/* <h1 classNam='text-xl font-semibold bg-black text-white p-2'>Technical Information</h1> */}
+                                    <p>Security Form Is not Submited yet</p>
+                                </div>
+                            )
+                            }
                             <div>
                                 <h1 className='bg-gray-200 p-2 text-sm font-bold  mr-4 underline'> Secondary User Information</h1>
                                 <div className='flex'>
@@ -106,37 +145,8 @@ export default function VehicleInformation() {
                                 <h1 className='bg-gray-200 p-2 text-sm font-bold my-2 mr-4 underline'> Contact Information</h1>
                               
                             </div> */}
-                            <div>
-                                <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Customer Email:</p>
-                                    <p className='text-sm  w-60'>{data && data.security.customer_email || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Password </p>
-                                    <p className='text-sm  w-60'>{data && data.security.password || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Emergency Password: </p>
-                                    <p className='text-sm  w-60'>{data && data.security.emergency_pass || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Emergency Person :</p>
-                                    <p className='text-sm  w-60'>{data && data.security.emergency_person || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Emergency Person Contact:</p>
-                                    <p className='text-sm  w-60'>{data && data.security.emergency_person_contact || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Security Question:</p>
-                                    <p className='text-sm  w-60'>{data && data.security.security_ques || "N/A"}</p>
-                                </div>
-                                <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Security Answer:</p>
-                                    <p className='text-sm  w-60'>{data && data.security.security_ans || "N/A"}</p>
-                                </div>
-                            </div>
+
+
                         </div>
                     </div>
                     <div className='grid lg:grid-cols-2 md:grid-cols-1 gap-x-3 m-2 mt-2'>
@@ -305,26 +315,34 @@ export default function VehicleInformation() {
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Other Information  </h1>
                             <div className='p-2'>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Compaign Point :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.campaign_point || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Compaign Point :</p>
+                                    <p className='text-sm  w-40'>{data && data.user.campaign_point || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Dealer Name :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.dealer_name || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Dealer Name :</p>
+                                    <p className='text-sm  w-40'>{data && data.user.dealer_name || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Bank Name :</p>
-                                        <p className='text-sm ml w-60'>{data && data.technical.date_of_installation || "N/A"}</p>
-                                    </div>
+                                    <p className='text-sm font-bold w-60'>Demo Duration :</p>
+                                    <p className='text-sm w-40'>{data && data.user.demo_duration || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-60'>Insurance Partner :</p>
+                                    <p className='text-sm w-40'>{data && data.user.insurance_partner || "N/A"}</p>
+                                </div>
+                                <div className='flex'>
+                                    <p className='text-sm font-bold w-60'>Dealership :</p>
+                                    <p className='text-sm w-40'>{data && data.user.dealership || "N/A"}</p>
+                                </div>
                                 {data && data.technical !== null ? (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Tracker Status :</p>
+                                        <p className='text-sm font-bold w-60'>Tracker Status :</p>
                                         <p className='text-sm  w-60'>{data && data.technical.tracker_status || "N/A"}</p>
                                     </div>
                                 ) : (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Tracker Status :</p>
-                                        <p className='text-sm  w-60'>Pending</p>
+                                        <p className='text-sm font-bold w-60'>Tracker Status :</p>
+                                        <p className='text-sm  w-40'>Pending</p>
                                     </div>
                                 )}
 
@@ -344,10 +362,6 @@ export default function VehicleInformation() {
                                         <p className='text-sm  w-40'>{data && data.user.tracker_charges || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Sales Person :</p>
-                                        <p className='text-sm  w-40'>{data && data.user.sales_person || "N/A"}</p>
-                                    </div>
-                                    <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Internal Commission :</p>
                                         <p className='text-sm  w-40'>{data && data.user.int_comission || "N/A"}</p>
                                     </div>
@@ -360,12 +374,12 @@ export default function VehicleInformation() {
                                         <p className='text-sm  w-40'>{data && data.user.discount || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-60'>Installation Date :</p>
+                                        <p className='text-sm font-bold w-60'>Install Date :</p>
                                         <p className='text-sm  w-40'>{data && data.user.date_of_installation || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Install Location :</p>
-                                        <p className='text-sm  w-40'>{data && data.user.installation_loc || "N/A"}</p>
+                                        <p className='text-sm  w-40'>{data && data.user.install_loc || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Sales Person :</p>
