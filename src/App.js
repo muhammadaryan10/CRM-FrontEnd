@@ -124,6 +124,8 @@ function App() {
       <Route path='/cs' element={<CS_Home/>}/>
       <Route path='/cs/addUser' element={<AddUserCS/>}/>
       <Route path='/cs/allUser' element={<AllUserCS/>}/>
+
+
       {/* <Route path='/cs/allUser' element={<Approved/>}/>  */}
       <Route path='/cs/userInfo/:reg_no' element={<UserInfoCS/>}/>
       <Route path='/cs/logs' element={<LogsCS/>}/>
