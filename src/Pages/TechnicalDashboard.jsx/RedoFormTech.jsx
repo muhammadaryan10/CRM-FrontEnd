@@ -81,7 +81,7 @@ export default function RedoFormTech() {
       // if(!empName){
       // console.log(empName)
       //   return alert("Errro")
-      // }
+      // }  
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/redo_search`,
         { search_term }
