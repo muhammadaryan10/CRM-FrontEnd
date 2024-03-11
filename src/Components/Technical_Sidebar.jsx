@@ -166,6 +166,14 @@ export default function Technical_Sidebar() {
                   </li>
                   <li>
                     <Link
+                      to="/tech/removalTransfer"
+                      className="block rounded-lg px-2 py-2 text-sm font-medium text-gray-500  hover:text-white"
+                    >
+                      <FontAwesomeIcon icon={faUsers} /> Removal Transfer
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       to="/tech/misi"
                       className="block rounded-lg px-2 py-2 text-sm font-medium text-gray-500  hover:text-white"
                     >

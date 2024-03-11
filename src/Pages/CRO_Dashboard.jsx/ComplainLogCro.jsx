@@ -475,7 +475,7 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
                                 ) : (<></>)}
                                 {data && data.data.user.mobileno_3 && data.data.user.mobileno_3 !== null ? (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact 2</p>
+                                        <p className='text-sm font-bold w-40'>Contact 3</p>
                                         <p className='text-sm  w-60'>{data && data.data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}

@@ -41,7 +41,8 @@ export default function AddUserTech() {
         customer_name: "",
         chasis_no: "",
         engine_no: "",
-        cc: ""
+        cc: "",
+        tracker_position:""
     })
 
     const [empName, setEmpName] = useState("")
@@ -113,17 +114,17 @@ export default function AddUserTech() {
         })
     }
 
-    const handleDeviceIdSelect1 = (deviceId, vender, imei, sim) => {
-        setSelectedDeviceId(deviceId);
-        setCustomer(prevState => ({
-            ...prevState,
-            device_id_1: deviceId,
-            vendor_name_1: vender,
-            sim_1: sim,
-            IMEI_no_1: imei
-        }));
-        setIsListOpen1(false)
-    };
+    // const handleDeviceIdSelect1 = (deviceId, vender, imei, sim) => {
+    //     setSelectedDeviceId(deviceId);
+    //     setCustomer(prevState => ({
+    //         ...prevState,
+    //         device_id_1: deviceId,
+    //         vendor_name_1: vender,
+    //         sim_1: sim,
+    //         IMEI_no_1: imei
+    //     }));
+    //     setIsListOpen1(false)
+    // };
 
     const getUserInfo = async () => {
         try {
@@ -282,7 +283,7 @@ export default function AddUserTech() {
                                     </div>
                                 </div>
                             )}
-                            <div className='flex justify-start my-2'><button onClick={(e) => setSecondDevice(true)} className='bg-gray-300 p-2 rounded-1'>Add another Device</button> {secondDevice && (<> <button onClick={close} className='bg-red-600 text-white ml-2 p-1 rounded-1'>Remove</button> <input onChange={getDeviceData} name='device_id_1' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} value={customer.device_id_1} /> </>)} </div>
+                            {/* <div className='flex justify-start my-2'><button onClick={(e) => setSecondDevice(true)} className='bg-gray-300 p-2 rounded-1'>Add another Device</button> {secondDevice && (<> <button onClick={close} className='bg-red-600 text-white ml-2 p-1 rounded-1'>Remove</button> <input onChange={getDeviceData} name='device_id_1' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} value={customer.device_id_1} /> </>)} </div>
                             {isListOpen1 && (
                                 <div className='flex justify-center my-2 relative' >
                                     <div className='absolute -top-2 right-4 z-0 bg-white' style={{ width: "55%" }}>
@@ -295,7 +296,7 @@ export default function AddUserTech() {
                                         </div>
                                     </div>
                                 </div>
-                            )}
+                            )} */}
                             {/* <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%" }}> IMEI Number :</p><input onChange={getUserData} name='IMEI_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div> */}
                             {/* <div className='flex justify-center my-2'><p className='text-end md:text-start' style={{ width: "40%"    }}> GSM Number :</p><input onChange={getUserData} name='Gsm_no' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div> */}
                             <div className='flex justify-center my-2'><p className='text-start md:text-start' style={{ width: "40%" }}> Designated Technician:</p><input onChange={getUserData} name='technician_name' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
@@ -358,6 +359,7 @@ export default function AddUserTech() {
                                     </div>
                                 </div>
                             </div>
+                            <div className='flex justify-center my-2'><p className='text-start md:text-start' style={{ width: "40%" }}> Tracker Position:</p><input onChange={getUserData} name='tracker_position' className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
                             {/* <div className='flex justify-around ' >
                                 <div className='w-50'>
                                     Operational Status

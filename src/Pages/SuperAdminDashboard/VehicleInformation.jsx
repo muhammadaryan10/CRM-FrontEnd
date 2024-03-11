@@ -247,23 +247,11 @@ export default function VehicleInformation() {
                                         <p className='text-sm font-bold w-40'>Sim No:</p>
                                         <p className='text-sm  w-60'>{data && data.technical.sim || "N/A"}</p>
                                     </div>
-                                    {data && data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
+                                    {data && data.secondary_device && data.secondary_device.secondary_device !== null ? (
                                         <>
                                             <div className='flex'>
-                                                <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
-                                                <p className='text-sm  w-60'>{data && data.device_information.vendor_name_1 || "N/A"}</p>
-                                            </div>
-                                            <div className='flex'>
                                                 <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
-                                                <p className='text-sm  w-60'>{data && data.technical.device_id_1 || "N/A"}</p>
-                                            </div>
-                                            <div className='flex'>
-                                                <p className='text-sm font-bold w-40'>Secendory Sim #:</p>
-                                                <p className='text-sm  w-60'>{data && data.technical.sim_1 || "N/A"}</p>
-                                            </div>
-                                            <div className='flex'>
-                                                <p className='text-sm font-bold w-40'>Secondery Device IMEI #:</p>
-                                                <p className='text-sm  w-60'>{data && data.technical.IMEI_no_1 || "N/A"}</p>
+                                                <p className='text-sm  w-60'>{data && data.secondary_device.secondary_device || "N/A"}</p>
                                             </div>
                                         </>
                                     ) : (<></>)

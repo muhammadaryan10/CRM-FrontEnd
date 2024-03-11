@@ -154,7 +154,7 @@ export default function RedoFormTech() {
     e.preventDefault();
     try {
       const { remarks, new_device, charges, harness_change, backupbattery_change, install_loc , technician} = createRedo
-      if (remarks && new_device && charges && harness_change && backupbattery_change && install_loc && technician) {
+      // if (remarks && new_device && charges && harness_change && backupbattery_change && install_loc && technician) {
       const emp_name = cookies.get('name');
       setEmpName(emp_name)
       const response = await axios.post(
@@ -169,9 +169,9 @@ export default function RedoFormTech() {
       else {
         toast.error("Please Try Again Later");
       }
-      } else {
-        toast.error("Plase Fill ALl the Feilds")
-      }
+      // } else {
+      //   toast.error("Plase Fill ALl the Feilds")
+      // }
     }
     catch (error) {
       if (error.response.status === 402) {
@@ -283,7 +283,7 @@ export default function RedoFormTech() {
           <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Customer Number :</p><input onChange={getUserdata} name="contact_no" className=' ml-3 custum_input p-1 cursor-not-allowed' style={{ width: "55%" }} value={createRedo && createRedo.contact_no} readOnly /> </div>
           <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Registration Number:</p><input onChange={getUserdata} name="reg_no" className=' ml-3 custum_input  p-1  cursor-not-allowed' style={{ width: "55%" }} value={createRedo && createRedo.reg_no} readOnly /> </div>
           <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Sales Person :</p><input onChange={getUserdata} name="sales_person" className=' ml-3 custum_input  p-1  cursor-not-allowed' style={{ width: "55%" }} value={createRedo && createRedo.sales_person} readOnly /> </div>
-          <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Technecian :</p><input onChange={getUserdata} name="technician" className=' ml-3 custum_input  p-1  cursor-not-allowed' style={{ width: "55%" }} value={createRedo && createRedo.technician} /> </div>
+          <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Technecian :</p><input onChange={getUserdata} name="technician" className=' ml-3 custum_input  p-1' style={{ width: "55%" }} value={createRedo && createRedo.technician} /> </div>
           <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Charges :</p><input onChange={getUserdata} name="charges" className=' ml-3 custum_input p-1 ' style={{ width: "55%" }} /> </div>
           <div className='flex justify-center my-2'><p className='text-end md:text-start text-sm' style={{ width: "40%" }}> Old Device :</p><input onChange={getUserdata} name="old_device" className=' ml-3 custum_input p-1 cursor-not-allowed' style={{ width: "55%" }} value={createRedo && createRedo.old_device} readOnly /> </div>
 

@@ -4,228 +4,228 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 
 
 export default function NRSuperAdmin({ data }) {
-    const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
-    const getResolvedBy = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].representative;
-        } else {
-            return 'Not Resolved';
-        }
-    };
+  const getResolvedBy = (complain) => {
+    if (complain.actions && complain.actions.length > 0) {
+      return complain.actions[0].representative;
+    } else {
+      return 'Not Resolved';
+    }
+  };
 
-    const getResolvedByDate = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].date;
-        } else {
-            return 'Not Resolved';
-        }
-    };
+  const getResolvedByDate = (complain) => {
+    if (complain.actions && complain.actions.length > 0) {
+      return complain.actions[0].date;
+    } else {
+      return 'Not Resolved';
+    }
+  };
 
-    const getResolvedByTime = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].time;
-        } else {
-            return 'Not Resolved';
-        }
-    };
+  const getResolvedByTime = (complain) => {
+    if (complain.actions && complain.actions.length > 0) {
+      return complain.actions[0].time;
+    } else {
+      return 'Not Resolved';
+    }
+  };
 
-    const columns = useMemo(
-        () => [
-            {
-                accessorKey: 'complain_id',
-                header: 'Ticket',
-                size: 100,
-            },
-            {
-                accessorKey: 'customer_name', //access nested data with dot notation
-                header: 'Customer Name',
-                size: 70,
-            },
-            {
-                accessorKey: 'reg_no', //normal accessorKey
-                header: 'Registration',
-                size: 100,
-            },
-            {
-                accessorKey: 'nature_of_complain',
-                header: 'Complain',
-                size: 100,
-            },
-            {
-                accessorKey: 'remarks',
-                header: 'Remarks',
-                size: 100,
-            },
-            {
-                accessorKey: 'date_time',
-                header: 'Day/Time (Complain)',
-                size: 100,
-            },
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'complain_id',
+        header: 'Ticket',
+        size: 100,
+      },
+      {
+        accessorKey: 'customer_name', //access nested data with dot notation
+        header: 'Customer Name',
+        size: 70,
+      },
+      {
+        accessorKey: 'reg_no', //normal accessorKey
+        header: 'Registration',
+        size: 100,
+      },
+      {
+        accessorKey: 'nature_of_complain',
+        header: 'Complain',
+        size: 100,
+      },
+      {
+        accessorKey: 'remarks',
+        header: 'Remarks',
+        size: 100,
+      },
+      {
+        accessorKey: 'date_time',
+        header: 'Day/Time (Complain)',
+        size: 100,
+      },
 
-            {
-                accessorKey: 'last_location',
-                header: 'Last Location',
-                size: 100,
-            },
-            {
-                accessorKey: 'resolve',
-                header: 'Resolved By',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedBy(row.original)}
-                    </p>
-                )
-            },
-            {
-                accessorKey: 'he',
-                header: 'Resolved Time',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedByDate(row.original)}
-                    </p>
-                )
-            },
-            {
-                accessorKey: 'hee',
-                header: 'Resolved Date',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedByTime(row.original)}
-                    </p>
-                )
-            },
-            {
-                accessorKey: 'Status',
-                header: 'Status',
-                size: 100,
-            },
-            {
-                accessorKey: 'emp_name',
-                header: 'Representative',
-                size: 100,
-            },
-        ],
-        [],
-    );
+      {
+        accessorKey: 'last_location',
+        header: 'Last Location',
+        size: 100,
+      },
+      {
+        accessorKey: 'resolve',
+        header: 'Resolved By',
+        size: 100,
+        Cell: ({ row }) => (
+          <p className='' >
+            {getResolvedBy(row.original)}
+          </p>
+        )
+      },
+      {
+        accessorKey: 'he',
+        header: 'Resolved Time',
+        size: 100,
+        Cell: ({ row }) => (
+          <p className='' >
+            {getResolvedByDate(row.original)}
+          </p>
+        )
+      },
+      {
+        accessorKey: 'hee',
+        header: 'Resolved Date',
+        size: 100,
+        Cell: ({ row }) => (
+          <p className='' >
+            {getResolvedByTime(row.original)}
+          </p>
+        )
+      },
+      {
+        accessorKey: 'Status',
+        header: 'Status',
+        size: 100,
+      },
+      {
+        accessorKey: 'emp_name',
+        header: 'Representative',
+        size: 100,
+      },
+    ],
+    [],
+  );
 
-    useEffect(() => {
-        if (data && data.complain.NR) {
-            // console.log("New data received:", data.NR); // Log the new data received
-            setTableData(data.complain.NR);
-        }
-    }, [data]);
+  useEffect(() => {
+    if (data && data.complain.NR) {
+      // console.log("New data received:", data.NR); // Log the new data received
+      setTableData(data.complain.NR);
+    }
+  }, [data]);
 
-    const table = useMaterialReactTable({
-        columns,
-        data: tableData,
-        enableColumnActions: false,
-        enableColumnFilters: false,
-        enableSorting: false,
-        initialState: { density: 'compact' },
-        muiTableHeadCellProps: {
-            sx: {
-                fontWeight: 'bold',
-                fontSize: '12px',
-                border: '1px solid #e0e0e0',
-                color: "black"
-            },
-        },
-        muiTableBodyProps: {
-            sx: {
-                fontSize: "8px"
-            }
-        },
-        muiTableBodyCellProps: {
-            sx: {
-                fontSize: "11px",
-                borderRight: '2px solid #e0e0e0', //add a border between columns
-            },
-        }
-    });
-
-
-    return (
-        <div>
-            <div className='flex h-100'>
-                <div className='bg-gray-200 rounded-xl m-2 p-2 mt-0 pt-0  w-100'>
-                    {/* NR Logs  */}
-                    <div className='m-2 bg-white mt-4'>
-                        <h1 className='text-xl font-semibold bg-black text-white p-2 '> NR Log</h1>
-                        <MaterialReactTable table={table} />
-                    </div>
-                    <div className='bg-white m-2 mt-4'>
-                        <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Information</h1>
-                        <div className="flex flex-col">
-                            <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-                                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                                    <div className="overflow-x-auto m-2 mb-4">
-                                        <table className="min-w-full">
-                                            <thead className="bg-gray-300 border">
-                                                <tr>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Registration #
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Chassis #
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Engine #
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Make / Model
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Color
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Year
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Transmission
-                                                    </th>
-                                                    <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
-                                                        Mobilizer
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr className="bg-white border">
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{data && data.data.user.registeration_no || " "}</td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.user.chasis_no || " "}
-                                                    </td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.user.engine_no || " "}
-                                                    </td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.user.make || " "} / {data && data.data.user.model || ""}
-                                                    </td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{data && data.data.user.color || " "}</td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.user.year || " "}
-                                                    </td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.user.transmission || " "}
-                                                    </td>
-                                                    <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
-                                                        {data && data.data.technical.mobilizer || " "}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  const table = useMaterialReactTable({
+    columns,
+    data: tableData,
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enableSorting: false,
+    initialState: { density: 'compact' },
+    muiTableHeadCellProps: {
+      sx: {
+        fontWeight: 'bold',
+        fontSize: '12px',
+        border: '1px solid #e0e0e0',
+        color: "black"
+      },
+    },
+    muiTableBodyProps: {
+      sx: {
+        fontSize: "8px"
+      }
+    },
+    muiTableBodyCellProps: {
+      sx: {
+        fontSize: "11px",
+        borderRight: '2px solid #e0e0e0', //add a border between columns
+      },
+    }
+  });
 
 
-                    {/* INformation  */}
-                    <div className='m-2 bg-white mt-4'>
+  return (
+    <div>
+      <div className='flex h-100'>
+        <div className='bg-gray-200 rounded-xl m-2 p-2 mt-0 pt-0  w-100'>
+          {/* NR Logs  */}
+          <div className='m-2 bg-white mt-4'>
+            <h1 className='text-xl font-semibold bg-black text-white p-2 '> NR Log</h1>
+            <MaterialReactTable table={table} />
+          </div>
+          <div className='bg-white m-2 mt-4'>
+            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Vehicle Information</h1>
+            <div className="flex flex-col">
+              <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="overflow-x-auto m-2 mb-4">
+                    <table className="min-w-full">
+                      <thead className="bg-gray-300 border">
+                        <tr>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Registration #
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Chassis #
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Engine #
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Make / Model
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Color
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Year
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Transmission
+                          </th>
+                          <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                            Mobilizer
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="bg-white border">
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{data && data.data.user.registeration_no || " "}</td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                            {data && data.data.user.chasis_no || " "}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                            {data && data.data.user.engine_no || " "}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                            {data && data.data.user.make || " "} / {data && data.data.user.model || ""}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{data && data.data.user.color || " "}</td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                            {data && data.data.user.year || " "}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                            {data && data.data.user.transmission || " "}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                            {data && data.data.technical.mobilizer || " "}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          {/* INformation  */}
+          <div className='m-2 bg-white mt-4'>
             <h1 className='text-xl font-semibold bg-black text-white p-2'>Client Information</h1>
             <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 p-2 space-y-4 '>
               <div>
@@ -258,7 +258,7 @@ export default function NRSuperAdmin({ data }) {
                 ) : (<></>)}
                 {data && data.data.user.mobileno_3 && data.data.user.mobileno_3 !== null ? (
                   <div className='flex'>
-                    <p className='text-sm font-bold w-40'>Contact 2</p>
+                    <p className='text-sm font-bold w-40'>Contact 3</p>
                     <p className='text-sm  w-60'>{data && data.data.user.mobileno_3 || "N/A"}</p>
                   </div>
                 ) : (<></>)}
@@ -413,26 +413,15 @@ export default function NRSuperAdmin({ data }) {
                   <p className='text-sm font-bold w-40'>Technecian :</p>
                   <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
                 </div>
-                {data && data.data.technical.device_id_1 && data.data.technical.device_id_1 !== null ? (
+                {data && data.data.secondary_device.secondary_device && data.data.secondary_device.secondary_device !== null ? (
                   <>
                     <div className='flex'>
-                      <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
-                      <p className='text-sm  w-60'>{data && data.data.technical.vendor_name_1 || "N/A"}</p>
-                    </div>
-                    <div className='flex'>
                       <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
-                      <p className='text-sm  w-60'>{data && data.data.technical.device_id_1 || "N/A"}</p>
-                    </div>
-                    <div className='flex'>
-                      <p className='text-sm font-bold w-40'>Secendory Sim #:</p>
-                      <p className='text-sm  w-60'>{data && data.data.technical.sim_1 || "N/A"}</p>
-                    </div>
-                    <div className='flex'>
-                      <p className='text-sm font-bold w-40'>Secondery Device IMEI #:</p>
-                      <p className='text-sm  w-60'>{data && data.data.technical.IMEI_no_1 || "N/A"}</p>
+                      <p className='text-sm  w-60'>{data && data.data.secondary_device.secondary_device || "N/A"}</p>
                     </div>
                   </>
                 ) : (<></>)
+                }
                 }
                 {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>GPS Activation :</p>
@@ -499,9 +488,9 @@ export default function NRSuperAdmin({ data }) {
                   <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
                 </div>
                 <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Bank Name :</p>
-                    <p className='text-sm ml w-40'>{data && data.data.technical.date_of_installation || "N/A"}</p>
-                  </div>
+                  <p className='text-sm font-bold w-60'>Bank Name :</p>
+                  <p className='text-sm ml w-40'>{data && data.data.technical.date_of_installation || "N/A"}</p>
+                </div>
                 {/* <div className='flex'>
                   <p className='text-sm font-bold w-40'>Contact Person :</p>
                   <p className='text-sm  w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
@@ -521,6 +510,10 @@ export default function NRSuperAdmin({ data }) {
                   <div className='flex'>
                     <p className='text-sm font-bold w-60'>Tracker Charges :</p>
                     <p className='text-sm  w-40'>{data && data.data.user.tracker_charges || "N/A"}</p>
+                  </div>
+                  <div className='flex'>
+                    <p className='text-sm font-bold w-60'>Renewal Charges :</p>
+                    <p className='text-sm  w-40'>{data && data.renewal_charges.renewal_charges || "N/A"}</p>
                   </div>
                   <div className='flex'>
                     <p className='text-sm font-bold w-60'>Internal Commission :</p>
@@ -642,8 +635,8 @@ export default function NRSuperAdmin({ data }) {
               </div>
             </div>
           </div>
-                </div>
-            </div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }

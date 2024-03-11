@@ -477,7 +477,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                 ) : (<></>)}
                                 {data && data.data.user.mobileno_3 && data.data.user.mobileno_3 !== null ? (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact 2</p>
+                                        <p className='text-sm font-bold w-40'>Contact 3</p>
                                         <p className='text-sm  w-60'>{data && data.data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}
@@ -632,23 +632,11 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     <p className='text-sm font-bold w-40'>Technecian :</p>
                                     <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
                                 </div>
-                                {data && data.data.technical.device_id_1 && data.data.technical.device_id_1 !== null ? (
+                                {data && data.data.secondary_device.secondary_device && data.data.secondary_device.secondary_device !== null ? (
                                     <>
                                         <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
-                                            <p className='text-sm  w-60'>{data && data.data.technical.vendor_name_1 || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
                                             <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
-                                            <p className='text-sm  w-60'>{data && data.data.technical.device_id_1 || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secendory Sim #:</p>
-                                            <p className='text-sm  w-60'>{data && data.data.technical.sim_1 || "N/A"}</p>
-                                        </div>
-                                        <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secondery Device IMEI #:</p>
-                                            <p className='text-sm  w-60'>{data && data.data.technical.IMEI_no_1 || "N/A"}</p>
+                                            <p className='text-sm  w-60'>{data && data.data.secondary_device.secondary_device || "N/A"}</p>
                                         </div>
                                     </>
                                 ) : (<></>)
@@ -740,6 +728,10 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                     <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Tracker Charges :</p>
                                         <p className='text-sm  w-40'>{data && data.data.user.tracker_charges || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
+                                        <p className='text-sm font-bold w-60'>Renewal Charges :</p>
+                                        <p className='text-sm  w-40'>{data && data.renewal_charges.renewal_charges || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Internal Commission :</p>

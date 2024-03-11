@@ -60,6 +60,7 @@ import UpdateRenewal from './Pages/SuperVisorDashboard/UpdateRenewal';
 import AllDataLogs from './Pages/AllDataLogs';
 import TechInventery from './Pages/TechnicalDashboard.jsx/TechInventery';
 import TechLogs from './Pages/TechnicalDashboard.jsx/TechLogs';
+import RemovalTransferLog from './Pages/TechnicalDashboard.jsx/RemovalTransferLog';
 
 function App() {
   return (
@@ -98,6 +99,7 @@ function App() {
       <Route path='/tech/devices' element={<DevicesTech/>}/>
       <Route path='/tech/inventory' element={<InventroyListTech/>}/>
       <Route path='/tech/removal' element={<RemovalTech/>}/>
+      <Route path='/tech/removalTransfer' element={<RemovalTransferLog/>}/>
       <Route path='/tech/logs' element={<TechLogs/>}/>
       <Route path='/tech/misi' element={<MISITech/>}/>
       <Route path='/tech/redo' element={<RedoTech/>}/>

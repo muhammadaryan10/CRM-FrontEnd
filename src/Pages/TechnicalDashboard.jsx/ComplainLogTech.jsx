@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Technical_Sidebar from '../../Components/Technical_Sidebar';
 import { faCircleXmark, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Nature } from '@mui/icons-material';
+
 
 
 
@@ -48,6 +50,8 @@ const ComplainLogTech = () => {
         setSelectedComplain([]);
         setView(false);
     };
+
+ 
 
 
     const getResolvedBy = (complain) => {

@@ -388,7 +388,7 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                 ) : (<></>)}
                                 {data && data.data.user.mobileno_3 && data.data.user.mobileno_3 !== null ? (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact 2</p>
+                                        <p className='text-sm font-bold w-40'>Contact 3</p>
                                         <p className='text-sm  w-60'>{data && data.data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}
@@ -421,7 +421,7 @@ export default function LogCro({ data, onFetchDataSuccess }) {
                                 <h1 className='bg-gray-200 text-sm font-bold my-2 mr-2 p-2 underline'>Security  Information</h1>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Customer Email:</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.security || "N/A"}</p>
+                                    <p className='text-sm  w-60'>{data && data.data.security.customer_email || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Password </p>
