@@ -11,8 +11,8 @@ export default function EditProfileSuperVisor() {
 
   const getData = async (e,empId) => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/view_update`,
-        { login_id: empid },
+      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/viewprofile`,
+        { emp_id: empid },
         {
           headers: {
             "Content-Type": "application/json",
@@ -41,8 +41,7 @@ export default function EditProfileSuperVisor() {
     if (empid) {
       getData(empid); 
     }
-  }, [empid]);
-
+  }, [empid])
 
   return (
     <div>

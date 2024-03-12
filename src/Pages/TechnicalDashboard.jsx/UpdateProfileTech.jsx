@@ -42,6 +42,8 @@ export default function UpdateProfileTech() {
       getData(empid); 
     }
   }, [empid])
+
+  
   return (
     <div>
     <div className='flex h-[100vh] bg-black'>

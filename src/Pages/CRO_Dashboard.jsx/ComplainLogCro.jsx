@@ -218,7 +218,7 @@ export default function ComplainLogCro({ data, onFetchDataSuccess }) {
             ...complain,
             nature_of_complain: value
         })
-        if (value === "N/R(no report)") {
+        if (value === "N/R") {
             setAdditionalFields(true)
         } else {
             setAdditionalFields(false)

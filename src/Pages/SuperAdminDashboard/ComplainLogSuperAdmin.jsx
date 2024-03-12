@@ -102,7 +102,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
             setMsg("Plesae Fill All the feilds")
         }
     }
-
+    
     const getResolvedBy = (complain) => {
         if (complain.actions && complain.actions.length > 0) {
             return complain.actions[0].resolved_by;
@@ -218,7 +218,7 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
             ...complain,
             nature_of_complain: value
         })
-        if (value === "N/R(no report)") {
+        if (value === "N/R") {
             setAdditionalFields(true)
         } else {
             setAdditionalFields(false)

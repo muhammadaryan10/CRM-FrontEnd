@@ -18,7 +18,7 @@ export default function HomeSuperAdmin() {
   const [isInstallationVisible, setIsInstallationVisible] = useState(false); // State to track visibility
   const [popup, setPopup] = useState(false)
   const [active_id, setActive_id] = useState("")
-  const [ total , setTotal ]=useState([])
+  const [ total , setTotal ]=useState("")
   const [loading, setLoading] = useState(false);
 
 
@@ -106,7 +106,7 @@ export default function HomeSuperAdmin() {
   }
 
   const getCount = async (e) => {
-    const res = await fetch("http://127.0.0.1:8000/api/employees_count")
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/employees_count`)
     const data =await res.json()
     setTotal(data)
   }
