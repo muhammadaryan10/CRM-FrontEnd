@@ -78,7 +78,7 @@ export default function VehicleInformation() {
                                 ) : (<></>)}
                                 {data && data.user.mobileno_3 && data.user.mobileno_3 !== null ? (
                                     <div className='flex'>
-                                        <p className='text-sm font-bold w-40'>Contact 2</p>
+                                        <p className='text-sm font-bold w-40'>Contact 3</p>
                                         <p className='text-sm  w-60'>{data && data.user.mobileno_3 || "N/A"}</p>
                                     </div>
                                 ) : (<></>)}
@@ -248,7 +248,16 @@ export default function VehicleInformation() {
                                         <p className='text-sm font-bold w-40'>Sim No:</p>
                                         <p className='text-sm  w-60'>{data && data.technical.sim || "N/A"}</p>
                                     </div>
-                                    {data && data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
+                                    {data && data.secondary_device && data.secondary_device.secondary_device !== null ? (
+                                        <>
+                                            <div className='flex'>
+                                                <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
+                                                <p className='text-sm  w-60'>{data && data.secondary_device.secondary_device || "N/A"}</p>
+                                            </div>
+                                        </>
+                                    ) : (<></>)
+                                    }
+                                    {/* {data && data.technical.device_id_1 && data.technical.device_id_1 !== null ? (
                                         <>
                                             <div className='flex'>
                                                 <p className='text-sm font-bold w-40'>Secondery Device Vendor :</p>
@@ -268,7 +277,7 @@ export default function VehicleInformation() {
                                             </div>
                                         </>
                                     ) : (<></>)
-                                    }
+                                    } */}
                                     {/* <div className='flex'>
          <p className='text-sm font-bold w-40'>GPS Activation :</p>
          <p className='text-sm  w-60'>{data && data.technical.Gps_check || "N/A"}</p>

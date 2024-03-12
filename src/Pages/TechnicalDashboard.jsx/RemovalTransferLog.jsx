@@ -99,7 +99,7 @@ const RemovalTransferLog = () => {
         size: 100,
       },
       {
-        accessorKey: 'transfer_date',
+        accessorKey: 'new_inst_date',
         header: 'Transfer Date',
         size: 100,
       },

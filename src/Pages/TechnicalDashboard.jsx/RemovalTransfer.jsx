@@ -36,7 +36,8 @@ export default function RemowalTransfer() {
     new_inst_date: "",
     representative: "",
     eng_type:"",
-    mobilizer:""
+    mobilizer:"",
+    device_id:""
   });
 
   const cookies = new Cookies();
@@ -136,7 +137,8 @@ export default function RemowalTransfer() {
           customer_name: response.data.user.customer_name,
           old_year: response.data.user.year,
           old_inst_date: response.data.user.date_of_installation,
-          new_device:response.data.device.device
+          device_id:response.data.device.device_id
+          // new_device:response.data.device.device
         })
         console.log(removal)
         return
@@ -370,7 +372,7 @@ export default function RemowalTransfer() {
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  Chassis Number :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_chasis" /> </div>
             {/* <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Old cc :</p><input className=' ml-3 p-1 custum_input cursor-not-allowed' style={{ width: "55%" }} value={removal.old_cc} onChange={getUserdata} name="chasis_no" readOnly /> </div> */}
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  cc :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_cc" /> </div>
-            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Installation Date :</p><input type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_inst_date" /> </div>
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Transfer Date :</p><input type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_inst_date" /> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Remarks :</p><input className=' ml-3 p-1 ' style={{ width: "55%" }} value={removal.remarks} onChange={getUserdata} name="remarks" /> </div>
           </div>
         </div>
