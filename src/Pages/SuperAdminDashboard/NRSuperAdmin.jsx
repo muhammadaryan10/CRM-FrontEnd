@@ -421,7 +421,7 @@ export default function NRSuperAdmin({ data }) {
                     </div>
                   </>
                 ) : (<></>)
-                }
+                }   
                 {/* } */}
                 {/* <div className='flex'>
                                     <p className='text-sm font-bold w-40'>GPS Activation :</p>
