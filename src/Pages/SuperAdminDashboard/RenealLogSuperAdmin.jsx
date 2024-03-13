@@ -241,7 +241,7 @@ export default function RenewalLogSuperAdmin({ data }) {
 
           {/* Data Logs  */}
           <div className='m-2 bg-white mt-4'>
-            <h1 className='text-xl font-semibold bg-black text-white p-2 '> Renewal Log</h1>
+            <h1 className='text-xl font-semibold bg-black text-white p-2 '> Removal Log</h1>
             {/* <div className="flex flex-col">
                             <div className="overflow-x-auto">
                                 <div className="py-2 inline-block min-w-full my-3 mx-1">

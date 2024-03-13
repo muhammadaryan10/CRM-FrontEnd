@@ -3,7 +3,7 @@ import SuperAdminSidebar from '../../Components/SuperAdminSidebar';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCircleXmark, faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
@@ -103,29 +103,50 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
         }
     }
 
+    // const getResolvedBy = (complain) => {
+    //     if (complain.actions && complain.actions.length > 0) {
+    //         return complain.actions[0].resolved_by;
+    //     } else {
+    //         return 'Not Resolved';
+    //     }
+    // };
+
+    // const getResolvedByDate = (complain) => {
+    //     if (complain.actions && complain.actions.length > 0) {
+    //         return complain.actions[0].date;
+    //     } else {
+    //         return 'Not Resolved';
+    //     }
+    // };
+
+    // const getResolvedByTime = (complain) => {
+    //     if (complain.actions && complain.actions.length > 0) {
+    //         return complain.actions[0].time;
+    //     } else {
+    //         return 'Not Resolved';
+    //     }
+    // };
+
     const getResolvedBy = (complain) => {
+        // if (complain.actions && complain.actions.length == 1) {
+        //     return complain.actions[0].resolved_by
+        // }
         if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].resolved_by;
+            // setSelectedComplain(complain.actions);
+            return (
+                <>
+                    {complain.actions[0].representative}
+                    {/* console.log(selectedComplain) */}
+                    {/* <button  className="font-bold m-2 rounded">
+                        <FontAwesomeIcon className='text-black ml-3' icon={faEye} />
+                    </button> */}
+                </>
+            );
         } else {
-            return 'Not Resolved';
+            return 'Pending';
         }
     };
 
-    const getResolvedByDate = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].date;
-        } else {
-            return 'Not Resolved';
-        }
-    };
-
-    const getResolvedByTime = (complain) => {
-        if (complain.actions && complain.actions.length > 0) {
-            return complain.actions[0].time;
-        } else {
-            return 'Not Resolved';
-        }
-    };
 
     const columns = useMemo(
         () => [
@@ -173,35 +194,35 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                 accessorKey: 'resolved_by',
                 header: 'Resolved By',
                 size: 100,
-                Cell: ({ row }) => (
+                Cell: ({ renderedCellValue, row }) => (
                     <p className='' >
                         {getResolvedBy(row.original)}
                     </p>
 
                 ),
             },
-            {
-                accessorKey: 'Date',
-                header: 'Resolved Date',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedByDate(row.original)}
-                    </p>
+            // {
+            //     accessorKey: 'Date',
+            //     header: 'Resolved Date',
+            //     size: 100,
+            //     Cell: ({ renderedCellValue, row }) => (
+            //         <p className='' >
+            //             {getResolvedByDate(row.original)}
+            //         </p>
 
-                ),
-            },
-            {
-                accessorKey: 'Time',
-                header: 'Resolved Time',
-                size: 100,
-                Cell: ({ row }) => (
-                    <p className='' >
-                        {getResolvedByTime(row.original)}
-                    </p>
+            //     ),
+            // },
+            // {
+            //     accessorKey: 'Time',
+            //     header: 'Resolved Time',
+            //     size: 100,
+            //     Cell: ({ renderedCellValue, row }) => (
+            //         <p className='' >
+            //             {getResolvedByTime(row.original)}
+            //         </p>
 
-                ),
-            },
+            //     ),
+            // },
             {
                 accessorKey: 'Status',
                 header: 'Status',

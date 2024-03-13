@@ -244,6 +244,10 @@ export default function VehicleInformation() {
                                         <p className='text-sm  w-60'>{data && data.technical.device_id || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
+                                        <p className='text-sm font-bold w-40'>Tracker Position:</p>
+                                        <p className='text-sm  w-60'>{data && data.technical.tracker_position || "N/A"}</p>
+                                    </div>
+                                    <div className='flex'>
                                         <p className='text-sm font-bold w-40'>Sim No:</p>
                                         <p className='text-sm  w-60'>{data && data.technical.sim || "N/A"}</p>
                                     </div>
@@ -371,7 +375,7 @@ export default function VehicleInformation() {
                                     </div>
                                     <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Install Location :</p>
-                                        <p className='text-sm  w-40'>{data && data.user.install_loc || "N/A"}</p>
+                                        <p className='text-sm  w-40'>{data && data.user.installation_loc || "N/A"}</p>
                                     </div>
                                     <div className='flex'>
                                         <p className='text-sm font-bold w-60'>Sales Person :</p>
@@ -419,36 +423,26 @@ export default function VehicleInformation() {
                             </div>
                         </div>
                         {/* Value Addition Services */}
-                        <div className='bg-white mt-3 border border-gray-600'>
+                        {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Value Addition Services</h1>
                             <div className='p-2 flex'>
                                 <div className='w-50'>
                                     <div className='w-60'>
                                         <div className='w-60'>
-                                            {data && data.vas && data.vas.map((option, index) => (
-                                                <div className='flex' key={index}>
-                                                    <p className='text-sm font-bold w-60'>{option}:</p>
-                                                    <p className='text-sm ml w-40'>{"YES" || "N/A"}</p>
-                                                </div>
-                                            ))}
+                                            {typeof data.user.vas_options === 'string' ? (
+                                                <ul>
+                                                    {data.user.vas_options.split(',').map((option, index) => (
+                                                        <li className='text-sm font-bold  my-2' key={index}>{option.trim()} </li>
+                                                    ))}
+                                                </ul>
+                                            ) : (
+                                                <p>No VAS options available</p>
+                                            )}
                                         </div>
-
                                     </div>
-
-                                </div>
-                                <div className='w-50'>
-                                    {data && data.vas && data.vas.map((option, index) => (
-                                        <div className='flex' key={index}>
-                                            <p className='text-sm font-bold w-40'>Time :</p>
-                                            <p className='text-sm  w-60'>  {new Date(data.user.created_at).toLocaleString("en-US", {
-                                                timeZone: "Asia/Karachi",
-                                            }) || "N/A"}</p>
-                                        </div>
-                                    ))}
-
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Records Table  */}
                         {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Record Remarks</h1>

@@ -36,7 +36,7 @@ export default function FormTech() {
                         <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'Renewal' ? 'bg-gray-400' : 'bg-white'}`}
                             onClick={() => handleLogButtonClick('Renewal')}>Removal</button>
                         <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'Transfer' ? 'bg-gray-400' : 'bg-white'}`}
-                            onClick={() => handleLogButtonClick('Transfer')}>Removal Transfer</button>
+                            onClick={() => handleLogButtonClick('Transfer')}>Transfer</button>
                              <button className={`mr-1 text-md font-bold  p-2 ${selectedLog === 'add' ? 'bg-gray-400' : 'bg-white'}`}
                             onClick={() => handleLogButtonClick('add')}>Add Another Device  </button>
                     </div>

@@ -109,7 +109,7 @@ export default function TechLogs() {
                         <button className={`mr-1 text-xs font-bold   p-2 ${selectedLog === 'Redo' ? 'bg-white' : 'bg-gray-200'}`}
                             onClick={() => handleLogButtonClick('Redo')}>Redo </button>
                         <button className={`mr-1 text-xs font-bold   p-2 ${selectedLog === 'Renewal' ? 'bg-white' : 'bg-gray-200'}`}
-                            onClick={() => handleLogButtonClick('Renewal')}>Renewal</button>
+                            onClick={() => handleLogButtonClick('Renewal')}>Removal</button>
                         <button className={`mr-1 text-xs font-bold   p-2 ${selectedLog === 'NR' ? 'bg-white' : 'bg-gray-200'}`}
                             onClick={() => handleLogButtonClick('NR')}>N/R (No Report)</button>
                     </div>

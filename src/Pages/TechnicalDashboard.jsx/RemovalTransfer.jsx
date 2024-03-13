@@ -374,6 +374,7 @@ export default function RemowalTransfer() {
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}>  cc :</p><input className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_cc" /> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Transfer Date :</p><input type="date" className=' ml-3 p-1 custum_input ' style={{ width: "55%" }} onChange={getUserdata} name="new_inst_date" /> </div>
             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Remarks :</p><input className=' ml-3 p-1 ' style={{ width: "55%" }} value={removal.remarks} onChange={getUserdata} name="remarks" /> </div>
+            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Transfer Charges :</p><input className=' ml-3 p-1 ' style={{ width: "55%" }} value={removal.remarks} onChange={getUserdata} name="remarks" /> </div>
           </div>
         </div>
       </div>

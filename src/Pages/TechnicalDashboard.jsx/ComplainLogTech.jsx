@@ -51,9 +51,6 @@ const ComplainLogTech = () => {
         setView(false);
     };
 
-
-
-
     const getResolvedBy = (complain) => {
         // if (complain.actions && complain.actions.length == 1) {
         //     return complain.actions[0].resolved_by
@@ -73,8 +70,6 @@ const ComplainLogTech = () => {
             return 'Pending';
         }
     };
-
-
 
     const getResolvedByDate = (complain) => {
         if (complain.actions && complain.actions.length > 0) {
