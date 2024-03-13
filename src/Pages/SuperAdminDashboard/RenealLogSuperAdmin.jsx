@@ -562,7 +562,7 @@ export default function RenewalLogSuperAdmin({ data }) {
                   <p className='text-sm font-bold w-40'>Technecian :</p>
                   <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
                 </div>
-                {data && data.data.secondary_device.secondary_device && data.data.secondary_device.secondary_device !== null ? (
+                {data && data.data.secondary_device && data.data.secondary_device !== null ? (
                   <>
                     <div className='flex'>
                       <p className='text-sm font-bold w-40'>Secondery Device ID:</p>

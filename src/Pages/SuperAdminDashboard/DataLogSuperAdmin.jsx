@@ -543,11 +543,11 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
                   <p className='text-sm font-bold w-40'>Technecian :</p>
                   <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
                 </div>
-                {data && data.data.secondary_device.secondary_device && data.data.secondary_device.secondary_device!== null ? (
+                {data && data.data.secondary_device && data.data.secondary_device !== null ? (
                   <>
                     <div className='flex'>
                       <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
-                      <p className='text-sm  w-60'>{data && data.data.secondary_device.secondary_device|| "N/A"}</p>
+                      <p className='text-sm  w-60'>{data && data.data.secondary_device.secondary_device || "N/A"}</p>
                     </div>
                   </>
                 ) : (<></>)
@@ -617,9 +617,9 @@ export default function DataLogSuperAdmin({ data, onFetchDataSuccess }) {
                   <p className='text-sm w-40'>{data && data.data.user.dealership || "N/A"}</p>
                 </div>
                 <div className='flex'>
-                    <p className='text-sm font-bold w-60'>Bank Name :</p>
-                    <p className='text-sm ml w-40'>{data && data.data.technical.date_of_installation || "N/A"}</p>
-                  </div>
+                  <p className='text-sm font-bold w-60'>Bank Name :</p>
+                  <p className='text-sm ml w-40'>{data && data.data.technical.date_of_installation || "N/A"}</p>
+                </div>
                 {/* <div className='flex'>
                   <p className='text-sm font-bold w-40'>Contact Person :</p>
                   <p className='text-sm  w-60'>{data && data.data.user.conatct_person || "N/A"}</p>
