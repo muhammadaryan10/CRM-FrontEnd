@@ -36,75 +36,6 @@ export default function RemowalFromTech() {
     console.log(removal);
   };
 
-  const getRemoavalData = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/removal_search`,
-        { search_term: search_term }
-      );
-      if (response.status == 200) {
-
-        if (!empName) {
-          console.log(empName)
-        }
-        console.log(response)
-        // console.log("data", response.status)
-        setRemoval({
-          ...removal,
-          id: response.data.removal_id,
-          make: response.data.user.make,
-          model: response.data.user.model,
-          color: response.data.user.color,
-          client_id: response.data.user.id,
-          customer_name: response.data.user.customer_name,
-          reg_no: response.data.user.registeration_no,
-          device: response.data.device.device_id,
-          eng_no: response.data.user.engine_no,
-          chasis: response.data.user.chasis_no,
-          contact_no: response.data.user.mobileno_1,
-          sales_per: response.data.user.sales_person,
-          representative: empName,
-          install_loc: response.data.user.installation_loc,
-          install_date: response.data.user.date_of_installation
-        })
-        console.log(removal)
-        return
-      }
-    }
-    catch (error) {
-      console.log(error)
-      if (error.response.status === 422) {
-       toast.error("Please Enter Registration Number First ")
-      }
-      else if (error.response.status === 400) {
-        setRemoval({
-          id: "",
-          make: "",
-          model: "",
-          sales_per: "",
-          color: "",
-          client_id: "",
-          customer_name: "",
-          reg_no: "",
-          device: "",
-          eng_no: "",
-          chasis: "",
-          contact_no: "",
-          representative: "",
-          remarks: "",
-          install_loc: "",
-          install_date: ""
-        })
-        // console.log(error.response.data.message)
-        toast.error(error.response.data.message)
-      }
-      else {
-        toast.error("Internal Server Error")
-      }
-    }
-  };
-
   const SubmitRemoval = async (e) => {
     e.preventDefault();
     try {
@@ -141,6 +72,75 @@ export default function RemowalFromTech() {
     }
   };
 
+  const getRemoavalData = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/removal_search`,
+        { search_term: search_term }
+      );
+      
+      // Log the entire response object to inspect its structure
+      console.log(response);
+      
+      // Check if the response is successful and contains the expected data
+      if (response && response.data && response.data.data) {
+        const responseData = response.data.data;
+        setRemoval({
+          id: responseData.removal_id,
+          make: responseData.user.make,
+          model: responseData.user.model,
+          color: responseData.user.color,
+          client_id: responseData.user.id,
+          customer_name: responseData.user.customer_name,
+          reg_no: responseData.user.registeration_no,
+          device: responseData.device.device_serialno,
+          eng_no: responseData.user.engine_no,
+          chasis: responseData.user.chasis_no,
+          contact_no: responseData.user.mobileno_1,
+          sales_per: responseData.user.sales_person,
+          representative: empName,
+          install_loc: responseData.user.installation_loc,
+          install_date: responseData.user.date_of_installation
+        });
+        console.log(removal);
+      } else {
+        console.error("Unexpected response structure:", response);
+        // Handle unexpected response structure or missing data
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      if (error.response.status === 422) {
+         toast.error("Please Enter Registration Number First ")
+        }
+        else if (error.response.status === 400) {
+          setRemoval({
+            id: "",
+            make: "",
+            model: "",
+            sales_per: "",
+            color: "",
+            client_id: "",
+            customer_name: "",
+            reg_no: "",
+            device: "",
+            eng_no: "",
+            chasis: "",
+            contact_no: "",
+            representative: "",
+            remarks: "",
+            install_loc: "",
+            install_date: ""
+          })
+          // console.log(error.response.data.message)
+          toast.error(error.response.data.message)
+        }
+        else {
+          toast.error("Internal Server Error")
+        }
+    }
+  };
+  
   useEffect(() => {
     console.log(search_term)
     console.log(removal)

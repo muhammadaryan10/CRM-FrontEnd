@@ -634,30 +634,39 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Technical Information</h1>
                             <div className='p-2'>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Vendor :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.vendor_name || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Vendor :</p>
+                                    <p className='text-sm  w-40'>{data && data.data.technical.vendor_name || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>IMEI #:</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.IMEI_no || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>IMEI #:</p>
+                                    <p className='text-sm  w-40'>{data && data.data.technical.IMEI_no || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Device ID:</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.device_id || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Device ID:</p>
+                                    <p className='text-sm  w-40'>{data && data.data.technical.device_id || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Sim No:</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.sim || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Sim No:</p>
+                                    <p className='text-sm  w-40'>{data && data.data.technical.sim || "N/A"}</p>
                                 </div>
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Technecian :</p>
-                                    <p className='text-sm w-60'>{data && data.data.technical.technician_name || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Technecian :</p>
+                                    <p className='text-sm w-40'>{data && data.data.technical.technician_name || "N/A"}</p>
                                 </div>
                                 {data && data.data.secondary_device && data.data.secondary_device !== null ? (
                                     <>
                                         <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Secondery Device ID:</p>
-                                            <p className='text-sm  w-60'>{data && data.data.secondary_device.secondary_device || "N/A"}</p>
+                                            <p className='text-sm font-bold w-60'>Secondery Device ID:</p>
+                                            <p className='text-sm  w-40'>{data && data.data.secondary_device.secondary_device || "N/A"}</p>
+                                        </div>
+                                    </>
+                                ) : (<></>)
+                                }
+                                {data && data.data.secondary_vendor && data.data.secondary_vendor !== null ? (
+                                    <>
+                                        <div className='flex'>
+                                            <p className='text-sm font-bold w-60'>Secondery Device Vender:</p>
+                                            <p className='text-sm  w-40'>{data && data.data.secondary_vendor || "N/A"}</p>
                                         </div>
                                     </>
                                 ) : (<></>)
@@ -677,12 +686,12 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                                 {data && data.data.technical.webtrack_id && data.data.technical.webtrack_pass && data.data.technical.webtrack_id !== null ? (
                                     <>
                                         <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Webtrack Id :</p>
-                                            <p className='text-sm  w-60'>{data && data.data.technical.webtrack_id || "N/A"}</p>
+                                            <p className='text-sm font-bold w-60'>Webtrack Id :</p>
+                                            <p className='text-sm  w-40'>{data && data.data.technical.webtrack_id || "N/A"}</p>
                                         </div>
                                         <div className='flex'>
-                                            <p className='text-sm font-bold w-40'>Webtrack Password :</p>
-                                            <p className='text-sm  w-60'>{data && data.data.technical.webtrack_pass || "N/A"}</p>
+                                            <p className='text-sm font-bold w-60'>Webtrack Password :</p>
+                                            <p className='text-sm  w-40'>{data && data.data.technical.webtrack_pass || "N/A"}</p>
                                         </div>
                                     </>
                                 ) : (<></>)
@@ -696,8 +705,8 @@ export default function ComplainLogSuperAdmin({ data, onFetchDataSuccess }) {
                   <p className='text-sm  w-60'>{data && data.data.technical.overspeed_alerts || "N/A"}</p>
                 </div> */}
                                 <div className='flex'>
-                                    <p className='text-sm font-bold w-40'>Tracker Status :</p>
-                                    <p className='text-sm  w-60'>{data && data.data.technical.tracker_status || "N/A"}</p>
+                                    <p className='text-sm font-bold w-60'>Tracker Status :</p>
+                                    <p className='text-sm  w-40'>{data && data.data.technical.tracker_status || "N/A"}</p>
                                 </div>
                             </div>
                         </div>
