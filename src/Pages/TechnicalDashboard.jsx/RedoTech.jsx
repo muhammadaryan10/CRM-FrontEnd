@@ -210,6 +210,6 @@ const RedoTech = () => {
         </div>
       </div>
     </div>)
-};
+};  
 
 export default RedoTech;
