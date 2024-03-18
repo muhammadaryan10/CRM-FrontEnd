@@ -718,36 +718,26 @@ export default function RenewalLogSuperAdmin({ data }) {
               </div>
             </div>
             {/* Value Addition Services */}
-            {/* <div className='bg-white mt-3 border border-gray-600'>
-                            <h1 className='text-xl font-semibold bg-black text-white p-2 '>Value Addition Services</h1>
-                            <div className='p-2 flex'>
-                                <div className='w-50'>
-                                    <div className='w-60'>
-                                        <div className='w-60'>
-                                            {data && data.vas && data.vas.map((option, index) => (
-                                                <div className='flex' key={index}>
-                                                    <p className='text-sm font-bold w-60'>{option}:</p>
-                                                    <p className='text-sm ml w-40'>{"YES" || "N/A"}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <div className='w-50'>
-                                    {data && data.vas && data.vas.map((option, index) => (
-                                        <div className='flex' key={index}>
-                                            <p className='text-sm font-bold w-40'>Time :</p>
-                                            <p className='text-sm  w-60'>  {new Date(data.user.created_at).toLocaleString("en-US", {
-                                                timeZone: "Asia/Karachi",
-                                            }) || "N/A"}</p>
-                                        </div>
-                                    ))}
-
-                                </div>
-                            </div>
-                        </div> */}
+            <div className='bg-white mt-3 border border-gray-600'>
+              <h1 className='text-xl font-semibold bg-black text-white p-2 '>Value Addition Services</h1>
+              <div className='p-2 flex'>
+                <div className='w-50'>
+                  <div className='w-60'>
+                    <div className='w-60'>
+                      {data && data.data.user && typeof data.data.user.vas_options === 'string' && data.data.user.vas_options ? (
+                        <ul>
+                          {data.data.user.vas_options.split(',').map((option, index) => (
+                            <li className='text-sm font-bold  my-2' key={index}>{option.trim()} </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>No VAS options available</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             {/* Records Table  */}
             {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Record Remarks</h1>

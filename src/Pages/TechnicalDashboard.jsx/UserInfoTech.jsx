@@ -25,6 +25,7 @@ export default function VehicleInformation() {
             const response = await res.json();
             console.log("data>>", response);
             setData(response);
+            console.log(typeof data.user.vas_options)
             // setCount(response.count)
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -251,7 +252,7 @@ export default function VehicleInformation() {
                                         <p className='text-sm font-bold w-60'>Sim No:</p>
                                         <p className='text-sm  w-40'>{data && data.technical.sim || "N/A"}</p>
                                     </div>
-                                    {data && data.secondary_device && data.secondary_device.secondary_device !== null ? (
+                                    {data && data.secondary_device && data.secondary_device.secondary_status !== "Removed" && data.secondary_device.secondary_device !== null ? (
                                         <>
                                             <div className='flex'>
                                                 <p className='text-sm font-bold w-60'>Secondery Device ID:</p>
@@ -260,7 +261,7 @@ export default function VehicleInformation() {
                                         </>
                                     ) : (<></>)
                                     }
-                                        {data && data.secondary_vendor && data.secondary_vendor !== null ? (
+                                    {data && data.secondary_vendor  && data.secondary_device.secondary_status !== "Removed" && data.secondary_vendor !== null ? (
                                         <>
                                             <div className='flex'>
                                                 <p className='text-sm font-bold w-60'>Secondery Device Vender:</p>
@@ -432,13 +433,13 @@ export default function VehicleInformation() {
                             </div>
                         </div>
                         {/* Value Addition Services */}
-                        {/* <div className='bg-white mt-3 border border-gray-600'>
+                        <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Value Addition Services</h1>
                             <div className='p-2 flex'>
                                 <div className='w-50'>
                                     <div className='w-60'>
                                         <div className='w-60'>
-                                            {typeof data.user.vas_options === 'string' ? (
+                                            {data && data.user && typeof data.user.vas_options === 'string' && data.user.vas_options ? (
                                                 <ul>
                                                     {data.user.vas_options.split(',').map((option, index) => (
                                                         <li className='text-sm font-bold  my-2' key={index}>{option.trim()} </li>
@@ -451,7 +452,7 @@ export default function VehicleInformation() {
                                     </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                         {/* Records Table  */}
                         {/* <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Record Remarks</h1>

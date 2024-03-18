@@ -443,27 +443,17 @@ export default function VehicleInformation() {
                                 <div className='w-50'>
                                     <div className='w-60'>
                                         <div className='w-60'>
-                                            {data && data.vas && data.vas.map((option, index) => (
-                                                <div className='flex' key={index}>
-                                                    <p className='text-sm font-bold w-60'>{option}:</p>
-                                                    <p className='text-sm ml w-40'>{"YES" || "N/A"}</p>
-                                                </div>
-                                            ))}
+                                            {data && data.user && typeof data.user.vas_options === 'string' && data.user.vas_options ? (
+                                                <ul>
+                                                    {data.user.vas_options.split(',').map((option, index) => (
+                                                        <li className='text-sm font-bold  my-2' key={index}>{option.trim()} </li>
+                                                    ))}
+                                                </ul>
+                                            ) : (
+                                                <p>No VAS options available</p>
+                                            )}
                                         </div>
-
                                     </div>
-
-                                </div>
-                                <div className='w-50'>
-                                    {data && data.vas && data.vas.map((option, index) => (
-                                        <div className='flex' key={index}>
-                                            <p className='text-sm font-bold w-40'>Time :</p>
-                                            <p className='text-sm  w-60'>  {new Date(data.user.created_at).toLocaleString("en-US", {
-                                                timeZone: "Asia/Karachi",
-                                            }) || "N/A"}</p>
-                                        </div>
-                                    ))}
-
                                 </div>
                             </div>
                         </div>

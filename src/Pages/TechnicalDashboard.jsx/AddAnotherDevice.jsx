@@ -38,7 +38,7 @@ export default function AddAnotherDevice() {
 
                 if (response.status === 200) {
                     console.log("Request successful");
-                    toast.error('Device Added Successfully')
+                    toast.success('Device Added Successfully')
                 } else {
                     toast.error("Please Try Again Later.");
                 }

@@ -269,6 +269,12 @@ export default function RedoFormTech() {
 
   const handleRadioSelect = (e)=>{
     let value = e.target.value
+    if(value === "device"){
+      setSelectedOption("device")
+    }
+    else{
+      setSelectedOption("complain")
+    }
   }
 
   useEffect(() => {
@@ -277,26 +283,26 @@ export default function RedoFormTech() {
 
   return (
     <>
-      <div className='py-4'>
-        <div className='flex justify-around ' >
+      <div className=''>
+        {/* <div className='flex justify-around ' >
           <div className='w-50 font-semibold'>
             Search BY
           </div>
           <div className='flex justify-around space-x-5'>
             <div class="form-check">
-              <input class="border" type="radio" name="mobilizer" value="complain" onChange="" />
+              <input class="border" type="radio" name="mobilizer" value="complain" onChange={handleRadioSelect} />
               <label class="ml-3" for="mobilizer">
                 Complain ID
               </label>
             </div>
             <div class="form-check">
-              <input class="border" type="radio" name="mobilizer" value="device" onChange="" />
+              <input class="border" type="radio" name="mobilizer" value="device" onChange={handleRadioSelect} />
               <label class="ml-3" for="mobilizer">
                 Device ID
               </label>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       {selectedOption === 'complain' ? (
         <div className='p-3'>
@@ -444,7 +450,7 @@ export default function RedoFormTech() {
         <div className='p-3'>
           <ToastContainer />
           <div className='flex justify-content-center my-3 mb-5'>
-            <input onChange={(e) => setSearch_term(e.target.value)} name="search_term" className='w-96 mx-4  p-2 custum_input' placeholder='Enter Complain ID ' />
+            <input onChange={(e) => setSearch_term(e.target.value)} name="search_term" className='w-96 mx-4  p-2 custum_input' placeholder='Enter Device ID ' />
             <button className='theme_btn_md rounded-0 ' onClick={newRedo}>Search</button>
           </div>
           <div className='flex grid lg:grid-cols-2 md:grid-cols-1 gap-x-4'>
