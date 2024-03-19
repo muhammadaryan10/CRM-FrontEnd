@@ -61,6 +61,7 @@ import AllDataLogs from './Pages/AllDataLogs';
 import TechInventery from './Pages/TechnicalDashboard.jsx/TechInventery';
 import TechLogs from './Pages/TechnicalDashboard.jsx/TechLogs';
 import RemovalTransferLog from './Pages/TechnicalDashboard.jsx/RemovalTransferLog';
+import EditUser from './Pages/TechnicalDashboard.jsx/EditUser';
 
 function App() {
   return (
@@ -97,6 +98,7 @@ function App() {
       <Route path='/tech/complains' element={<ComplainLogTech/>}/>
       <Route path='/tech/form' element={<FormTech/>}/>
       <Route path='/tech/devices' element={<DevicesTech/>}/>
+      <Route path='/tech/editUser' element={<EditUser/>}/>
       <Route path='/tech/inventory' element={<InventroyListTech/>}/>
       <Route path='/tech/removal' element={<RemovalTech/>}/>
       <Route path='/tech/removalTransfer' element={<RemovalTransferLog/>}/>

@@ -128,16 +128,35 @@ const DevicesTech = () => {
           </p>
         ),
       },
-      {
-        accessorKey: 'si', //normal accessorKey
-        header: 'Primary',
-        size: 100,
-      }, 
-      {
-        accessorKey: 'sim_no0', //normal accessorKey
-        header: 'Secendory',
-        size: 100,
-      }, 
+      // {
+      //   accessorKey: 'Primary', //normal accessorKey
+      //   header: 'Primary',
+      //   size: 100,
+      //   Cell: ({ renderedCellValue, row }) => {
+      //     if (row.original.primary === 'yes' && !row.original.secondary) {
+      //       return (
+      //         <p className=''>Primary</p>
+      //       );
+      //     } else if (row.original.secondary === 'yes' && !row.original.primary) {
+      //       return (
+      //         <p className=''>Secondary</p>
+      //       );
+      //     } else if (row.original.primary === 'yes' && row.original.secondary === 'yes') {
+      //       return (
+      //         <p className=''>Both Primary and Secondary</p>
+      //       );
+      //     } else {
+      //       return (
+      //         <p className=''></p>
+      //       );
+      //     }
+      //   },
+      // }, 
+      // {
+      //   accessorKey: 'sim_no0', //normal accessorKey
+      //   header: 'Secendory',
+      //   size: 100,
+      // }, 
       // {
       //   accessorKey: 'segment',
       //   header: 'Segment',

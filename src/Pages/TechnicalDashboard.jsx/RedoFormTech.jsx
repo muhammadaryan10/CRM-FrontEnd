@@ -36,7 +36,8 @@ export default function RedoFormTech() {
     remarks: "",
     install_loc: "",
     install_date: "",
-    nature: ""
+    nature: "",
+    device_id:""
   });
 
   const cookies = new Cookies();
@@ -107,7 +108,8 @@ export default function RedoFormTech() {
           contact_no: response.data.data.other_details.mobileno_1,
           // technician: response.data.data.technical.technician_name,
           sales_person: response.data.data.other_details.sales_person,
-          install_date: response.data.data.other_details.date_of_installation
+          install_date: response.data.data.other_details.date_of_installation,
+          device_id : response.data.data.technical.device_no
         })
         toast.success("Data Found SuccessFully")
         return
@@ -119,7 +121,7 @@ export default function RedoFormTech() {
     catch (error) {
       if (error.response.status === 402) {
         toast.error("Please Fill All the Feild")
-
+console.log(error)
       }
       else if (error.response.status === 400) {
         toast.error("Data Not Found ")
@@ -143,10 +145,11 @@ export default function RedoFormTech() {
           install_loc: "",
           install_date: ""
         })
+        console.log(error)
       }
       else {
         toast.error("Internal Server Error ")
-        // console.log(error)
+        console.log(error)
       }
     }
   }

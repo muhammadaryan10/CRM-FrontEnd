@@ -116,6 +116,14 @@ export default function Technical_Sidebar() {
               </Link>
             </li>
             <li>
+              <Link
+                to="/tech/editUser"
+                className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500  hover:text-white"
+              >
+                Edit User
+              </Link>
+            </li>
+            <li>
               <details className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary
                   className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500  hover:text-white"
