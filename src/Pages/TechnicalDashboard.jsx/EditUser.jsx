@@ -132,7 +132,7 @@ export default function EditUser() {
             }
         }
     };
-
+ 
     let name, value
     const getUserdata = (e) => {
         name = e.target.name;
@@ -210,7 +210,7 @@ export default function EditUser() {
         // Include the converted string in the data you send to the backend
         const dataToSend = {
             vas_options: vasOptionsString,
-            cleintId,
+            client_id:cleintId,
             customer_name,
             father_name,
             address,
@@ -243,22 +243,22 @@ export default function EditUser() {
             dealer_name,
             insurance_partner,
             sales_person,
-            renewal_charges,
-            customer_email,
-            emergency_pass,
-            emergency_person,
-            security_ques,
-            security_ans,
-            password,
+            // renewal_charges,
+            // customer_email,
+            // emergency_pass,
+            // emergency_person,
+            // security_ques,
+            // security_ans,
+            // password,
             dealership,
-            emergency_person_contact,
+            // emergency_person_contact,
         };
 
 
         // if (customer_name && father_name && address && mobileno_1 && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && remarks && campaign_point && dealership && dealer_name && sales_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
         try {
 
-            const response = await axios.post(
+            const response = await axios.put(
                 `${process.env.REACT_APP_BACKEND_URL}/update_user`,
                 dataToSend,
                 {
