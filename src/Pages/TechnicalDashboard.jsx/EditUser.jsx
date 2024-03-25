@@ -7,7 +7,9 @@ export default function EditUser() {
     const [search_term, setSearch_term] = useState("")
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [user, setUser] = useState({
+        cleintId: "",
         customer_name: "",
+        father_name: "",
         address: "",
         registeration_no: "",
         mobileno_1: "",
@@ -17,10 +19,28 @@ export default function EditUser() {
         seconadryuser_name: "",
         relationship: "",
         secondaryuser_con1: "",
+        chasis_no: "",
+        engine_no: "",
+        make: "",
+        CC: "",
+        color: "",
+        model: "",
+        year: "",
+        campaign_point: "",
         installation_loc: "",
         tracker_charges: "",
         date_of_installation: "",
+        discount: "",
+        engine_type: "",
+        ext_comission: "",
+        int_comission: "",
+        transmission: "",
         remarks: "",
+        vas: "",
+        dealer_name: "",
+        insurance_partner: "",
+        vas_options: [],
+        sales_person: "",
         renewal_charges: "",
         customer_email: "",
         emergency_pass: "",
@@ -28,6 +48,7 @@ export default function EditUser() {
         security_ques: "",
         security_ans: "",
         password: "",
+        dealership: "",
         emergency_person_contact: "",
         representative: ""
     })
@@ -46,7 +67,9 @@ export default function EditUser() {
             // Check if the response is successful and contains the expected data
             if (response && response.data && response.data.data) {
                 const data = response.data.data;
+                const receivedVasOptionsArray = data.user.vas_options.split(",").map(option => option.trim());
                 setUser({
+                    cleintId: data.user.id,
                     customer_name: data.user.customer_name,
                     address: data.user.address,
                     registeration_no: data.user.registeration_no,
@@ -69,7 +92,26 @@ export default function EditUser() {
                     security_ans: data.security.security_ans,
                     password: data.security.password,
                     emergency_person_contact: data.security.emergency_person_contact,
-                    representative: ""
+                    representative: "",
+                    dealership: data.user.dealership,
+                    dealer_name: data.user.dealer_name,
+                    insurance_partner: data.user.insurance_partner,
+                    father_name: data.user.father_name,
+                    chasis_no: data.user.chasis_no,
+                    engine_no: data.user.engine_no,
+                    make: data.user.make,
+                    CC: data.user.CC,
+                    color: data.user.color,
+                    model: data.user.model,
+                    year: data.user.year,
+                    campaign_point: data.user.campaign_point,
+                    vas: data.user.vas,
+                    vas_options: receivedVasOptionsArray,
+                    sales_person: data.user.sales_person,
+                    engine_type: data.user.engine_type,
+                    ext_comission: data.user.ext_comission,
+                    int_comission: data.user.int_comission,
+                    transmission: data.user.transmission,
                 });
                 console.log(user)
             } else {
@@ -98,9 +140,185 @@ export default function EditUser() {
         setUser({ ...user, [name]: value });
         console.log(user);
     };
+
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+
+    const handleCheckboxChange = (e, option) => {
+        const isChecked = e.target.checked;
+        if (isChecked) {
+            setUser(prevUser => ({
+                ...prevUser,
+                vas_options: [...prevUser.vas_options, option]
+            }));
+        } else {
+            setUser(prevUser => ({
+                ...prevUser,
+                vas_options: prevUser.vas_options.filter(item => item !== option)
+            }));
+        }
+    };
+
+    const sendData = async (e) => {
+        // setLoading(true)
+        e.preventDefault();
+        const { cleintId,
+            customer_name,
+            father_name,
+            address,
+            registeration_no,
+            mobileno_1,
+            mobileno_2,
+            mobileno_3,
+            cnic,
+            seconadryuser_name,
+            relationship,
+            secondaryuser_con1,
+            chasis_no,
+            engine_no,
+            make,
+            CC,
+            color,
+            model,
+            year,
+            campaign_point,
+            installation_loc,
+            tracker_charges,
+            date_of_installation,
+            discount,
+            engine_type,
+            ext_comission,
+            int_comission,
+            transmission,
+            remarks,
+            vas,
+            dealer_name,
+            insurance_partner,
+            sales_person,
+            renewal_charges,
+            customer_email,
+            emergency_pass,
+            emergency_person,
+            security_ques,
+            security_ans,
+            password,
+            dealership,
+            emergency_person_contact, } = user;
+        const vasOptionsString = JSON.stringify(user.vas_options).replace(/[\[\]"]+/g, '');
+
+        // Include the converted string in the data you send to the backend
+        const dataToSend = {
+            vas_options: vasOptionsString,
+            cleintId,
+            customer_name,
+            father_name,
+            address,
+            registeration_no,
+            mobileno_1,
+            mobileno_2,
+            mobileno_3,
+            cnic,
+            seconadryuser_name,
+            relationship,
+            secondaryuser_con1,
+            chasis_no,
+            engine_no,
+            make,
+            CC,
+            color,
+            model,
+            year,
+            campaign_point,
+            installation_loc,
+            tracker_charges,
+            date_of_installation,
+            discount,
+            engine_type,
+            ext_comission,
+            int_comission,
+            transmission,
+            remarks,
+            vas,
+            dealer_name,
+            insurance_partner,
+            sales_person,
+            renewal_charges,
+            customer_email,
+            emergency_pass,
+            emergency_person,
+            security_ques,
+            security_ans,
+            password,
+            dealership,
+            emergency_person_contact,
+        };
+
+
+        // if (customer_name && father_name && address && mobileno_1 && cnic && seconadryuser_name && relationship && secondaryuser_con1 && registeration_no && engine_no && chasis_no && CC && make && model && year && color && installation_loc && remarks && campaign_point && dealership && dealer_name && sales_person && insurance_partner && tracker_charges && date_of_installation && int_comission && ext_comission && discount && renewal_charges && engine_type && transmission && vas) {
+        try {
+
+            const response = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/update_user`,
+                dataToSend,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                }
+            );
+
+            console.log(response); // use response.data to get the server response
+
+            if (response.status === 200) {
+                // setLoading(false)
+                console.log("Request successful");
+                // setMsg('User Register Succfully')
+                // setSuccessAlert(true)
+                // setSuccessAlert(true);
+                // setTimeout(() => {
+                //     navigate('/cs');
+                // }, 1000);
+            } else if (response.response.request.status === 402) {
+                // setLoading(false)
+                // setErrorAlert(true)
+                // setMsg("validations Fail")
+                console.log(response);
+            } else {
+
+                console.log("Please Try Again Later.");
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                // setLoading(false)
+                console.log("Error:", "User Already Registered With This Credentials", error);
+                // setErrorAlert(true);
+                let errorMessage = "";
+                for (const key in error.response.data.message) {
+                    errorMessage += ` ${error.response.data.message[key].join(", ")}\n`;
+                }
+                console.log(errorMessage);
+            }
+
+            else if (error.response.status === 500) {
+                // setLoading(false)
+                console.log("Internal Server Error", error);
+                // setErrorAlert(true)
+                // setMsg("Internal Server Error")
+            }
+            else {
+                // setLoading(false)
+                // setErrorAlert(true)
+                // setMsg("Internal Server Error")
+                console.log(error)
+            }
+        }
+        // } else {
+        //   setErrorAlert(true)
+        //   setMsg("Plesae Fill All the feilds")
+        // }
+    }
 
     return (
         <div className='flex h-[100vh] bg-black'>
@@ -121,9 +339,13 @@ export default function EditUser() {
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.customer_name} />
                         </div>
                         <div className='flex justify-center'>
-                            <p className='text-start text-sm' style={{ width: "40%" }}> Registration Number:</p>
-                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }}  value={user && user.registeration_no} name="registeration_no" />
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Father  Name :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.father_name} name="father_name" />
                         </div>
+                        {/* <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Contact Number 3 :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.mobileno_3} name="mobileno_3" />
+                        </div> */}
                         <div className='flex justify-center'>
                             <p className='text-start text-sm' style={{ width: "40%" }}> CNIC :</p>
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} onChange={getUserdata} value={user && user.cnic} name="cnic" />
@@ -133,11 +355,11 @@ export default function EditUser() {
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} onChange={getUserdata} value={user && user.mobileno_1} name="mobileno_1" />
                         </div>
                         <div className='flex justify-center'>
-                            <p className='text-start text-sm' style={{ width: "40%" }}> 2 Contact Number :</p>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Contact Number 2 :</p>
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} onChange={getUserdata} value={user && user.mobileno_2} name="mobileno_2" />
                         </div>
                         <div className='flex justify-center'>
-                            <p className='text-start text-sm' style={{ width: "40%" }}> 3 Contact Number :</p>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Contact Number 3 :</p>
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.mobileno_3} name="mobileno_3" />
                         </div>
                         <div className='flex justify-center'>
@@ -157,12 +379,106 @@ export default function EditUser() {
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} onChange={getUserdata} value={user && user.relationship} name="relationship" />
                         </div>
                         <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Registration Number:</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.registeration_no} name="registeration_no" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Engine Number :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.engine_no} name="engine_no" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Chassis  Number :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.chasis_no} name="chasis_no" />
+                        </div> <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> CC :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.CC} name="CC" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Make :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.make} name="make" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Model :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.model} name="model" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Year :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.year} name="year" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Color :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.color} name="color" />
+                        </div>
+                        <div className='flex justify-center'>
+                            <p className='text-start text-sm' style={{ width: "40%" }}> Insurance Partner :</p>
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} onChange={getUserdata} value={user && user.insurance_partner} name="insurance_partner" />
+                        </div>
+                        <div className='flex justify-center'>
                             <p className='text-start text-sm' style={{ width: "40%" }}>Special Instruction :</p>
                             <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} onChange={getUserdata} value={user && user.remarks} name="remarks" />
                         </div>
+                        <div className='flex w-100'>
+                            <p className='text-start text-sm my-2' style={{ width: "40%" }}>VAS :</p>
+                            <div className=' flex flex-col  p-2 w-100'>
+                                <div className='flex my-2'>
+                                    <label className='text-end md:text-start' style={{ width: "40%" }}>Igination On :</label>
+                                    <input
+                                        type="checkbox"
+                                        checked={user && user.vas_options.includes('Ignition On')}
+                                        onChange={(e) => handleCheckboxChange(e, 'Ignition On')}
+                                        className='ml-3 custom_checkbox'
+                                    />
+                                </div>
+                                <div className='flex my-2'>
+                                    <label className='text-end md:text-start' style={{ width: "40%" }}>Igination Off :</label>
+                                    <input
+                                        type="checkbox"
+                                        checked={user && user.vas_options.includes('Ignition Off')}
+                                        onChange={(e) => handleCheckboxChange(e, 'Ignition Off')}
+                                        className='ml-3 custom_checkbox'
+                                    />
+                                </div>
+                                <div className='flex my-2'>
+                                    <label className='text-end md:text-start' style={{ width: "40%" }}>Over Speed :</label>
+                                    <input
+                                        type="checkbox"
+                                        checked={user && user.vas_options.includes('Over Speed')}
+                                        onChange={(e) => handleCheckboxChange(e, 'Over Speed')}
+                                        className='ml-3 custom_checkbox'
+                                    />
+                                </div>
+                                <div className='flex my-2'>
+                                    <label className='text-end md:text-start' style={{ width: "40%" }}>Webtrack :</label>
+                                    <input
+                                        type="checkbox"
+                                        checked={user && user.vas_options.includes('Webtrack')}
+                                        onChange={(e) => handleCheckboxChange(e, 'Webtrack')}
+                                        className='ml-3 custom_checkbox'
+                                    />
+                                </div>
+                                <div className='flex my-2'>
+                                    <label className='text-end md:text-start' style={{ width: "40%" }}>Mobile App :</label>
+                                    <input
+                                        type="checkbox"
+                                        checked={user && user.vas_options.includes('Mobile App')}
+                                        onChange={(e) => handleCheckboxChange(e, 'Mobile App')}
+                                        className='ml-3 custom_checkbox'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div >
                     <div className='space-y-3'>
                         <div className=' flex flex-col justify-center space-y-3'>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Date of Installation :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.date_of_installation} onChange={getUserdata} name="date_of_installation" /> </div>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Internal Commission :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.int_comission} onChange={getUserdata} name="int_comission" /> </div>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> External Commission :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.ext_comission} onChange={getUserdata} name="ext_comission" /> </div>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Campaign Point Allocation :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.campaign_point} onChange={getUserdata} name="campaign_point" /> </div>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Dealership :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.dealership} onChange={getUserdata} name="dealership" /> </div>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Dealer Name :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.dealer_name} onChange={getUserdata} name="dealer_name" /> </div>
+                            <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Sales Person  :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.sales_person} onChange={getUserdata} name="sales_person" /> </div>
                             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Tracker Charges  :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.tracker_charges} onChange={getUserdata} name="tracker_charges" /> </div>
                             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Renewals Charges :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.renewal_charges} onChange={getUserdata} name="renewal_charges" /> </div>
                             <div className='flex justify-between'><p className='text-start text-sm' style={{ width: "40%" }}> Customer Email :</p><input className=' ml-3 p-1 custum_input' style={{ width: "55%" }} value={user && user.customer_email} onChange={getUserdata} name="customer_email" /> </div>
@@ -176,7 +492,7 @@ export default function EditUser() {
                         </div>
                     </div>
                 </div>
-                <button className='theme_btn_md rounded-0 float-end my-3' onClick="">Submit</button>
+                <button className='theme_btn_md rounded-0 float-end my-3' onClick={sendData} >Submit</button>
             </div>
         </div>
     )
