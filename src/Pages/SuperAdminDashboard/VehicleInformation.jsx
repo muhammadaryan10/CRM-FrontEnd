@@ -2,15 +2,23 @@ import React, { useState } from 'react'
 import SuperAdminSidebar from '../../Components/SuperAdminSidebar';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function VehicleInformation() {
     const { reg_no } = useParams();
     const [data, setData] = useState();
     console.log(reg_no)
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [view, setView] = useState(false)
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const handleClosePopup = () => {
+        // setSelectedComplain([]);
+        setView(false);
     };
 
     const fetchData = async () => {
@@ -40,6 +48,61 @@ export default function VehicleInformation() {
             <div className='flex h-[100vh] bg-black'>
                 {isSidebarOpen && (
                     <div className="sidebar"><SuperAdminSidebar /></div>
+                )}
+                {view && (
+                    <div className="overlay">
+                        <div className="popup">
+                            <div className="bg-white p-3 " role="alert">
+                                <div className="flex justify-end">
+                                    <button onClick={handleClosePopup}><FontAwesomeIcon className='h-8' icon={faCircleXmark} /></button>
+                                </div>
+                                <h1 className="font-bold fs-4 my-2">Updates</h1>
+                                <div>
+                                    <table className="min-w-full">
+                                        <thead className="bg-gray-300 border">
+                                            <tr>
+                                                <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                                    Date
+                                                </th>
+                                                <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                                    Time
+                                                </th>
+                                                <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                                    Representative
+                                                </th>
+                                                <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                                    Remarks
+                                                </th>
+                                                <th scope="col" className="text-xs font-medium text-gray-900  p-2 text-start border-2 border-gray-200">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className=''>
+                                            {/* {selectedComplain.length > 0 && (
+                                            selectedComplain.map(action => (<tr className="bg-white border">
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">{action.date || " "}</td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {action.time || " "}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {action.resolved_by || " "}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {action.remarks || ""}
+                                                </td>
+                                                <td className="text-xs text-gray-900 font-light p-2  whitespace-nowrap border border-gray-200">
+                                                    {action.action || ""}
+                                                </td>
+                                            </tr>
+                                            ))
+                                        )} */}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 )}
                 <div className='bg-white rounded-xl m-2 p-2 w-100 overflow-y-scroll bg'>
                     <button onClick={toggleSidebar} className='bg-black'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAY1BMVEX///8AAADPz89LS0uWlpaPj4/4+PhfX1/29vawsLAdHR3b29v8/PzExMQzMzOEhIRzc3MPDw+hoaGysrLq6uo8PDwXFxfh4eFkZGRXV1fGxsZGRkaHh4fX19d6enqnp6e7u7sLhoRgAAAChUlEQVR4nO3di1LCQAyF4eWOCIgIqPWC7/+UWhm8jZNs2Z3JJP2/J8gZK+1u02xKAAAAAAAAAAAAAAAAABDfcjWZjfyYTVbLTvl2rwN/Nrv8gBPrYi80ycw33VtXerH9NCvgwbrOAoeciGvrKous9YA31jUWutEC3ltXWOxeSfhgXWCxBzng3Lq+CuZiwivr8iq4EhNurMurYCMm9H2rOJFvGNbVVdHzhJ6f2M4WYsJH6/IqeBQTel03/SSvoYbW5VUwFBOmW+v6it3KAdPRusBiRyVhWlhXWEj+JW29WJdY6EVN6PzhW71GW1vrKgtscwKm1FjXebEmL+DHOtjjhvDHskle+/7JOPa2abofd9jyPpleD/24ztoKBgAAAAAAAAAAPs2b49iPY9PlvVPrbWT9Lqmz0VuHfEOf7QoLpZPm27N1qRdT29hPZtZ1FpjlBPTdJiw3CH+6s66x0J0W0H+zvnbb8P7JzGDwLAdcWtdXgfyp5cq6vApWwS9S7ab4ZF1eBU9iQv8twlqTsHV1VfT8bxj//zD+b2n8+2GEZxoxoOfV75nyXBpgbaH20vr+GCFjfdiDNX4P9mk8/9povzJfwu+Xpvh73q3o7y0AAAAAAAAAAIAjwedE7cbeZiavO836mvt8050/r83vzD25WehL+LmJvme0Zsy+jD+/1GeTwjd1Bq3va7SlXaf+m4SVWdDx53nHn8kef65+hLMRDmJC6+qq6HlCb2um/8jnzPhcNv0mtwl77/JuyZ3e/lv11Q+Bw5+71oOz89x/25UxOML3DSPjDMsenEMa/yzZ5HcNlXsecHJ6pvNrtwMulo2zc7mbbudyAwAAAAAAAAAAAAAAAIBP7y86VZGfUH/eAAAAAElFTkSuQmCC' className='h-8 w-8 bg-black' /></button>
@@ -156,7 +219,7 @@ export default function VehicleInformation() {
                             <div className='p-2'>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Registration # :</p>
-                                    <p className='text-sm  w-60'>{data && data.user.registeration_no || "N/A"}</p>
+                                    <p className='text-sm  w-60 '>{data && data.user.registeration_no || "N/A"}<button className='text_edit' onClick={()=> setView(true)}>Edited</button></p>
                                 </div>
                                 <div className='flex'>
                                     <p className='text-sm font-bold w-40'>Engine #:</p>
@@ -297,7 +360,6 @@ export default function VehicleInformation() {
                                 <p>Technical Form Is not Submited yet</p>
                             </div>
                         )}
-
                         {/* Other Information   */}
                         <div className='bg-white mt-3 border border-gray-600'>
                             <h1 className='text-xl font-semibold bg-black text-white p-2 '>Other Information  </h1>

@@ -360,7 +360,7 @@ export default function EditUser() {
                         </div>
                         <div className='flex justify-center'>
                             <p className='text-start text-sm' style={{ width: "40%" }}> Contact Number 3 :</p>
-                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.mobileno_3} name="mobileno_3" />
+                            <input className='ml-3 p-1 custom_input' style={{ width: "55%" }} value={user && user.mobileno_3} name="mobileno_3" onChange={getUserdata} />
                         </div>
                         <div className='flex justify-center'>
                             <p className='text-start text-sm' style={{ width: "40%" }}> Address :</p>

@@ -3,13 +3,13 @@ import CSR_SIdebar from '../../Components/CRO_SIdebar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsersGear, faBook, faEye, faExpand, faPowerOff, faCircleXmark, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate } from 'react-router-dom';
-import Technical_Sidebar from '../../Components/Technical_Sidebar';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Watch } from 'react-loader-spinner';
+import CMD_Sidebar from '../../Components/CMD_Sidebar';
 
-export default function TechHome() {
+export default function CMD_Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentDate, setCurrentDate] = useState('');
   const [currentHours, setCurrentHours] = useState('');
@@ -28,7 +28,9 @@ export default function TechHome() {
   const cookies = new Cookies();
   const [loading, setLoading] = useState(false);
   const [NR, setNR] = useState([]);
-  const [isNRVisible, setIsNRVisible] = useState(false);
+  const [isNRVisible, setIsNRVisible] = useState(false); 
+  const [Update, setUpdate] = useState([]);
+  const [isUpdateVisible, setIsUpdateVisible] = useState(false); 
 
   const navigate = useNavigate();
   const toggleSidebar = () => {
@@ -38,6 +40,9 @@ export default function TechHome() {
   const hideAlerts = () => {
     setPopup(false);
   };
+
+
+  
   // const toggleScreen = () => {
   //   const element = document.getElementById("root")
   //   const isFullScreen = document.fullscreenElement;
@@ -96,6 +101,21 @@ export default function TechHome() {
     }
   }
 
+  const GetUpdateFormComplain = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/Update_form_complains`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data. Status: ${res}`);
+      }
+
+      const response = await res.json();
+      console.log("Update data>>", response.data);
+      setUpdate(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
   const getAlert = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/demo_days_alert`);
@@ -116,6 +136,13 @@ export default function TechHome() {
     setIsInstallationVisible(!isInstallationVisible);
   };
 
+  const toggleAlertVisibility = () => {
+    setAlertVisibility(!AlertVisibility);
+  };
+
+  const toggleComplainVisibility = () => {
+    setIsComplain(!isComplain);
+  };
 
   const logout = async (e) => {
     setLoading(true)
@@ -130,13 +157,13 @@ export default function TechHome() {
         //   { withCredentials: true } // Include credentials (cookies)
         // );
         // if (response.status === 200) {
-        const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
-        for (const cookieName of cookieNames) {
-          cookies.remove(cookieName);
-        }
-        toast.success("Logged out SuccesFullly")
-        // console.log(response)
-        navigate("/");
+          const cookieNames = ['name', 'designation', 'active_id', "session_token", "image", "em_loginid", "role", "emp_id",]; // Replace with your actual cookie names
+          for (const cookieName of cookieNames) {
+            cookies.remove(cookieName);
+          }
+          toast.success("Logged out SuccesFullly")
+          // console.log(response)
+          navigate("/");
         // }
       }
       catch (error) {
@@ -175,12 +202,12 @@ export default function TechHome() {
     getNewInstallation()
     getComplains()
     getAlert()
+    GetUpdateFormComplain()
     getNRComplains()
     return () => clearInterval(intervalId); // Clear interval on unmount
 
 
   }, []);
-
 
 
   return (
@@ -200,7 +227,7 @@ export default function TechHome() {
       )}
       <div className='flex h-[100vh] bg-black'>
         {isSidebarOpen && (
-          <div className="sidebar"><Technical_Sidebar /></div>
+          <div className="sidebar"><CMD_Sidebar /></div>
         )}
         {popup && (
           <div className="overlay">
@@ -234,16 +261,16 @@ export default function TechHome() {
           </div>
 
           <div className='grid lg:grid-cols-3  gap-2 '>
-            <Link to="/tech/updateProfile" className=' border  p-2 flex bg-white border'>
+            <Link to="/cmd/updateProfile" className=' border  p-2 flex bg-white border'>
               <FontAwesomeIcon icon={faUsersGear} className='h-16 p-2' />
               <div className=' ml-3'>
                 <h1 className='text-2xl text-black'>Update Profile</h1>
               </div>
             </Link>
-            <Link to="/tech/form" className=' border  p-2 flex bg-white border'>
+            <Link to="/cmd/complains" className=' border  p-2 flex bg-white border'>
               <FontAwesomeIcon icon={faBook} className='h-16 p-2' />
               <div className=' ml-3'>
-                <h1 className='text-2xl text-black'>Request Form</h1>
+                <h1 className='text-2xl text-black'>View Complains</h1>
               </div>
             </Link>
             <div className=' border bg-white  p-2'>
@@ -252,50 +279,12 @@ export default function TechHome() {
                 <p className='text-lg font-bold text-black text-center'>{currentDate}</p>
               </div>
             </div>
-            <Link to="/tech/DataLog" className=' border  p-2 flex bg-white border'>
+            <Link to="/cmd/logs" className=' border p-2 flex bg-white border'>
               <FontAwesomeIcon icon={faEye} className='h-16 p-2' />
               <div className=' ml-3'>
-                <h1 className='text-2xl text-black'>View Data Logs</h1>
+                <h1 className='text-2xl text-black'>View  Logs</h1>
               </div>
             </Link>
-          </div>
-          <div>
-            <div>
-              <div >
-                <h2 className='m-2 p-2 border-t border-black shadow-md' style={{ backgroundColor: "#F5F5F5" }}><button onClick={toggleInstallationVisibility}>New Installation Que ({count})</button></h2>
-                {isInstallationVisible && (
-                  <div>
-                    {newInstall.map((installation, index) => (
-                      <div key={index} className='m-2'>
-                        <div className='bg-white p-2 flex justify-between'>
-                          <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
-                            <div>
-                              <p>Customer Name</p>
-                              <p>Registration</p>
-                            </div>
-                            <div>
-                              <p>: {installation.name}</p>
-                              <p>: {installation.reg_no}</p>
-                            </div>
-                          </div>
-                          <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-0'>
-                            <div>
-                              <p>Representative</p>
-                              <p>Date / Time</p>
-                            </div>
-                            <div >
-                              <p>: {installation.representative}</p>
-                              <p>: {installation.date} / {installation.time}</p>
-                            </div>
-                          </div>
-                          <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status : <Link to={`/tech/addUser/${installation.reg_no}`}>{installation.status}</Link></span></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div >
-            </div>
           </div>
           <div>
             <div>
@@ -305,32 +294,27 @@ export default function TechHome() {
                   <div>
                     {NR.map((installation, index) => (
                       <div key={index} className='m-2'>
-                        <div className='bg-white p-2 flex justify-between'>
+                        <div className='bg-white p-2 flex justify-start gap-4'>
                           <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
-                            <div>
+                            <div> 
                               <p>Customer Name</p>
                               <p>Registration</p>
-                              <p>Remarks</p>
                             </div>
                             <div>
-                              <p>: {installation.customer_name}</p>
+                              <p>: {installation.customer_name }</p>
                               <p>: {installation.reg_no}</p>
-                              <p>: {installation.remarks}</p>
                             </div>
                           </div>
-                          <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-0'>
+                          <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
                             <div>
                               <p>Representative</p>
                               <p>Date / Time</p>
-                              <p>Last Location</p>
                             </div>
                             <div >
                               <p>: {installation.emp_name}</p>
-                              <p>: {installation.date}/{installation.time}</p>
-                              <p>: {installation.last_location}</p>
+                              <p>: {installation.date} / {installation.time}</p>
                             </div>
                           </div>
-                          <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status : <Link to={`/tech/resolve/${installation.complain_id}`}>{installation.Status}</Link></span></div>
                         </div>
                       </div>
                     ))}
@@ -342,12 +326,49 @@ export default function TechHome() {
           <div>
             <div>
               <div >
-                <h2 className='m-2 p-2 border-t border-black shadow-md' style={{ backgroundColor: "#F5F5F5" }}><button onClick={()=> setIsComplain(!isComplain)}>New Complains  ({complaincount})</button></h2>
+                <h2 className='m-2 p-2 border-t border-black shadow-md' style={{ backgroundColor: "#F5F5F5" }}><button onClick={()=> setIsUpdateVisible(!isUpdateVisible)}>Update Form ({Update && Update.length})</button></h2>
+                {isUpdateVisible && (
+                  <div>
+                    {Update.map((installation, index) => (
+                    <div key={index} className='m-2'>
+                    <div className='bg-white p-2 flex justify-start gap-4'>
+                      <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
+                        <div> 
+                          <p>Customer Name</p>
+                          <p>Registration</p>
+                        </div>
+                        <div>
+                          <p>: {installation.customer_name }</p>
+                          <p>: {installation.reg_no}</p>
+                        </div>
+                      </div>
+                      <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-2'>
+                        <div>
+                          <p>Representative</p>
+                          <p>Date / Time</p>
+                        </div>
+                        <div >
+                          <p>: {installation.emp_name}</p>
+                          <p>: {installation.date} / {installation.time}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    ))}
+                  </div>
+                )}
+              </div >
+            </div>
+          </div>
+          <div>
+            <div>
+              <div >
+                <h2 className='m-2 p-2 border-t border-black shadow-md' style={{ backgroundColor: "#F5F5F5" }}><button onClick={toggleComplainVisibility}>New Complains  ({complaincount})</button></h2>
                 {isComplain && (
                   <div>
                     {Complains.map((e, index) => (
                       <div key={index} className='m-2'>
-                        <div className='bg-white p-2 flex justify-between  ' >
+                        <div className='bg-white p-2 flex justify-between grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2' >
                           {/* <div className='flex'> */}
                           <div className='grid lg:grid-cols-2 md:grid-cols-2 gap-0'>
                             <div className=''>
@@ -395,58 +416,10 @@ export default function TechHome() {
 
                             </div>
                           </div>
-                          <div className='flex justify-center items-center'><span className='mx-2 bg-black p-2 text-white'>Status : <Link to={`/tech/resolve/${e.complain_id}`}>{e.Status}</Link></span></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div >
-            </div>
-          </div>
-          <div>
-            <div>
-              <div >
-                <h2 className='m-2 p-2 border-t border-black shadow-md' style={{ backgroundColor: "#F5F5F5" }}><button onClick={()=> setAlertVisibility(!AlertVisibility)}>Demo Alerts  {Alert.length}</button></h2>
-                {AlertVisibility && (
-                  <div>
-                    {Alert.map((e, index) => (
-                      <div key={index} className='m-2'>
-                        <div className='bg-white p-2 flex justify-between'>
-                          <div className='flex space-x-4'>
-                            <div>
-                              <div className='flex space-x-4'>
-                                <p>Customer Name :</p>
-                                <p>{e.customer_name}</p>
-                              </div>
-                              <div className='flex space-x-4'>
-                                <p>Date OF Installation :</p>
-                                <p>{e.date_of_installation}</p>
-                              </div>
-                              <div className='flex space-x-4'>
-                                <p>Demp Expire Date :</p>
-                                <p>{e.demo_duration}</p>
-                              </div>
-                            </div>
-                            <div>
-                              {/* <div className='flex space-x-4'>
-                              <p>Representative  # :</p>
-                              <p>{e.representative}</p>
-                            </div> */}
-                              <div className='flex space-x-4'>
-                                <p>Sales Person :</p>
-                                <p>{e.sales_person}</p>
-                              </div>
-                              <div className='flex space-x-4'>
-                                <p>Special Instruction :</p>
-                                <p>{e.remarks}</p>
-                              </div>
-                            </div>
+                          <div>
+                          <div className='flex justify-end items-end'><span className='mx-2 bg-black p-2 m-2 text-white'>Status : <Link to={`/cmd/resolve/${e.complain_id}`}>{e.Status}</Link></span></div>
+                          <div className='flex justify-end items-end'><span className='mx-2 bg-black p-2 text-white px-3'><Link className='w-full' to={`/cmd/forward/${e.complain_id}`}>Forward Now</Link></span></div>
                           </div>
-                          {/* <div className='flex justify-center items-center'>
-                          <span className='mx-2'><Link to={`/tech/resolve/${e.complain_id}`}>Approved</Link></span>
-                          <span className='mx-2'><button onClick="">Removed</button></span>
-                        </div> */}
                         </div>
                       </div>
                     ))}

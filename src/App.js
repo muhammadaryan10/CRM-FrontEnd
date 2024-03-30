@@ -62,6 +62,13 @@ import TechInventery from './Pages/TechnicalDashboard.jsx/TechInventery';
 import TechLogs from './Pages/TechnicalDashboard.jsx/TechLogs';
 import RemovalTransferLog from './Pages/TechnicalDashboard.jsx/RemovalTransferLog';
 import EditUser from './Pages/TechnicalDashboard.jsx/EditUser';
+import CMD_Home from './Pages/CMD_Dashboard/CMD_Home';
+import CMD_Complain from './Pages/CMD_Dashboard/CMD_Complains';
+import CMD_Log from './Pages/CMD_Dashboard/CMD_Log';
+import UpdateProfileCMD from './Pages/CMD_Dashboard/UpdateProfileCMD';
+import CMD_Resolve from './Pages/CMD_Dashboard/CMD_Resolve';
+import CMD_Forward from './Pages/CMD_Dashboard/CMD_Forward';
+import CMD_ForwadingReport from './Pages/CMD_Dashboard/CMD_ForwadingReport';
 
 function App() {
   return (
@@ -141,6 +148,17 @@ function App() {
       <Route path='/cs/RedoForm' element={<RedoForm/>}/>
       <Route path='/cs/updateProfile' element={<EditProfileCS/>}/>
       <Route path='/cs/updateTracker' element={<UpdateTrackerCS/>}/>
+
+
+      {/* Routes For Complain  Manage Department  */}
+      <Route path='/cmd' element={<CMD_Home/>}/>
+      <Route path='/cmd/updateProfile' element={<UpdateProfileCMD/>}/>
+      <Route path='/cmd/complains' element={<CMD_Complain/>}/>
+      <Route path='/cmd/allUser' element={<CMD_Home/>}/>
+      <Route path='/cmd/resolve/:complain_id' element={<CMD_Resolve/>}/>
+      <Route path='/cmd/logs' element={<CMD_Log/>}/>
+      <Route path='/cmd/forwardingReports' element={<CMD_ForwadingReport/>}/>
+      <Route path='/cmd/forward/:complain_id' element={<CMD_Forward/>}/>
     </Routes>
   );
 }

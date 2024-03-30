@@ -9,19 +9,15 @@ import UpdateSimStatus from './UpdateSimStatus';
 export default function TechInventery() {
     const [selectedLog, setSelectedLog] = useState('device');
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [inputValue, setInputValue] = useState('');
 
     const handleLogButtonClick = (logType) => {
         setSelectedLog(logType);
     };
 
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-    };
-
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+    
     return (
         <div>
             <div className='flex h-[100vh] bg-black pt-0 mt-0 '>

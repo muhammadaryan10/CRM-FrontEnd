@@ -39,6 +39,9 @@ export default function Login() {
       } else if (check === "Head") {
         navigate("/superAdmin");
       }
+      else if (check === "CMD") {
+        navigate("/cmd");
+      }
       else {
         setLoading(false)
       }
@@ -99,6 +102,9 @@ export default function Login() {
             navigate("/cro");
           } else if (data.role === "Head") {
             navigate("/superAdmin");
+          }
+          else if (data.role === "CMD") {
+            navigate("/cmd");
           }
           else {
             toast.error("Opps it looks Like You are not Eligble");

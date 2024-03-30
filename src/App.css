@@ -93,3 +93,8 @@
   -moz-appearance: textfield;
 }
 
+.text_edit{
+  font-size:xx-small;
+  margin-left: 5px;
+  padding: 2px;
+}
